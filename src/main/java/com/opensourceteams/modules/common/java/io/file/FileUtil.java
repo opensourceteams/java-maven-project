@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import com.opensourceteams.modules.common.java.array.ArrayUtil;
 import java.util.List;
 
 /**
@@ -33,14 +34,19 @@ public class FileUtil {
      * @param path
      * @throws IOException
      */
-    public  static void readCharArray(String path) throws IOException {
+    public  static String readCharArray(String path) throws Exception {
         FileReader fr = new FileReader(path);
-        int length = 20; //定义缓冲区的大小
+        int length = 1024; //定义缓冲区的大小
         char[] charArry = new char[length];
         int len =0 ;
+        StringBuffer sb = new StringBuffer();
         while ((len  = fr.read(charArry,0,length)) != -1) {
-            System.out.print(new String(charArry,0,len));
+            //System.out.print(new String(charArry,0,len));
+
+            sb.append( ArrayUtil.subArray(charArry,len));
         }
+        fr.close();
+        return sb.toString();
 
     }
 
@@ -73,6 +79,31 @@ public class FileUtil {
         writer.close();
     }
 
+
+    /**
+     * 文件复制,如果文件已存在,就不会fu盖
+     * @param srcPath
+     * @param descPath
+     * @return
+     * @throws Exception
+     */
+    public  static boolean fileCopy(String srcPath,String descPath) throws Exception {
+
+        FileReader fr = new FileReader(srcPath);
+        FileWriter writer = new FileWriter(descPath,true);
+
+        int length = 1024; //定义缓冲区的大小
+        char[] charArry = new char[length];
+        int len =0 ;
+        while ((len  = fr.read(charArry,0,length)) != -1) {
+            writer.write(charArry,0,len);
+           // writer.write(ArrayUtil.subArray(charArry,len).toString());
+        }
+        fr.close();
+        writer.close();
+        return true;
+
+    }
 
 
     public static void appenContent(String fileName, String content) {

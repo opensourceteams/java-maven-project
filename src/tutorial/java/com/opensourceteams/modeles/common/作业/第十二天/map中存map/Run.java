@@ -32,6 +32,18 @@ public class Run {
             System.out.println(entry.getKey()+":" + entry.getValue());
         }
 
+        System.out.println("===================遍历二");
+        System.out.println("\n");
+
+        for(Map.Entry<Integer,Map<String,String>> entry : entries){
+            //System.out.println(entry.getKey()+":" + entry.getValue());
+            Map<String,String> subMap = entry.getValue();
+            for (Map.Entry<String,String> subEntry : subMap.entrySet()){
+                System.out.println(subEntry.getKey() + ":" +subEntry.getValue());
+
+            }
+        }
+
 
     }
 }
