@@ -22,7 +22,7 @@ public class Run {
 
 
     private static void write() throws IOException {
-        File file = new File("/opt/workspace/bigdata/all_frame_intellij/java-maven/c.txt");// 指定要写入的文件
+        File file = new File("/opt/workspace/bigdata/all_frame_intellij/java-maven/gbk_file.txt");// 指定要写入的文件
 
         // 获取该文件的缓冲输出流
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));

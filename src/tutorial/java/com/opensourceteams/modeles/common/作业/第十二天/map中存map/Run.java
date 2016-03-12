@@ -30,6 +30,8 @@ public class Run {
         Set<Map.Entry<Integer,Map<String,String>>> entries = grad.entrySet();
         for(Map.Entry<Integer,Map<String,String>> entry : entries){
             System.out.println(entry.getKey()+":" + entry.getValue());
+
+
         }
 
         System.out.println("===================遍历二");
@@ -43,6 +45,11 @@ public class Run {
 
             }
         }
+
+        System.out.println("===================遍历三");
+        System.out.println("\n");
+
+
 
 
     }

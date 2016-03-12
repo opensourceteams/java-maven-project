@@ -78,16 +78,23 @@ public class FileUtil {
         }
         writer.close();
     }
+    public static void writeFileAppend(String path,List<String> list) throws IOException {
+        FileWriter writer = new FileWriter(path,true);
+        for(String s : list){
+            writer.write(s);
+        }
+        writer.close();
+    }
 
 
     /**
-     * 文件复制,如果文件已存在,就不会fu盖
+     * 文件复制,如果文件已存在,就不会fu盖,但是会zhui加内容
      * @param srcPath
      * @param descPath
      * @return
      * @throws Exception
      */
-    public  static boolean fileCopy(String srcPath,String descPath) throws Exception {
+    public  static boolean fileCopyAppend(String srcPath,String descPath) throws Exception {
 
         FileReader fr = new FileReader(srcPath);
         FileWriter writer = new FileWriter(descPath,true);
@@ -98,6 +105,31 @@ public class FileUtil {
         while ((len  = fr.read(charArry,0,length)) != -1) {
             writer.write(charArry,0,len);
            // writer.write(ArrayUtil.subArray(charArry,len).toString());
+        }
+        fr.close();
+        writer.close();
+        return true;
+
+    }
+
+    /**
+     * 复制文件,不会zhui加内容
+     * @param srcPath
+     * @param descPath
+     * @return
+     * @throws Exception
+     */
+    public  static boolean fileCopy(String srcPath,String descPath) throws Exception {
+
+        FileReader fr = new FileReader(srcPath);
+        FileWriter writer = new FileWriter(descPath,false);
+
+        int length = 1024; //定义缓冲区的大小
+        char[] charArry = new char[length];
+        int len =0 ;
+        while ((len  = fr.read(charArry,0,length)) != -1) {
+            writer.write(charArry,0,len);
+            // writer.write(ArrayUtil.subArray(charArry,len).toString());
         }
         fr.close();
         writer.close();
