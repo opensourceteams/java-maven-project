@@ -13,7 +13,7 @@ public class PreferencesDemo {
     public static void main(String[] args) throws BackingStoreException {
         Preferences prefs = Preferences.userNodeForPackage(PreferencesDemo.class);
         prefs.put("a","我");
-        prefs.put("b","爱");
+        prefs.put("subRecursionListFiles","爱");
         prefs.put("c","中");
         prefs.put("d","国");
 

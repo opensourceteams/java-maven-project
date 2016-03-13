@@ -2,6 +2,7 @@ package com.opensourceteams.modules.common.java.io.file;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,41 @@ public class FileUtilTest {
         String srcPath = "/opt/workspace/temp/bigtxt.txt";
         String destPath="/opt/workspace/temp/bigtxt2.write.txt";
         FileUtil.fileCopy(srcPath,destPath);
+
+    }
+
+    @Test
+    public void testDirectoryCopy() throws Exception {
+        List<String> list = new ArrayList<String>();
+        File f = new File("/opt/workspace/bigdata/all_frame_intellij/java_maven/src/tutorial/java/com/opensourceteams/modules/common/作业/第十四天");
+        String destPath = "/opt/workspace/bigdata/all_frame_intellij/java_maven/a";
+        subRecursionListFiles(list,f);
+
+        for (String s : list){
+           // System.out.println(s);
+            //FileUtil.fileCopy(s,destPath);
+
+        }
+
+    }
+
+    public static void subRecursionListFiles(List<String> list, File f ) throws IOException {
+        if(f!= null ){
+            if(f.isDirectory()){
+                for (File subF : f.listFiles()){
+                    list.add(subF.getAbsolutePath());
+                    System.out.println(subF.getCanonicalPath());
+
+                    if(subF.isDirectory()){
+                        subRecursionListFiles(list,subF);
+                    }
+                }
+            }else if(f.isFile()){
+                list.add(f.getAbsolutePath());
+            }
+
+
+        }
 
     }
 

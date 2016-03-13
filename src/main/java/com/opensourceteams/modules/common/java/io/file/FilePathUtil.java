@@ -1,6 +1,8 @@
 package com.opensourceteams.modules.common.java.io.file;
 
 import java.io.File;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -56,5 +58,58 @@ public class FilePathUtil {
             // log.error("创建文件错误.path=" + path, e);
             throw e;
         }
+    }
+
+
+
+    /**
+     * 递归查找子文件路径
+     * @param list
+     * @param f
+     */
+    public static void subRecursionListFiles(List<String> list, File f ){
+        if(f!= null ){
+            if(f.isDirectory()){
+                for (File subF : f.listFiles()){
+                    list.add(subF.getAbsolutePath());
+
+                    if(subF.isDirectory()){
+                        subRecursionListFiles(list,subF);
+                    }
+                }
+            }else if(f.isFile()){
+                list.add(f.getAbsolutePath());
+            }
+
+
+        }
+
+    }
+
+
+    /**
+     * 递归查找子文件路径
+     * @param list
+     * @param f
+     */
+    public static void subRecursionListFilesSort(List<String> list, File f ){
+        subRecursionListFiles(list,f);
+        /**
+         * 对结果进行排序
+         */
+        list.sort(new Comparator<String>() {
+            public int compare(String o1, String o2) {
+                if(o1 == null && o2 == null){
+                    return 0 ;
+                }else if(o1 == null){
+                    return -1 ;
+                }else if(o2 == null){
+                    return 1 ;
+                }else{
+                    return o1.compareTo(o2);
+                }
+            }
+        });
+
     }
 }

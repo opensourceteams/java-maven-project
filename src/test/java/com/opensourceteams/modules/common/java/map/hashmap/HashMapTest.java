@@ -23,7 +23,7 @@ public class HashMapTest {
     public void testPut(){
         String s= System.getProperty("line.separator");
         hashMap.put(1,"a");
-        hashMap.put(2,"b");
+        hashMap.put(2,"subRecursionListFiles");
 
     }
 
