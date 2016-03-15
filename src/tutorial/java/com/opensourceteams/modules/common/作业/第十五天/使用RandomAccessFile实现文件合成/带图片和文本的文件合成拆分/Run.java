@@ -56,9 +56,6 @@ public class Run {
         int len = 0 ;
         boolean isBeginFile = true;
 
-
-
-
         while ((len = raf.read(buffer))  != -1){
 
             //又是一个新文件
@@ -122,39 +119,37 @@ public class Run {
     }
 
     /**
-     * 文件的合成1
+     * 文件的合成
      * 第一个文件为文件类型,写死的,都是文本文件,所以类型都为0
      * ).一个文件的报文分为三块,
      *      第一块:1个byte来存储文件类型    1:为jpg格式文件  0:为txt文件格式
+     *      第二块:4个byte存储文件的长度
+     *      第三块:文件的实际内容
+     * ).思路,遍历每一个文件进行存储到一个合成文件中
+     * ).每一个文件的写入分为三块,先写类型,再写长度,最后写内容
+     * )
      * @param srcFiles
      * @param descFile
      * @throws IOException
      */
-    public static void fileCompose(String[] srcFiles, String descFile) throws IOException {
+    public static void fileCompose(String[] srcFiles, String descFile) throws Exception {
 
         FileOutputStream fos = new FileOutputStream(descFile);
         RandomAccessFile raf = null;
 
         int len = 0 ;
+        byte[] buffer = new byte[1024]; //文件输出流的缓冲区
 
         for (int i = 0 ;i< srcFiles.length ;i ++){
 
             raf = new RandomAccessFile(srcFiles[i],"r");
 
-            if(".jpg".equals(srcFiles[i].substring(srcFiles[i].lastIndexOf(".")).toLowerCase())){
-                fos.write((byte)1);//文本文件:0 ,jpg:1
-            }else{
-                fos.write((byte)0);//文本文件:0 ,jpg:1
-            }
-
-
-
-
+            fos.write(getFileByteType(srcFiles[i]));//文本文件:0 ,jpg:1
             fos.write(IntConvertEachBinary.convertIntToByteArry((int)raf.length()));
 
-            raf.seek(0);
-            while ((len = raf.read()) != -1){
-                fos.write(len);
+            //raf.seek(0);
+            while ((len = raf.read(buffer)) != -1){
+                fos.write(buffer,0,len);
             }
 
         }
@@ -164,6 +159,30 @@ public class Run {
         }
 
         fos.close();
+    }
+
+    /**
+     * 根据文件路径,得到文件类型
+     * @param filePath
+     * @return
+     * @throws Exception
+     */
+    public static byte getFileByteType(String filePath) throws Exception {
+        File file = new File(filePath);
+        if(file == null){
+            throw new Exception("文件不能为空");
+        }else if(file.isDirectory()){
+            throw new Exception("此路径为目录,不是文件");
+        }else if(file.getName().indexOf(".") == -1){
+            throw new Exception("文件格式不正确,文件名称需要包含.");
+        }else{
+            if(".jpg".equals(file.getName().substring(file.getName().lastIndexOf(".")).toLowerCase())){
+                return 1;//文本文件:0 ,jpg:1
+            }else{
+                return 0;//文本文件:0 ,jpg:1
+            }
+
+        }
     }
 
     /**
