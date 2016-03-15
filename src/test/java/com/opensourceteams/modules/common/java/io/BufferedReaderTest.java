@@ -78,7 +78,7 @@ public class BufferedReaderTest {
     @Test
     public void testReadLineBigFile() throws IOException {
         long start = System.currentTimeMillis();
-        String path = "/opt/workspace/temp/bigtxt4.write.txt"; //1.6g  执行时间83797
+        String path = "/opt/workspace/temp/bigtxt4.fileCompose.txt"; //1.6g  执行时间83797
         BufferedReader br = new BufferedReader(new FileReader(path),1);
         String result = null;
         while ((result = br.readLine()) != null){

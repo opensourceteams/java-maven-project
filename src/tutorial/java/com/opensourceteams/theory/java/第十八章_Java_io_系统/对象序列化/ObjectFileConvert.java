@@ -101,7 +101,7 @@ public class ObjectFileConvert {
         list.add("元素二");
 
         ObjectFileConvert.objectToFile(list, fileName);
-        //System.out.println("success write List<String> to file.");
+        //System.out.println("success fileCompose List<String> to file.");
 
         List<String> tmpList = (List<String>) ObjectFileConvert
                 .fileToObject(fileName);

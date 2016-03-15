@@ -66,8 +66,8 @@ public class FileReaderTest {
 
     /**
      * 带缓冲区的读取,字符 的中文乱码问题
-     * ).FileReader read 字符数组的没有传字符集的方法
-     * ).FileReader read 字节数组可以传字符集,可以指定编码
+     * ).FileReader fileSplit 字符数组的没有传字符集的方法
+     * ).FileReader fileSplit 字节数组可以传字符集,可以指定编码
      * @throws IOException
      */
     @Test
@@ -128,7 +128,7 @@ public class FileReaderTest {
     @Test
     public void testReadBigFile() throws IOException {
         long start = System.currentTimeMillis();
-        String path = "/opt/workspace/temp/bigtxt4.write.txt"; //1.6g  执行时间83797 8642  9860
+        String path = "/opt/workspace/temp/bigtxt4.fileCompose.txt"; //1.6g  执行时间83797 8642  9860
 
         path = "a.txt";
 

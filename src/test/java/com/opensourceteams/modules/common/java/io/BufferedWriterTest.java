@@ -19,7 +19,7 @@ public class BufferedWriterTest {
 
     /**
      * 往文件中写入字符串,覆盖原有文件数据
-     * ).BufferedWriter.write 方法,把字符串写入默认为8k的缓冲区
+     * ).BufferedWriter.fileCompose 方法,把字符串写入默认为8k的缓冲区
      * ).缓冲区中的数据,待close 或 flushBuffer 才把数据写到文件中去
      * @throws IOException
      */
@@ -35,7 +35,7 @@ public class BufferedWriterTest {
 
     /**
      * 往文件中写入字符数组,覆盖原有文件数据
-     * ).BufferedWriter.write 方法,把字符串写入默认为8k的缓冲区
+     * ).BufferedWriter.fileCompose 方法,把字符串写入默认为8k的缓冲区
      * ).缓冲区中的数据,待close 或 flushBuffer 才把数据写到文件中去
      * @throws IOException
      */
@@ -79,8 +79,8 @@ public class BufferedWriterTest {
         long start = System.currentTimeMillis();
         System.out.println(start);
 
-        String srcPath = "/opt/workspace/temp/bigtxt2.write.txt";
-        String destPath="/opt/workspace/temp/bigtxt3.write.txt";
+        String srcPath = "/opt/workspace/temp/bigtxt2.fileCompose.txt";
+        String destPath="/opt/workspace/temp/bigtxt3.fileCompose.txt";
 
         FileUtil.fileCopy(srcPath,destPath);
         long end = System.currentTimeMillis();
@@ -94,7 +94,7 @@ public class BufferedWriterTest {
         System.out.println(start);
 
         String srcPath = "/opt/workspace/temp/bigtxt.txt";
-        String destPath="/opt/workspace/temp/bigtxt2.write.txt";
+        String destPath="/opt/workspace/temp/bigtxt2.fileCompose.txt";
         for(int i =0;i< 100 ;i++){
             FileUtil.fileCopyAppend(srcPath,destPath);
         }
@@ -120,7 +120,7 @@ public class BufferedWriterTest {
         System.out.println(start);
 
         char[] charArry = new char[1024];
-        String destPath="/opt/workspace/temp/bigtxt6.write.txt";
+        String destPath="/opt/workspace/temp/bigtxt6.fileCompose.txt";
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(destPath)));
 
         for(int i = 0 ;i< 1000000;i++){
@@ -140,7 +140,7 @@ public class BufferedWriterTest {
         long start = System.currentTimeMillis();
         System.out.println(start);
 
-        String destPath="/opt/workspace/temp/bigtxt10.write.txt";
+        String destPath="/opt/workspace/temp/bigtxt10.fileCompose.txt";
 
 
         String s = "中国人民中国人民中国人民中国人民中国人民中国人民中国人民中国人民\n";
@@ -159,7 +159,7 @@ public class BufferedWriterTest {
         System.out.println(start);
 
         char[] charArry = new char[1024];
-        //String destPath2="/opt/workspace/temp/bigtxt6.write.txt";
+        //String destPath2="/opt/workspace/temp/bigtxt6.fileCompose.txt";
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(destPath)));
 
         for(int i = 0 ;i< 1000000;i++){
@@ -186,8 +186,8 @@ public class BufferedWriterTest {
 
         long start = System.currentTimeMillis();
         System.out.println(start);
-        String srcPath = "/opt/workspace/temp/bigtxt2.write.txt";
-        String destPath="/opt/workspace/temp/bigtxt4.write.txt";
+        String srcPath = "/opt/workspace/temp/bigtxt2.fileCompose.txt";
+        String destPath="/opt/workspace/temp/bigtxt4.fileCompose.txt";
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(destPath)));
 
 

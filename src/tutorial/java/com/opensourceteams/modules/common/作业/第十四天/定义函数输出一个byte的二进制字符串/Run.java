@@ -18,6 +18,9 @@ public class Run {
          s = BinaryUtil.byteToBits((byte)127);
         System.out.println(s);
 
+        s = BinaryUtil.byteToBits((byte)0);
+        System.out.println(s);
+
         s = BinaryUtil.byteToBits((byte)-1);
         System.out.println(s);
 

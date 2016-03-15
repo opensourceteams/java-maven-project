@@ -43,7 +43,7 @@ public class FileUtilTest {
         System.out.println(start);
 
         String srcPath = "/opt/workspace/temp/bigtxt.txt";
-        String destPath="/opt/workspace/temp/bigtxt2.write.txt";
+        String destPath="/opt/workspace/temp/bigtxt2.fileCompose.txt";
         FileUtil.fileCopy(srcPath,destPath);
 
     }
