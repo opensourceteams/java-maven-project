@@ -16,10 +16,10 @@ import java.util.List;
 public class FileUtil {
 
     /*
-  * 读字符,一次读一个
-  * @param path
-  * @throws IOException
-  */
+      * 读字符,一次读一个
+      * @param path
+      * @throws IOException
+      */
     public static void readChar(String path) throws IOException {
         FileReader fr = new FileReader(path);
         int i = 0;
@@ -28,6 +28,8 @@ public class FileUtil {
         }
         fr.close();
     }
+
+
 
     /**
      * 读取文件数据到缓冲区

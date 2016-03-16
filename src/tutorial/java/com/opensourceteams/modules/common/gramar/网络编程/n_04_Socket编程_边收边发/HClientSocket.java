@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.网络编程.n_03_Socket客户端请求数据接收数据_服务端接收数据返回数据;
+package com.opensourceteams.modules.common.gramar.网络编程.n_04_Socket编程_边收边发;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,7 +13,7 @@ public class HClientSocket {
 
     public static void main(String[] args) throws IOException {
         String host = "192.168.12.2";
-        //host = "localhost";
+        host = "localhost";
         //host ="192.168.12.9";
         Socket socket = new Socket(host,1234);
         System.out.println("客户端发送请求...");
@@ -21,8 +21,9 @@ public class HClientSocket {
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
 
-        writer.write(" a");
+        writer.write("你好a");
         writer.newLine();
+        writer.write("你好b");
 
         writer.flush();
 
