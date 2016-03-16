@@ -88,4 +88,21 @@ public class FileBufferedUtil {
     public static  StringBuilder readerStringBuilderNoClose(BufferedReader reader,InputStream in){
         return readerStringBuilderNoClose(reader,in,new char[1024]);
     }
+
+
+    public static boolean writerStringNoClose(BufferedWriter writer,OutputStream os,String str){
+
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
+            writer.write(str);
+            writer.flush();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return true;
+    }
 }

@@ -29,6 +29,6 @@ public class ReceiverThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("服客reader端:读取客户端数据-->" +readData);
+        System.out.println("服务reader端:读取客户端数据-->" +readData);
     }
 }

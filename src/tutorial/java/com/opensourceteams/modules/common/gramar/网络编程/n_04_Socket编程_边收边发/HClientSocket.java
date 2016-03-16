@@ -21,24 +21,32 @@ public class HClientSocket {
         System.out.println("客户端发送请求...");
 
 
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
-
-        writer.write("你好a");
-        writer.newLine();
-        writer.write("你好b");
-
-        writer.flush();
+        /**
+         * 客户端写
+         */
+        BufferedWriter writer = null ;
+        FileBufferedUtil.writerStringNoClose(writer,socket.getOutputStream(),"你好\r\n aa");
 
 
         /**
          * 客户端读
          */
-        StringBuilder sb = FileBufferedUtil.readerNoEnd(socket.getInputStream());
+        BufferedReader reader = null;
+        StringBuilder sb = FileBufferedUtil.readerStringBuilderNoClose(reader,socket.getInputStream());
         System.out.println("客户端接收服务器返回的数据 : " + sb.toString());
 
-        writer.close();
+        if(reader!= null){
+            reader.close();
+        }
+
+        if(writer!= null){
+            writer.close();
+        }
+
+        if(socket!= null){
+            socket.close();
+        }
 
 
-        socket.close();
     }
 }
