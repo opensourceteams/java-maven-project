@@ -27,7 +27,23 @@ public class Run {
     }
 
     /**
-     * 文件分隔
+     * 文件拆分
+     * ).需要拆分的文件A,被分成若干个小文件
+     * ).每一个文件的大小是不确定的,但是文件存储是有格式的,一个文件的报文分为三块
+     *      第一块:1个byte来存储文件类型    1:为jpg格式文件  0:为txt文件格式
+     *      第二块:4个byte存储文件的长度
+     *      第三块:文件的实际内容
+     * ).可以循环去读文件A中的数据放到buffer缓冲数组中
+     * ).一次读取的缓冲数组数据可能包含一个文件的所有信息
+     * ).多次读取的缓冲数据的和才包含一个文件的所有信息
+     * ).根据第一个文件的特殊性
+     *          也就是文件A的第一个byte肯定是第一个文件的文件类型
+     *               文件A的第二个byte到第五个byte肯定是第一个文件的文件长度:FileALength
+     *               文件A的第六个byte到取FileALength个byte 为第一个文件的内容
+     * ).文件A中包含的每个文件的长度fileLength放到while循环去计算,文件A的当前指针 >= 1 + 4 + fileLength  说明又读到了一个新文件
+     * ).只要能确定每个新文件的每隔点,那就找到分隔点,保存到不同的文件中就行
+     *
+     *
      * @param srcPath
      * @throws Exception
      */
@@ -42,15 +58,9 @@ public class Run {
         FileOutputStream fos = null;
 
         int fileType = 0; //读取到的当前文件类型
-
         byte[] byteArrayFileLength = null;
-
         byte[] buffer = new byte[1024];
-
-
         int fileLength = 0 ;//读取到的当前文件长度
-
-
         int totalLeng = 0 ;
 
         int len = 0 ;
@@ -62,7 +72,6 @@ public class Run {
             if(isBeginFile){
 
                 fileType = buffer[0];
-                //fos.close();
                 fos = new FileOutputStream(getFileSplitName(file,fileCount++,fileType));
                 byteArrayFileLength= Arrays.copyOfRange(buffer,1,5);
                 fileLength = IntConvertEachBinary.getIntByArray(byteArrayFileLength) ;//读取到的当前文件长度
@@ -73,8 +82,6 @@ public class Run {
             if(1 + 4 + fileLength < len){
                 fos.write(buffer,5,fileLength);
             }else{
-
-
 
                 if(isBeginFile){
 
@@ -89,18 +96,11 @@ public class Run {
 
             }
 
-
-
-
             if (raf.getFilePointer() >= 1 + 4 + fileLength   ){
                 totalLeng = totalLeng + 1 + 4 + fileLength;
 
                 raf.seek(totalLeng );
                 isBeginFile = true;
-
-                //deleteFilePath = getFileSplitName(file,fileCount++,fileType);
-
-                //fos = new FileOutputStream(deleteFilePath) ;
 
                 continue;
             }else{
@@ -111,16 +111,12 @@ public class Run {
 
         fos.close();
         raf.close();
-
-       // new File(deleteFilePath).deleteOnExit();
-
         return true;
 
     }
 
     /**
      * 文件的合成
-     * 第一个文件为文件类型,写死的,都是文本文件,所以类型都为0
      * ).一个文件的报文分为三块,
      *      第一块:1个byte来存储文件类型    1:为jpg格式文件  0:为txt文件格式
      *      第二块:4个byte存储文件的长度
