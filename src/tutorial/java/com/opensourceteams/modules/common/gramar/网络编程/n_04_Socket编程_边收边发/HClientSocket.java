@@ -1,5 +1,7 @@
 package com.opensourceteams.modules.common.gramar.网络编程.n_04_Socket编程_边收边发;
 
+import com.opensourceteams.modules.common.java.io.file.FileBufferedUtil;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -18,7 +20,7 @@ public class HClientSocket {
         Socket socket = new Socket(host,1234);
         System.out.println("客户端发送请求...");
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
+
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
 
         writer.write("你好a");
@@ -28,12 +30,14 @@ public class HClientSocket {
         writer.flush();
 
 
-        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-        System.out.println("服务器返回的数据 : " + reader.readLine());
+        /**
+         * 客户端读
+         */
+        StringBuilder sb = FileBufferedUtil.readerNoEnd(socket.getInputStream());
+        System.out.println("客户端接收服务器返回的数据 : " + sb.toString());
 
         writer.close();
-        reader.close();
+
 
         socket.close();
     }

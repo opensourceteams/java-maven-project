@@ -12,22 +12,21 @@ public class FileBufferedUtil {
 
     public static String encoded = "UTF-8" ;
 
+
     /**
-     * BufferedReader 读取流的全部内容,默认字符集为UTF-8
+     * BufferedReader 读取流的指定数组 char 数据,默认字符集为UTF-8
      * @param in
+     * @param buffer
      * @return
      */
-    public static  StringBuilder readerStringBuilder(InputStream in){
+    public static  StringBuilder readerNoEnd(InputStream in,char[] buffer){
 
         StringBuilder sb = new StringBuilder();
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in,encoded)) ;
 
-            String line = "";
-            while ((line = reader.readLine()) != null){
-                sb.append(line);
-
-            }
+            int len = reader.read(buffer);
+            sb.append(buffer,0,len);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -45,21 +44,30 @@ public class FileBufferedUtil {
         return sb;
     }
 
+    /**
+     * BufferedReader 读取流的1024 char 数据,默认字符集为UTF-8
+     * @param in
+     * @return
+     */
+    public static  StringBuilder readerNoEnd(InputStream in){
+        return readerNoEnd(in,new char[1024]);
+    }
+
 
     /**
-     * BufferedReader 读取流的全部内容,默认字符集为UTF-8
+     * BufferedReader 读取流的指定大小的内容,默认字符集为UTF-8
      * @param in
      * @param buffer
      * @return
      */
-    public static  StringBuilder readerStringBuilderNoClose(InputStream in,char[] buffer){
+    public static  StringBuilder readerStringBuilderNoClose(BufferedReader reader,InputStream in,char[] buffer){
 
         StringBuilder sb = new StringBuilder();
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in,encoded)) ;
+            reader = new BufferedReader(new InputStreamReader(in,encoded)) ;
 
-            String line = reader.readLine();
-            sb.append(line);
+       /*     String line = reader.readLine();
+            sb.append(line);*/
 
             int len = reader.read(buffer);
             sb.append(buffer,0,len);
@@ -70,5 +78,14 @@ public class FileBufferedUtil {
             e.printStackTrace();
         }
         return sb;
+    }
+
+    /**
+     * BufferedReader 读取流的 1024 char 大小的内容,默认字符集为UTF-8
+     * @param in
+     * @return
+     */
+    public static  StringBuilder readerStringBuilderNoClose(BufferedReader reader,InputStream in){
+        return readerStringBuilderNoClose(reader,in,new char[1024]);
     }
 }

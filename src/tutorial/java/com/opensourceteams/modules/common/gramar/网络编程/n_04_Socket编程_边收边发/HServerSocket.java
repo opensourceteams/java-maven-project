@@ -40,23 +40,25 @@ public class HServerSocket {
 
             //reader = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8")) ;
 
+            new ReceiverThread(socket).start();
+            new SenderThread(socket).start();
             //len = reader.read(buffer);
             //readData = readData + new String(buffer,0,len);
-            readData = FileBufferedUtil.readerStringBuilderNoClose(socket.getInputStream(),buffer).toString();
+            //readData = FileBufferedUtil.readerStringBuilderNoClose(socket.getInputStream(),buffer).toString();
 
 
            // readData = reader.readLine();
             //readData = readData +reader.readLine();
 
             //readData = FileBufferedUtil.readerStringBuilderNoClose(reader,socket.getInputStream()).toString();
-            System.out.println("服客reader端:读取客户端数据-->" +readData);
+           // System.out.println("服客reader端:读取客户端数据-->" +readData);
 
            // reader.close();
 
-            writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
-            writer.write("服务端处理后返回-->" +readData);
+  /*          writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
+            writer.write("服务端处理后返回-->");
             writer.newLine();
-            writer.flush();
+            writer.flush();*/
             //writer.close();
 
            // socket.close();
