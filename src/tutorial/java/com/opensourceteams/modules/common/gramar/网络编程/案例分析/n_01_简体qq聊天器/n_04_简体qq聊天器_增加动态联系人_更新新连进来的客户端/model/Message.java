@@ -6,20 +6,17 @@ import com.opensourceteams.modules.common.java.io.SystemTest;
 /**
  * 开发者:刘文  Email:372065525@qq.com
  * 16/3/17  下午4:45
- * 功能描述:
+ * 功能描述:输出消息
  */
 
 public class Message {
+
 
     private byte type;
     private int length;
     private byte[] content;
 
-    public Message(String text){
-        this.type = 0;
-        this.content = text.getBytes();
-        this.length = content.length;
-    }
+
 
     public byte getType() {
         return type;
@@ -46,23 +43,5 @@ public class Message {
     }
 
 
-    /**
-     * 生成报文
-     * 第一个byte 是文件类型 1:文本
-     * 第二个byte到第五个byte,共4个byte表示文件的长度
-     * 第三个部分,是文件的数据
-     * @return
-     */
-    public  byte[] genMessagePack(){
-        byte[] dataArray = new byte[ 1 + 4 + length];
 
-        byte[] lengtyArray = IntConvertEachBinary.convertIntToByteArry(length);
-
-        dataArray[0] = 1 ;
-
-        System.arraycopy(lengtyArray,0,dataArray,1,4);
-        System.arraycopy(content,0,dataArray,5,length);
-
-        return dataArray;
-    }
 }

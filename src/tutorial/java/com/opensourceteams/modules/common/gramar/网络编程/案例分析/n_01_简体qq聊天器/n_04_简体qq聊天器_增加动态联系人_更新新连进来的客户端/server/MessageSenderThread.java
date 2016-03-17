@@ -1,5 +1,6 @@
 package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_04_简体qq聊天器_增加动态联系人_更新新连进来的客户端.server;
 
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_04_简体qq聊天器_增加动态联系人_更新新连进来的客户端.model.WriterMessage;
 import com.opensourceteams.modules.common.java.binary.IntConvertEachBinary;
 import com.opensourceteams.modules.common.java.io.file.ObjectSerializationUtil;
 
@@ -33,14 +34,24 @@ public class MessageSenderThread extends Thread {
     public void run() {
 
         byte[] readData = null;
+
+
+/*        WriterMessage message = new WriterMessage(readData);
+        try {
+            os.write(message.genMessagePack());
+            os.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+
+
+
         try {
             readData = ObjectSerializationUtil.objectSerialization(contractTableRowData);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
 
         List<Byte> resultList = new ArrayList<Byte>();
         resultList.add((byte) 1);
