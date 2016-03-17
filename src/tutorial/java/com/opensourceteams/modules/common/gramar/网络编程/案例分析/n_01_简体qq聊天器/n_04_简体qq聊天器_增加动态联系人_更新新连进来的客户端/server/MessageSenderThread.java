@@ -36,18 +36,19 @@ public class MessageSenderThread extends Thread {
         byte[] readData = null;
 
 
-/*        WriterMessage message = new WriterMessage(readData);
+        WriterMessage message = new WriterMessage(contractTableRowData);
         try {
+            readData = message.getContent();
             os.write(message.genMessagePack());
             os.flush();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
 
 
 
-        try {
+      /*  try {
             readData = ObjectSerializationUtil.objectSerialization(contractTableRowData);
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,7 +83,7 @@ public class MessageSenderThread extends Thread {
             os.flush();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         System.out.println("服务writer端:读取客户端数据-->" +new String(readData));
     }
 }

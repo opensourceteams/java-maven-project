@@ -2,6 +2,10 @@ package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01
 
 import com.opensourceteams.modules.common.java.binary.IntConvertEachBinary;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 /**
  * 开发者:刘文  Email:372065525@qq.com
  * 16/3/17  下午4:45
@@ -23,6 +27,23 @@ public class WriterMessage extends Message{
         super.setLength(text.length);
     }
 
+    public WriterMessage(Object obj){
+
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(obj);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+            super.setType((byte) 1);
+            super.setContent(byteArray);
+            super.setLength(byteArray.length);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
@@ -42,7 +63,7 @@ public class WriterMessage extends Message{
         dataArray[0] = 1 ;
 
         System.arraycopy(lengtyArray,0,dataArray,1,4);
-        System.arraycopy(super.getLength(),0,dataArray,5,super.getLength());
+        System.arraycopy(getContent(),0,dataArray,5,super.getLength());
 
         return dataArray;
     }
