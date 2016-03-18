@@ -21,16 +21,19 @@ public class Message {
      */
     public static  byte  DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_REFRESH = 2;
 
+
+    /**
+     * 服向器向客户端主动推送,当前群更新消息
+     */
+    public static  byte  DATA_TRANSFORM_TYPE_SERVER_PUSH_GROUP_MESSAGE_REFRESH = 4;
+
+
     /**
      * 客户端用户向群发送消息,群消息
      */
     public static  byte  DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE = 3;
 
 
-    /**
-     * 服向器向客户端主动推送,当前群更新消息
-     */
-    public static  byte  DATA_TRANSFORM_TYPE_SERVER_PUSH_GROUP_MESSAGE_REFRESH = 4;
 
 
 

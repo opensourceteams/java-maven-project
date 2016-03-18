@@ -1,6 +1,6 @@
 package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.client.controller;
 
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.client.network.ClientMessageSenderThread;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.common.network.CommonMessageSenderThread;
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.Message;
 
 import javax.swing.*;
@@ -31,7 +31,7 @@ public class MouseEventProcessAdapter extends MouseAdapter {
         if(e.getComponent() == btnSend){
             System.out.println("单击事件" + taContent.getText());
             String text = taContent.getText();
-            new ClientMessageSenderThread(socket,text, Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE).start();
+            new CommonMessageSenderThread(socket,text, Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE).start();
             taContent.setText("");
         }
     }

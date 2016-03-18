@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.server;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.server.control;
 
 
 
@@ -6,6 +6,7 @@ package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.server.network.ServerAddContractThread;
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.server.network.ServerMessageReceiverThread;
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.server.network.ServerPushOnlineUserSetThread;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.server.service.QQServerService;
 import com.opensourceteams.modules.common.java.util.SetUtil;
 
 import java.io.IOException;
@@ -30,6 +31,8 @@ public class QQServer {
     private static Set<String> contractTableRowData = new HashSet<String>(); //联系人行数据
 
     private static List<Socket> socketList = new ArrayList<Socket>();
+
+    private QQServerService qqServerService = new QQServerService();
 
 
 
@@ -58,9 +61,15 @@ public class QQServer {
 
                 Socket socket = serverSocket.accept();
                 socketList.add(socket);
-                new ServerAddContractThread(socket).start();//更新服务器,当前在线用户数(增加新在线用户)
-                new ServerPushOnlineUserSetThread(socket).start();//实时推送在前在线用户集合给新登录用户
+
+                //new ServerAddContractThread(socket).start();//更新服务器,当前在线用户数(增加新在线用户)
+                //new ServerPushOnlineUserSetThread(socket).start();//实时推送在前在线用户集合给新登录用户
+
+
                 new ServerMessageReceiverThread(socket).start();
+                qqServerService.pushRefreshUsersToAllUser(socket);
+
+
                 //new MessageSenderThread(socket).start();
             }
 

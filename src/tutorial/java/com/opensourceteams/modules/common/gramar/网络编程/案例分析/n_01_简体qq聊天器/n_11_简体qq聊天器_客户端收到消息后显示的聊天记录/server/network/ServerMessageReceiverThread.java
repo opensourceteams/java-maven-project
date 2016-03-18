@@ -59,7 +59,7 @@ public class ServerMessageReceiverThread extends Thread {
 
 
 
-                qqServerService.sendMessageAllUser(new Message(sb.toString()));
+                qqServerService.pushGroupMessageToAllUser(new Message(sb.toString()));
 
 
             }

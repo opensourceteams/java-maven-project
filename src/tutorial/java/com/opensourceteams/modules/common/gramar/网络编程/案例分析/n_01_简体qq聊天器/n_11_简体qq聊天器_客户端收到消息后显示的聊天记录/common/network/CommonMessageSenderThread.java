@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.client.network;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.common.network;
 
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.WriterMessage;
 
@@ -12,14 +12,14 @@ import java.net.Socket;
  * 功能描述:
  */
 
-public class ClientMessageSenderThread extends Thread {
+public class CommonMessageSenderThread extends Thread {
 
     Socket socket;
     OutputStream os;
     Object object;
     byte type ;
 
-    public ClientMessageSenderThread(Socket socket,Object object,byte type){
+    public CommonMessageSenderThread(Socket socket, Object object, byte type){
         this.socket = socket;
         this.object = object;
         this.type = type;
