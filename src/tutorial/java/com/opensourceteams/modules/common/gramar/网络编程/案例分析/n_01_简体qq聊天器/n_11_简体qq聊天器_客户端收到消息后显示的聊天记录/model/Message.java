@@ -66,6 +66,18 @@ public class Message {
     }
 
 
+    public Message(){}
+
+    public Message(String text){
+        if(text != null){
+            this.content = text.getBytes();
+            this.length = text.getBytes().length;
+            this.contentObject = text;
+        }
+
+
+
+    }
 
     /**
      * 生成报文

@@ -2,10 +2,11 @@ package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01
 
 
 
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.Message;
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.ReaderMessageText;
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.ReaderMessage;
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.server.service.QQServerService;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.Message;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.ReaderMessageText;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.ReaderMessage;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.server.service.QQServerService;
+import com.opensourceteams.modules.common.java.util.CalendarUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,7 +47,19 @@ public class ServerMessageReceiverThread extends Thread {
 
                 ReaderMessageText messageText = new ReaderMessageText(message);
                 receiveData = messageText.getText();
-                qqServerService.sendMessageAllUser(message);
+                //重新组装发送信息
+                StringBuffer sb = new StringBuffer();
+                sb.append("\r\n");
+                sb.append(socket.getInetAddress().getHostAddress() );
+                sb.append("   ");
+                sb.append(CalendarUtil.getSimpleDate());
+                sb.append("\r\n");
+                sb.append(messageText.getText());
+
+
+
+
+                qqServerService.sendMessageAllUser(new Message(sb.toString()));
 
 
             }

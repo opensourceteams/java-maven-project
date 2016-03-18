@@ -3,10 +3,10 @@ package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01
 
 
 
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.Message;
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.ReaderMessageText;
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.ReaderMessage;
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.client.view.QQMainWindow;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.Message;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.ReaderMessageText;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.ReaderMessage;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.client.view.QQMainWindow;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,6 +50,8 @@ public class ClientMessageReceiverThread extends Thread {
            }else if(readerMessage.getType() == Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_GROUP_MESSAGE_REFRESH){
                ReaderMessageText messageText = new ReaderMessageText(readerMessage);
                System.out.println("客户端接收到 --> 群消息 " + messageText.getText());
+
+               qqMainWindow.appendJTextAreaHistory(messageText.getText());
 
 
 

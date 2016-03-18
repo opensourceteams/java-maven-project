@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.作业.第七天.日期异常处理;
+package com.opensourceteams.modules.common.java.util;
 
 import java.util.Calendar;
 
@@ -9,6 +9,12 @@ import java.util.Calendar;
  */
 
 public class CalendarUtil {
+
+    public static String getSimpleDate(){
+        Calendar c = Calendar.getInstance();
+
+        return c.get(Calendar.YEAR) +"-" + c.get(Calendar.MONTH) +"-" +c.get(Calendar.DATE) +" " +c.get(Calendar.HOUR_OF_DAY) +":" +c.get(Calendar.MINUTE)+":" +c.get(Calendar.SECOND);
+    }
 
     /**
      * 得到当前月有多少天

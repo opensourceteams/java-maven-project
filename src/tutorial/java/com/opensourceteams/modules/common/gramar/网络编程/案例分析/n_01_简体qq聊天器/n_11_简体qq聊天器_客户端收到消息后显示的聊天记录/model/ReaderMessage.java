@@ -13,7 +13,7 @@ import java.util.Vector;
  * 功能描述:
  */
 
-public class ReaderMessage  extends com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.Message {
+public class ReaderMessage  extends com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.Message {
 
 
 
@@ -24,10 +24,10 @@ public class ReaderMessage  extends com.opensourceteams.modules.common.gramar.�
             byte type = (byte) is.read();
             System.out.println(type);
             Vector<Byte> types = new Vector<Byte>();
-            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE);
-            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
-            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_REFRESH);
-            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_GROUP_MESSAGE_REFRESH);
+            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE);
+            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
+            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_REFRESH);
+            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_GROUP_MESSAGE_REFRESH);
 
             if(!types.contains(type)){
                 return ;
