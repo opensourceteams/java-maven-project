@@ -45,7 +45,7 @@ public class QQMainWindow extends JFrame {
     /**
      * 联系人列表
      */
-    static Vector<Vector> contractTableRowData = null; //联系人行数据
+    static Vector<Vector> contractTableRowData = new Vector<Vector>(); //联系人行数据
     private JTable contractTable;  // 联系人列表
     private JScrollPane scrollPane;//联系人,滚动面板
 
@@ -76,7 +76,7 @@ public class QQMainWindow extends JFrame {
         this.setLayout(null);
 
 
-        refleshContractTable();
+
 
         Vector<String> columnNames = new Vector<String>();
         columnNames.add("好友列表");
@@ -174,62 +174,24 @@ public class QQMainWindow extends JFrame {
         return (int) (totalValue * (currentValue / (double) totalScal));
     }
 
-    public  boolean refleshContractTable() {
-        // 把 data 数据变成更多
-        contractTableRowData = new Vector<Vector>();
-        Vector row1 = new Vector();
-        row1.add("小明1");
-        contractTableRowData.add(row1);
-
-        Vector row2 = new Vector();
-        row2.add("小黄1");
-        contractTableRowData.add(row2);
 
 
-        System.out.println("客户端的数据 start");
-        for (Vector<String> v : contractTableRowData){
-            System.out.println(v);
-        }
-        System.out.println("客户端的数据 end ============");
-
-        return true;
-    }
-
-    public  boolean refleshContractTable2() {
-        // 把 data 数据变成更多
-       // contractTableRowData = new Vector<Vector>();
-        Vector row1 = new Vector();
-        row1.add("小明2");
-        contractTableRowData.add(row1);
-
-        Vector row2 = new Vector();
-        row2.add("小黄2");
-        contractTableRowData.add(row2);
 
 
-        System.out.println("客户端的数据 start");
-        for (Vector<String> v : contractTableRowData){
-            System.out.println(v);
-        }
-        System.out.println("客户端的数据 end ============");
-        contractTable.addNotify();
-
-
-        return true;
-    }
-
-    public  boolean refleshContractTable3(Set set) {
+    public  boolean refleshContractTable(Set set) {
         // 把 data 数据变成更多
         contractTableRowData.clear();
 
-        System.out.println("客户端届新数据 start");
+        System.out.println("客户端窗体届新数据 start");
         Iterator<String> it = set.iterator();
         while (it.hasNext()){
             Vector vector = new Vector();
-            vector.add(it.next());
+            String v = it.next();
+            vector.add(v);
             contractTableRowData.add(vector);
+            System.out.println("客户端窗体届新数据:-->"+v);
         }
-        System.out.println("客户端届新数据 end ============");
+        System.out.println("客户端窗体届新数据 end ============");
         contractTable.addNotify();
 
 

@@ -61,7 +61,7 @@ public class ClientMessageReceiverThread extends Thread {
                    Vector<Vector> contractTableRowData = (Vector<Vector>) ObjectSerializationUtil.objectDeserialize(fileContentByte);
 
 
-                   qqMainWindow.refleshContractTable3(contractTableRowData);
+                   qqMainWindow.refleshContractTable(contractTableRowData);
                }
 
 

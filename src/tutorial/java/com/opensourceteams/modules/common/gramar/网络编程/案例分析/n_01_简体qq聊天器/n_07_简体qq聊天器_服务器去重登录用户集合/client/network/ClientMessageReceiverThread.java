@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.util.Set;
-import java.util.Vector;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -42,7 +41,7 @@ public class ClientMessageReceiverThread extends Thread {
            if(readerMessage.getType() == (byte)1){
                Object obj = readerMessage.objectDeserialize();
                Set<String> contractTableRowData = (Set<String>) obj;
-               qqMainWindow.refleshContractTable3(contractTableRowData);
+               qqMainWindow.refleshContractTable(contractTableRowData);
            }
 
        /* int fileType = 0;
@@ -62,7 +61,7 @@ public class ClientMessageReceiverThread extends Thread {
                    Vector<Vector> contractTableRowData = (Vector<Vector>) ObjectSerializationUtil.objectDeserialize(fileContentByte);
 
 
-                   qqMainWindow.refleshContractTable3(contractTableRowData);
+                   qqMainWindow.refleshContractTable(contractTableRowData);
                }
 
 

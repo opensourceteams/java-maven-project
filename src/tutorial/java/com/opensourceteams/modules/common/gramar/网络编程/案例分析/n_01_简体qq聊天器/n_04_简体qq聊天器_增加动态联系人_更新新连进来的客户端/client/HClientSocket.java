@@ -62,7 +62,7 @@ public class HClientSocket {
             Vector<Vector> contractTableRowData = (Vector<Vector>) ObjectSerializationUtil.objectDeserialize(fileContentByte);
 
 
-            qqMainWindow.refleshContractTable3(contractTableRowData);
+            qqMainWindow.refleshContractTable(contractTableRowData);
         }
 
 */

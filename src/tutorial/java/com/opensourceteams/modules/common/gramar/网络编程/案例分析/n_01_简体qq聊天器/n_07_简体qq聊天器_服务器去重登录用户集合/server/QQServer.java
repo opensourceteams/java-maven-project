@@ -51,9 +51,10 @@ public class QQServer {
             while (true){
 
                 Socket socket = serverSocket.accept();
-                new AddContractThread(socket).start();
+                new AddContractThread(socket).start();//更新服务器,当前在线用户数(增加新在线用户)
+                new PushOnlineUserSetThread(socket).start();//实时推送在前在线用户集合给新登录用户
                 new MessageReceiverThread(socket).start();
-                new MessageSenderThread(socket).start();
+                //new MessageSenderThread(socket).start();
             }
 
         } catch (IOException e) {
@@ -80,9 +81,9 @@ public class QQServer {
     public static synchronized boolean addContractTableRowData(String hostname){
 
         contractTableRowData.add(hostname) ;
-        System.out.println("增加后服务端的数据begin");
+        System.out.println("增加登录用户后,服务端的数据begin");
         SetUtil.println(contractTableRowData);
-        System.out.println("增加后服务端的数据end");
+        System.out.println("增加登录用户后,服务端的数据end");
 
         return true;
     }

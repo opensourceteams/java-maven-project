@@ -43,7 +43,7 @@ public class HClientSocket {
 
 
 
-        System.out.println("over");
+        System.out.println("客户端结束");
 
 
     }
