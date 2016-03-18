@@ -1,10 +1,14 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.view;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client.view;
 
+
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client.controller.MouseEventProcessAdapter;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.*;
@@ -131,7 +135,9 @@ public class QQMainWindow extends JFrame {
         int btnSendX = 580;
         int btnSendY = taContentY + taContentHeight + 5;
         btnSend.setBounds(btnSendX, btnSendY, 100, 50);
+        btnSend.addMouseListener(new MouseEventProcessAdapter(btnSend));
         this.add(btnSend);
+
 
 
         this.setVisible(true);

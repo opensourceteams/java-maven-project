@@ -9,6 +9,28 @@ package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01
 
 public class Message {
 
+    /**
+     * 服务器向客户端主动推送,当前在线用户列表
+     */
+    public static  byte  DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT = 1;
+
+    /**
+     * 服向器向客户端主动推送,当前在线用户列表更新
+     */
+    public static  byte  DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_REFRESH = 2;
+
+    /**
+     * 客户端用户向群发送消息,群消息
+     */
+    public static  byte  DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE = 3;
+
+
+    /**
+     * 服向器向客户端主动推送,当前群更新消息
+     */
+    public static  byte  DATA_TRANSFORM_TYPE_SERVER_PUSH_GROUP_MESSAGE_REFRESH = 4;
+
+
 
     private byte type;
     private int length;

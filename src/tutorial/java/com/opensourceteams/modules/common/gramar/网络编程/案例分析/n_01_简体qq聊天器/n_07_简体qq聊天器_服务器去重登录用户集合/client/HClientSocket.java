@@ -1,7 +1,7 @@
 package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client;
 
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client.network.ClientMessageReceiverThread;
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.view.QQMainWindow;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client.view.QQMainWindow;
 import com.opensourceteams.modules.common.java.io.file.FileBufferedUtil;
 
 import java.io.BufferedWriter;

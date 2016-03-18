@@ -36,6 +36,11 @@ public class WriterMessage extends com.opensourceteams.modules.common.gramar.网
     }
 
     public WriterMessage(Object obj){
+        this(obj, Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
+
+    }
+
+    public WriterMessage(Object obj,byte type){
 
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -43,7 +48,7 @@ public class WriterMessage extends com.opensourceteams.modules.common.gramar.网
             objectOutputStream.writeObject(obj);
             byte[] byteArray = byteArrayOutputStream.toByteArray();
 
-            super.setType((byte) 1);
+            super.setType(type);
             super.setContent(byteArray);
             super.setLength(byteArray.length);
 

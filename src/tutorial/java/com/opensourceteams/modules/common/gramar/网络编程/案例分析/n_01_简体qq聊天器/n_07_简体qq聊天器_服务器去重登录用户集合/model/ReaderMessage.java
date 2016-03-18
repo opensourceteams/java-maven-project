@@ -22,7 +22,7 @@ public class ReaderMessage  extends com.opensourceteams.modules.common.gramar.�
         byte[] contentLengthByteArray = new byte[fileLengthByteLength];
         try {
             byte type = (byte) is.read();
-            if(type != (byte)1){
+            if(type != Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT){
                 return ;
             }
             setType(type); //读取第一个byte 作为文件的类型

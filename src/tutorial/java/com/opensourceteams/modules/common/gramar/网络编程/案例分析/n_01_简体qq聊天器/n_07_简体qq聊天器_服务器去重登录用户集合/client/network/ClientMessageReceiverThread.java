@@ -3,8 +3,9 @@ package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01
 
 
 
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model.Message;
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model.ReaderMessage;
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.view.QQMainWindow;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client.view.QQMainWindow;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,7 +39,7 @@ public class ClientMessageReceiverThread extends Thread {
        while (true){
 
            ReaderMessage readerMessage = new ReaderMessage(is);
-           if(readerMessage.getType() == (byte)1){
+           if(readerMessage.getType() == Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT){
                Object obj = readerMessage.objectDeserialize();
                Set<String> contractTableRowData = (Set<String>) obj;
                qqMainWindow.refleshContractTable(contractTableRowData);
