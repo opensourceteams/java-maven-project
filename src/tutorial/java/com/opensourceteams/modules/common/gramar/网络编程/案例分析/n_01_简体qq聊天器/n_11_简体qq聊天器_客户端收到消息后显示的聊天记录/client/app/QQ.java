@@ -37,12 +37,12 @@ public class QQ {
          * 客户端写
          */
 
-        WriterMessage message = new WriterMessage("你好", Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE);
+   /*     WriterMessage message = new WriterMessage("你好", Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE);
 
         socket.getOutputStream().write(message.genMessagePack());
 
 
-
+*/
 
 
         System.out.println("客户端结束");

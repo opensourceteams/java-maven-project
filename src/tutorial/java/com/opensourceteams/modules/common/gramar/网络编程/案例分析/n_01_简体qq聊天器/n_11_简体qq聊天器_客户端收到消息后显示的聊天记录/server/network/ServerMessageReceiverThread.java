@@ -51,7 +51,7 @@ public class ServerMessageReceiverThread extends Thread {
                 StringBuffer sb = new StringBuffer();
                 sb.append("\r\n");
                 sb.append(socket.getInetAddress().getHostAddress() );
-                sb.append("   ");
+                sb.append("\t");
                 sb.append(CalendarUtil.getSimpleDate());
                 sb.append("\r\n");
                 sb.append(messageText.getText());
