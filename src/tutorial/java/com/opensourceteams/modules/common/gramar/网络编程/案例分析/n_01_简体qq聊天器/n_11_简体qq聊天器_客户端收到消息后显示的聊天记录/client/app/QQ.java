@@ -23,7 +23,7 @@ public class QQ {
         System.out.println("客户端发送请求...");
 
 
-        QQMainWindow qqMainWindow = QQMainWindow.getInstance();
+        QQMainWindow qqMainWindow = QQMainWindow.getInstance("192.168.12.1");
         Socket socket = qqMainWindow.getSocket();
 
 

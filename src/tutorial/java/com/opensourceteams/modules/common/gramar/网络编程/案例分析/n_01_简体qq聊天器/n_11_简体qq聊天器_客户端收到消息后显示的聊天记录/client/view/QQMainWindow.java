@@ -33,10 +33,14 @@ public class QQMainWindow extends JFrame {
 
     static QQMainWindow qqMainWindow = null;
 
-    public static synchronized QQMainWindow getInstance() {
+
+    public static synchronized QQMainWindow getInstance(){
+        return getInstance("localhost");
+    }
+    public static synchronized QQMainWindow getInstance(String hostname) {
         if (qqMainWindow == null) {
             try {
-                socket = new Socket("localhost",1234);
+                socket = new Socket(hostname,1234);
             } catch (IOException e) {
                 e.printStackTrace();
             }
