@@ -35,8 +35,8 @@ public class CommonMessageSenderThread extends Thread {
         WriterMessage writerMessage = new WriterMessage(object,type);
         try {
             os.write(writerMessage.genMessagePack());
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.toString());
         }
     }
 }

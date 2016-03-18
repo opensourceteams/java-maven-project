@@ -165,13 +165,6 @@ public class QQMainWindow extends JFrame {
         });
 
 
-        //contractTable.invalidate();
-/*        contractTable = new JTable(rowData,columnNames){
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };*/
 
     }
 

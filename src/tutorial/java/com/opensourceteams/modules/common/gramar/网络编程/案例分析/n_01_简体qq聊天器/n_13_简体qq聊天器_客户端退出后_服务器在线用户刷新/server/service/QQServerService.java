@@ -4,6 +4,7 @@ import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_13_简体qq聊天器_客户端退出后_服务器在线用户刷新.model.Message;
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_13_简体qq聊天器_客户端退出后_服务器在线用户刷新.model.ReaderMessageText;
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_13_简体qq聊天器_客户端退出后_服务器在线用户刷新.server.control.QQServer;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_13_简体qq聊天器_客户端退出后_服务器在线用户刷新.server.network.ServerMessageReceiverThread;
 import com.opensourceteams.modules.common.java.util.SetUtil;
 
 import java.net.Socket;
@@ -17,6 +18,16 @@ import java.util.Set;
  */
 
 public class QQServerService {
+
+    /**
+     * 接收消息
+     * @param socket
+     * @return
+     */
+    public boolean receiveMessage(Socket socket){
+        new ServerMessageReceiverThread(socket).start();
+        return  true;
+    }
 
 
     /**

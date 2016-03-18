@@ -43,7 +43,9 @@ public class ClientMessageReceiverThread extends Thread {
            System.out.println(++count + "客户端接收数据:");
 
            ReaderMessage readerMessage = new ReaderMessage(is);
-           if(readerMessage.getType() == Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT){
+           if(readerMessage.isOfEnd()){
+               continue;
+           }else if(readerMessage.getType() == Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT){
                System.out.println("客户端收到当前在线所有用户");
                Set<String> contractTableRowData = (Set<String>) readerMessage.getContentObject();
                qqMainWindow.refleshContractTable(contractTableRowData);

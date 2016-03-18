@@ -60,15 +60,10 @@ public class QQServer {
                 Socket socket = serverSocket.accept();
                 socketList.add(socket);
 
-                //new ServerAddContractThread(socket).start();//更新服务器,当前在线用户数(增加新在线用户)
-                //new ServerPushOnlineUserSetThread(socket).start();//实时推送在前在线用户集合给新登录用户
 
-
-                new ServerMessageReceiverThread(socket).start();
+                qqServerService.receiveMessage(socket);
                 qqServerService.pushAddUserRefreshUserSetToAllUser(socket);
 
-
-                //new MessageSenderThread(socket).start();
             }
 
         } catch (IOException e) {
