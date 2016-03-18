@@ -48,6 +48,10 @@ public class Message {
         return type;
     }
 
+    public boolean isOfEnd(){
+        return  type == -1 ;
+    }
+
     public void setType(byte type) {
         this.type = type;
     }

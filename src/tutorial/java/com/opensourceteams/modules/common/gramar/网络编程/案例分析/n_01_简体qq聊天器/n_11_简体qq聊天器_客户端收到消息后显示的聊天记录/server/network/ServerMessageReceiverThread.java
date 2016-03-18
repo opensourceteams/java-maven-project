@@ -43,7 +43,9 @@ public class ServerMessageReceiverThread extends Thread {
 
 
             Message message = new ReaderMessage(is);
-            if(message.getType() == Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE){
+            if(message.isOfEnd()){
+                break;
+            }else if(message.getType() == Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE){
 
                 ReaderMessageText messageText = new ReaderMessageText(message);
                 receiveData = messageText.getText();
