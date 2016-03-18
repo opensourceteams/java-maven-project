@@ -18,7 +18,6 @@ public class SetConverUtil {
      * @return
      */
     public static Vector convertVector(Set set ){
-        Vector vector = new Vector(set);
-        return vector;
+        return new Vector(set);
     }
 }
