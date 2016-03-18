@@ -1,5 +1,6 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_11_简体qq聊天器_客户端收到消息后显示的聊天记录.model;
 
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.*;
 import com.opensourceteams.modules.common.java.binary.IntConvertEachBinary;
 import com.opensourceteams.modules.common.java.io.file.ObjectSerializationUtil;
 
@@ -21,7 +22,7 @@ import java.io.ObjectOutputStream;
 
  */
 
-public class WriterMessage extends Message {
+public class WriterMessage extends com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model.Message {
 
 
 
