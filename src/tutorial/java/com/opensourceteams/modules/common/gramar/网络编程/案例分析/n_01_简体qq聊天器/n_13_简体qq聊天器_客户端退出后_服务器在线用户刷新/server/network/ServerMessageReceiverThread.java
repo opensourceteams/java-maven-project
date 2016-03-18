@@ -43,6 +43,7 @@ public class ServerMessageReceiverThread extends Thread {
 
 
             Message message = new ReaderMessage(is);
+
             if(message.isOfEnd()){
                 qqServerService.refreshCloseUserToUsersSet(socket.getInetAddress().getHostAddress());
                 qqServerService.pushRefreshUserSetToAllUser();

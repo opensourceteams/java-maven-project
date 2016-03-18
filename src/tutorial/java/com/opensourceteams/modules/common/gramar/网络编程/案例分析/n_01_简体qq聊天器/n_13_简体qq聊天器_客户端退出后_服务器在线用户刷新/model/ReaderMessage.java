@@ -61,10 +61,10 @@ public class ReaderMessage  extends com.opensourceteams.modules.common.gramar.�
                 setContent(contentByteArray);
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
+            setType((byte)-1); //读完,或客户端关了
+            return ;
         }
     }
 
