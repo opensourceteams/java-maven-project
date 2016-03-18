@@ -1,7 +1,6 @@
 package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_04_简体qq聊天器_增加动态联系人_更新新连进来的客户端.model;
 
-import com.opensourceteams.modules.common.java.binary.IntConvertEachBinary;
-import com.opensourceteams.modules.common.java.io.SystemTest;
+
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
