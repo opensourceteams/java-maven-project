@@ -1,17 +1,19 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.server;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.server;
 
 
 
 
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.server.network.ServerAddContractThread;
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.server.network.ServerMessageReceiverThread;
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.server.network.ServerPushOnlineUserSetThread;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.server.network.ServerAddContractThread;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.server.network.ServerMessageReceiverThread;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.server.network.ServerPushOnlineUserSetThread;
 import com.opensourceteams.modules.common.java.util.SetUtil;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,6 +28,8 @@ public class QQServer {
 
     /** 联系人列表*/
     private static Set<String> contractTableRowData = new HashSet<String>(); //联系人行数据
+
+    private static List<Socket> socketList = new ArrayList<Socket>();
 
 
 
@@ -53,6 +57,7 @@ public class QQServer {
             while (true){
 
                 Socket socket = serverSocket.accept();
+                socketList.add(socket);
                 new ServerAddContractThread(socket).start();//更新服务器,当前在线用户数(增加新在线用户)
                 new ServerPushOnlineUserSetThread(socket).start();//实时推送在前在线用户集合给新登录用户
                 new ServerMessageReceiverThread(socket).start();
@@ -88,5 +93,14 @@ public class QQServer {
         System.out.println("增加登录用户后,服务端的数据end");
 
         return true;
+    }
+
+
+    public static List<Socket> getSocketList() {
+        return socketList;
+    }
+
+    public static void setSocketList(List<Socket> socketList) {
+        QQServer.socketList = socketList;
     }
 }

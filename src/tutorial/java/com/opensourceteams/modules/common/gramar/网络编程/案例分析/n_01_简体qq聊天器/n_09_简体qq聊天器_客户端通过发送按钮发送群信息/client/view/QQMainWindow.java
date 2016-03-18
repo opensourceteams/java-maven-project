@@ -1,17 +1,20 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client.view;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.client.view;
 
 
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client.controller.MouseEventProcessAdapter;
+
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.client.controller.MouseEventProcessAdapter;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.*;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -20,6 +23,8 @@ import java.util.*;
  */
 
 public class QQMainWindow extends JFrame {
+
+    static Socket socket;
 
     int width = 1000;
     int height = 800;
@@ -30,6 +35,11 @@ public class QQMainWindow extends JFrame {
 
     public static synchronized QQMainWindow getInstance() {
         if (qqMainWindow == null) {
+            try {
+                socket = new Socket("localhost",1234);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return qqMainWindow = new QQMainWindow();
         } else {
             return qqMainWindow;
@@ -135,7 +145,7 @@ public class QQMainWindow extends JFrame {
         int btnSendX = 580;
         int btnSendY = taContentY + taContentHeight + 5;
         btnSend.setBounds(btnSendX, btnSendY, 100, 50);
-        btnSend.addMouseListener(new MouseEventProcessAdapter(btnSend,taContent));
+        btnSend.addMouseListener(new MouseEventProcessAdapter(btnSend,taContent,socket));
         this.add(btnSend);
 
 
@@ -204,6 +214,11 @@ public class QQMainWindow extends JFrame {
         return true;
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
 
-
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
 }

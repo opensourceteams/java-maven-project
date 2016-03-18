@@ -1,7 +1,9 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client.app;
 
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client.network.ClientMessageReceiverThread;
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.client.view.QQMainWindow;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model.WriterMessage;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.server.QQServer;
 import com.opensourceteams.modules.common.java.io.file.FileBufferedUtil;
 
 import java.io.BufferedWriter;
@@ -14,7 +16,7 @@ import java.net.Socket;
  * 功能描述:
  */
 
-public class HClientSocket {
+public class QQ {
 
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 
@@ -36,8 +38,10 @@ public class HClientSocket {
         /**
          * 客户端写
          */
-        BufferedWriter writer = null ;
-        FileBufferedUtil.writerStringNoClose(writer,socket.getOutputStream(),"你好\r\n aa");
+
+        WriterMessage message = new WriterMessage("你好");
+
+        socket.getOutputStream().write(message.genMessagePack());
 
 
 

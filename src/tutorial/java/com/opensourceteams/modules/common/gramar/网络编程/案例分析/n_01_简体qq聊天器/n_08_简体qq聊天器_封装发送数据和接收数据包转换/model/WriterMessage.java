@@ -1,5 +1,6 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_08_简体qq聊天器_封装发送数据和接收数据包转换.model;
 
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model.*;
 import com.opensourceteams.modules.common.java.binary.IntConvertEachBinary;
 
 import java.io.ByteArrayOutputStream;
@@ -24,19 +25,19 @@ public class WriterMessage extends com.opensourceteams.modules.common.gramar.网
 
 
     public WriterMessage(String text){
-        super.setType(Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE);
+        super.setType(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model.Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE);
         super.setContent(text.getBytes());
         super.setLength(text.getBytes().length);
     }
 
     public WriterMessage(byte[] text){
-        super.setType(Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
+        super.setType(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
         super.setContent(text);
         super.setLength(text.length);
     }
 
     public WriterMessage(Object obj){
-        this(obj, Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
+        this(obj, com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
 
     }
 

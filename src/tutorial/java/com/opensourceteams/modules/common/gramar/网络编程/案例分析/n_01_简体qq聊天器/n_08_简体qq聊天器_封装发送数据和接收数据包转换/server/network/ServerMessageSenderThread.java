@@ -1,8 +1,9 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.server;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_08_简体qq聊天器_封装发送数据和接收数据包转换.server.network;
 
 
 
 import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model.WriterMessage;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.server.QQServer;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,13 +15,13 @@ import java.net.Socket;
  * 功能描述:
  */
 
-public class MessageSenderThread extends Thread {
+public class ServerMessageSenderThread extends Thread {
 
     Socket socket = null;
 
     OutputStream os  = null;
 
-    public MessageSenderThread(Socket socket) throws IOException {
+    public ServerMessageSenderThread(Socket socket) throws IOException {
         this.socket = socket;
         os = socket.getOutputStream();
     }

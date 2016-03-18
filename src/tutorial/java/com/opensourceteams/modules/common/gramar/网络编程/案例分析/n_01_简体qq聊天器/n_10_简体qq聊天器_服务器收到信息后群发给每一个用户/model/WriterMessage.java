@@ -1,5 +1,7 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model;
 
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model.*;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.model.*;
 import com.opensourceteams.modules.common.java.binary.IntConvertEachBinary;
 
 import java.io.ByteArrayOutputStream;
@@ -20,23 +22,23 @@ import java.io.ObjectOutputStream;
 
  */
 
-public class WriterMessage extends com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_04_简体qq聊天器_增加动态联系人_更新新连进来的客户端.model.Message {
+public class WriterMessage extends com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.model.Message {
 
 
     public WriterMessage(String text){
-        super.setType(Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE);
+        super.setType(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.model.Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE);
         super.setContent(text.getBytes());
         super.setLength(text.getBytes().length);
     }
 
     public WriterMessage(byte[] text){
-        super.setType(Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
+        super.setType(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
         super.setContent(text);
         super.setLength(text.length);
     }
 
     public WriterMessage(Object obj){
-        this(obj, Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
+        this(obj, com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
 
     }
 
@@ -54,6 +56,15 @@ public class WriterMessage extends com.opensourceteams.modules.common.gramar.网
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public WriterMessage(String str,byte type){
+
+        super.setType(type);
+        if(str != null){
+            setContent(str.getBytes());
+            super.setLength(getContent().length);
         }
     }
 

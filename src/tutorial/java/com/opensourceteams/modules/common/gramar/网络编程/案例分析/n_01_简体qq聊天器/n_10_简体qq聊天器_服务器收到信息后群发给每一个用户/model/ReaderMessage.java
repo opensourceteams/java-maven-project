@@ -1,6 +1,6 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_10_简体qq聊天器_服务器收到信息后群发给每一个用户.model;
 
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_07_简体qq聊天器_服务器去重登录用户集合.model.Message;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.model.*;
 import com.opensourceteams.modules.common.java.binary.IntConvertEachBinary;
 
 import java.io.ByteArrayInputStream;
@@ -15,7 +15,7 @@ import java.util.Vector;
  * 功能描述:
  */
 
-public class ReaderMessage  extends Message {
+public class ReaderMessage  extends com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.model.Message {
 
 
 
@@ -26,10 +26,10 @@ public class ReaderMessage  extends Message {
             byte type = (byte) is.read();
             System.out.println(type);
             Vector<Byte> types = new Vector<Byte>();
-            types.add(Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE);
-            types.add(Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
-            types.add(Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_REFRESH);
-            types.add(Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_GROUP_MESSAGE_REFRESH);
+            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.model.Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE);
+            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_CURRENT);
+            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_USERSET_REFRESH);
+            types.add(com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_09_简体qq聊天器_客户端通过发送按钮发送群信息.model.Message.DATA_TRANSFORM_TYPE_SERVER_PUSH_GROUP_MESSAGE_REFRESH);
 
             if(!types.contains(type)){
                 return ;
