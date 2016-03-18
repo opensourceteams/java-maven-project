@@ -3,9 +3,13 @@ package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01
 
 
 
+import com.opensourceteams.modules.common.java.util.SetUtil;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -19,18 +23,7 @@ public class QQServer {
     private static QQServer qqServer = new QQServer();
 
     /** 联系人列表*/
-    private static Vector<Vector> contractTableRowData = null; //联系人行数据
-    static {
-        // 把 data 数据变成更多
-        contractTableRowData = new Vector<Vector>();
-        Vector row1 = new Vector();
-        row1.add("小明");
-        contractTableRowData.add(row1);
-
-        Vector row2 = new Vector();
-        row2.add("小黄");
-        contractTableRowData.add(row2);
-    }
+    private static Set<String> contractTableRowData = new HashSet<String>(); //联系人行数据
 
 
 
@@ -70,30 +63,14 @@ public class QQServer {
     }
 
 
-    public static Vector<Vector> getContractTableRowData() {
+    public static Set<String> getContractTableRowData() {
         return contractTableRowData;
     }
 
-    public static void setContractTableRowData(Vector<Vector> contractTableRowData) {
+    public static void setContractTableRowData(Set<String> contractTableRowData) {
         QQServer.contractTableRowData = contractTableRowData;
     }
 
-    /**
-     * 更新好友列表
-     * @param rowData
-     * @return
-     */
-    public static synchronized boolean addContractTableRowData(Vector rowData){
-        if(contractTableRowData != null){
-            contractTableRowData.add(rowData) ;
-
-            System.out.println("增加后服务端的数据");
-            for(Vector<String> v :contractTableRowData){
-                System.out.println(v.toString());
-            }
-        }
-        return true;
-    }
 
     /**
      * 更新好友列表
@@ -101,20 +78,12 @@ public class QQServer {
      * @return
      */
     public static synchronized boolean addContractTableRowData(String hostname){
-        if(contractTableRowData != null){
-            if(!contractTableRowData.contains(hostname)){
-                Vector<String> rowData = new Vector<String>();
-                rowData.add(hostname);
 
-                contractTableRowData.add(rowData) ;
-            }
+        contractTableRowData.add(hostname) ;
+        System.out.println("增加后服务端的数据begin");
+        SetUtil.println(contractTableRowData);
+        System.out.println("增加后服务端的数据end");
 
-
-            System.out.println("增加后服务端的数据");
-            for(Vector<String> v :contractTableRowData){
-                System.out.println(v.toString());
-            }
-        }
         return true;
     }
 }

@@ -18,6 +18,6 @@ public class AddContractThread extends Thread{
     @Override
     public void run() {
 
-        QQServer.addContractTableRowData(socket.getInetAddress().getHostName());
+        QQServer.addContractTableRowData(socket.getInetAddress().getHostAddress());
     }
 }

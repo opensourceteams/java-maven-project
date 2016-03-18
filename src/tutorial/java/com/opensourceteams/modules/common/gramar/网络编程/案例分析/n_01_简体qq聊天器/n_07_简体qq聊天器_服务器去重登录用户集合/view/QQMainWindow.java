@@ -218,16 +218,18 @@ public class QQMainWindow extends JFrame {
         return true;
     }
 
-    public  boolean refleshContractTable3(Vector<Vector> refleshVector) {
+    public  boolean refleshContractTable3(Set set) {
         // 把 data 数据变成更多
         contractTableRowData.clear();
 
-        System.out.println("客户端的数据 start");
-        for (Vector<String> v : refleshVector){
-            System.out.println(v);
-            contractTableRowData.add(v);
+        System.out.println("客户端届新数据 start");
+        Iterator<String> it = set.iterator();
+        while (it.hasNext()){
+            Vector vector = new Vector();
+            vector.add(it.next());
+            contractTableRowData.add(vector);
         }
-        System.out.println("客户端的数据 end ============");
+        System.out.println("客户端届新数据 end ============");
         contractTable.addNotify();
 
 

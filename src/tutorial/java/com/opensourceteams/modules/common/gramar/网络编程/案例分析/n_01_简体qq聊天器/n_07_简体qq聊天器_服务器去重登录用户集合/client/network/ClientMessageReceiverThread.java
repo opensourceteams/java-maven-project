@@ -9,6 +9,7 @@ import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -40,7 +41,7 @@ public class ClientMessageReceiverThread extends Thread {
            ReaderMessage readerMessage = new ReaderMessage(is);
            if(readerMessage.getType() == (byte)1){
                Object obj = readerMessage.objectDeserialize();
-               Vector<Vector> contractTableRowData = (Vector<Vector>) obj;
+               Set<String> contractTableRowData = (Set<String>) obj;
                qqMainWindow.refleshContractTable3(contractTableRowData);
            }
 
