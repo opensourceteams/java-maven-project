@@ -3,6 +3,7 @@ package com.opensourceteams.modules.common.java.lang;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -44,9 +45,17 @@ public class RuntimeUtil {
      * @return
      */
     public static String getHostname(){
+        return  getHostname("UTF-8");
+    }
+
+    public static String getHostname(String charsetName){
         byte[] bytes = getBytes("hostname");
         if(bytes != null){
-            return  new String(bytes);
+            try {
+                return  new String(bytes,charsetName);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }

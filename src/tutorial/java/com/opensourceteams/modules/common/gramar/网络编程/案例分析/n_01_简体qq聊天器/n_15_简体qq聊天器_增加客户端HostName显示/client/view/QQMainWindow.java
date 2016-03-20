@@ -99,6 +99,7 @@ public class QQMainWindow extends JFrame {
     private void init() {
 
 
+        this.setTitle("QQ");
         this.setSize(width, height);
         this.setLocation(x, y);
 

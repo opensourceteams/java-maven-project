@@ -25,7 +25,7 @@ public class QQ {
 
 
 
-        QQMainWindow qqMainWindow = QQMainWindow.getInstance("192.168.0.103");
+        QQMainWindow qqMainWindow = QQMainWindow.getInstance("192.168.12.1");
         Socket socket = qqMainWindow.getSocket();
 
 
