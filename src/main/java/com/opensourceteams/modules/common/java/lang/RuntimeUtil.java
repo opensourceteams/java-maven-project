@@ -1,9 +1,6 @@
 package com.opensourceteams.modules.common.java.lang;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -22,6 +19,8 @@ public class RuntimeUtil {
     public static byte[] getBytes(String command){
         try {
             InputStream inputStream = Runtime.getRuntime().exec(command).getInputStream();
+
+
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
             byte[] buffer = new byte[1024];

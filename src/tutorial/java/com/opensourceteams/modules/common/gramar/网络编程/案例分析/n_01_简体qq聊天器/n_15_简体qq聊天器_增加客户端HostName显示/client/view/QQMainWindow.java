@@ -46,7 +46,7 @@ public class QQMainWindow extends JFrame {
             try {
                 socket = new Socket(ip,1234);
 
-                String hostname = RuntimeUtil.getHostname();
+                String hostname = RuntimeUtil.getHostname("GBK");
                 if(hostname != null){
                     hostname = hostname.substring(0,hostname.indexOf("\n"));
                 }
