@@ -1,7 +1,7 @@
-package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_13_简体qq聊天器_客户端退出后_服务器在线用户刷新.client.app;
+package com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_14_简体qq聊天器_客户端界面调整.client.app;
 
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_13_简体qq聊天器_客户端退出后_服务器在线用户刷新.client.network.ClientMessageReceiverThread;
-import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_13_简体qq聊天器_客户端退出后_服务器在线用户刷新.client.view.QQMainWindow;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_14_简体qq聊天器_客户端界面调整.client.network.ClientMessageReceiverThread;
+import com.opensourceteams.modules.common.gramar.网络编程.案例分析.n_01_简体qq聊天器.n_14_简体qq聊天器_客户端界面调整.client.view.QQMainWindow;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -21,7 +21,7 @@ public class QQ {
         System.out.println("客户端发送请求...");
 
 
-        QQMainWindow qqMainWindow = QQMainWindow.getInstance("192.168.12.11");
+        QQMainWindow qqMainWindow = QQMainWindow.getInstance("192.168.0.103");
         Socket socket = qqMainWindow.getSocket();
 
 

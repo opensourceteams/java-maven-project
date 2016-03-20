@@ -23,7 +23,7 @@ public class QQ {
         System.out.println("客户端发送请求...");
 
 
-        QQMainWindow qqMainWindow = QQMainWindow.getInstance("192.168.0.101");
+        QQMainWindow qqMainWindow = QQMainWindow.getInstance("192.168.12.1");
         Socket socket = qqMainWindow.getSocket();
 
 
@@ -37,7 +37,7 @@ public class QQ {
          * 客户端写
          */
 
-   /*     WriterMessage message = new WriterMessage("你好", Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_MESSAGE);
+   /*     WriterMessage message = new WriterMessage("你好", Message.DATA_TRANSFORM_TYPE_CLIENT_SEND_GROUP_MESSAGE);
 
         socket.getOutputStream().write(message.genMessagePack());
 
