@@ -65,7 +65,6 @@ public class ScreenCaptureUtil {
         BufferedImage image = null;
         try {
             image = new Robot().createScreenCapture(rect);
-            //System.out.println(image);
             try {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(image, imageType, baos);

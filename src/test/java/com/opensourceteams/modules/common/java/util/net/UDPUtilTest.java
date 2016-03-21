@@ -86,18 +86,18 @@ public class UDPUtilTest {
 
 
 
-        Rectangle rect = new Rectangle(1200,0,400,300);
+        Rectangle rect = new Rectangle(800,0,800,400);
         while (true){
             byte[] bytes = ScreenCaptureUtil.screenCaptureToBytes(rect,"jpg");
             System.out.printf("抓到屏幕的大小:" +bytes.length + "  -->" + (bytes.length / 1024) + "(KB)");
 
             UDPUtil.senderOnce(8889,"192.168.12.1",8888,bytes);
 
-            try {
-                Thread.sleep(1000);
+   /*         try {
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
 
     }

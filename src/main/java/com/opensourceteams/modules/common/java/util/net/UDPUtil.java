@@ -73,8 +73,6 @@ public class UDPUtil {
             byte[] bytes = new byte[len];
             System.arraycopy(buffer,0,bytes,0,len);
 
-            //Object obj = ObjectSerializationUtil.objectDeserialize(bytes);
-            //System.out.println(new String(buffer,0,len));
             socket.close();
             return bytes;
 
@@ -153,8 +151,6 @@ public class UDPUtil {
 
         //将数据序列化
         try {
-           // byte[] objectSerialization = ObjectSerializationUtil.objectSerialization(sendData);
-            //DatagramPacket packet  = new DatagramPacket(objectSerialization,objectSerialization.length);
 
             DatagramPacket packet  = new DatagramPacket(sendData,sendData.length);
 

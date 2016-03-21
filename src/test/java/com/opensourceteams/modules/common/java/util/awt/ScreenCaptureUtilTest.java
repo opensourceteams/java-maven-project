@@ -17,7 +17,7 @@ public class ScreenCaptureUtilTest {
      */
     @Test
     public void testScreenCaptureToImageFile(){
-        Rectangle rect = new Rectangle(0,0,600,500);
+        Rectangle rect = new Rectangle(800,0,800,400);
         ScreenCaptureUtil.screenCaptureToImageFile(rect,"jpg","temp/screen_output.jpg");
     }
 

@@ -24,7 +24,7 @@ public class MyJButtonImageIcon extends JFrame {
 
     ImageIcon imageIcon = new ImageIcon();
 
-    JButton btnChange = new JButton("切换图片");
+
 
     //图片
     BufferedImage img = null;
@@ -43,8 +43,8 @@ public class MyJButtonImageIcon extends JFrame {
         this.setTitle(title);
         int x = 100 ;
         int y = 200 ;
-        int width = 600 ;
-        int height = 400;
+        int width = 1000 ;
+        int height = 600;
 
         this.setLayout(null);
 
@@ -65,7 +65,7 @@ public class MyJButtonImageIcon extends JFrame {
         btnShowImg = new JButton();
         btnShowImg.setIcon(new ImageIcon(imgPaths[0]));
 
-        btnShowImg.setBounds( 0,0,400,300);
+        btnShowImg.setBounds( 0,0,width,height);
 
 
 
@@ -74,8 +74,7 @@ public class MyJButtonImageIcon extends JFrame {
 
 
 
-        //切换图片的按钮
-        btnChange.setBounds(0,310,100,50);
+
 
 
         DatagramSocket socket = null;
@@ -93,7 +92,6 @@ public class MyJButtonImageIcon extends JFrame {
 
 
         this.add(btnShowImg);
-        this.add(btnChange);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//用户单击“关闭”按钮时关闭窗口
         this.setVisible(true);
