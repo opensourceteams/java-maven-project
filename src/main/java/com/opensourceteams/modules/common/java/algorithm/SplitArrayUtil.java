@@ -1,7 +1,10 @@
 package com.opensourceteams.modules.common.java.algorithm;
 
+import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -120,4 +123,147 @@ public class SplitArrayUtil {
         bytes[1] = (byte)(b >>> 1);
         return bytes;
     }
+
+
+    /**
+     * 根据byte数组的长度,分配线程数量,有指定的最大线程数限制
+     * )当总容量按每个容量单位分,总个数 size 小于等于总线程数时,线程数按size来分
+     * )当总容量按每个容量单位分,总个数 size 大于总线程数时,线程数按总线程数来分
+     * @param bytes
+     * @param maxThread
+     * @return
+     */
+    public static Vector<byte[]> splitBytes(byte[] bytes,int maxThread){
+
+
+        Vector<byte[]> vector = new Vector<byte[]>();
+
+        if(bytes == null){
+            return null;
+        }
+
+        int size = bytes.length /1024 /1024 ;//一共有多少M,默认1M分配一个线程处理
+
+        if(size <= maxThread){
+            //就按实际多少M就跑多少个线程
+
+            for (int i = 0 ;i < size;i++){
+                byte[] subBytes = new byte[1024 * 1024];
+                vector.add(subBytes);
+            }
+
+
+            int module = bytes.length % (1024 * 1024);
+            if(module > 0){
+                size = size + 1;
+                byte[] subBytes = new byte[module];
+                vector.add(subBytes);
+
+            }
+        }else {
+            //按最大线程数来跑
+            for (int i = 0 ;i < maxThread;i++){
+                if(bytes.length % maxThread > 0){
+                    size = size + 1;
+                    if( i == 0){
+                        byte[] subBytes = new byte[bytes.length / maxThread + (bytes.length % maxThread)];
+                        vector.add(subBytes);
+                        continue;
+                    }
+
+                }
+                byte[] subBytes = new byte[bytes.length / maxThread];
+                vector.add(subBytes);
+
+
+            }
+
+        }
+
+        return vector;
+    }
+
+
+
+    /**
+     * 默认为每个线程分配1024 * 1024 byte 容量,即为1M
+     * 根据byte数组的长度,分配线程数量,有指定的最大线程数限制
+     * )当总容量按每个容量单位分,总个数 size 小于等于总线程数时,线程数按size来分
+     * )当总容量按每个容量单位分,总个数 size 大于总线程数时,线程数按总线程数来分
+     * @param bytesLength
+     * @param maxThread
+     * @return
+     */
+    public static Vector<DownloadBytesBean> splitBytesToVector(int bytesLength,int maxThread){
+
+        int capacity = bytesLength / maxThread ;
+        if(capacity < 1024 * 1024){
+            capacity = 1024 * 1024;
+        }
+        return splitBytesToVector(bytesLength,maxThread,1024 * 1024);
+    }
+
+    /**
+     * 根据byte数组的长度,分配线程数量,有指定的最大线程数限制
+     * )当总容量按每个容量单位分,总个数 size 小于等于总线程数时,线程数按size来分
+     * )当总容量按每个容量单位分,总个数 size 大于总线程数时,线程数按总线程数来分
+     * @param bytesLength
+     * @param maxThread
+     * @param capacity
+     * @return
+     */
+    public static Vector<DownloadBytesBean> splitBytesToVector(int bytesLength,int maxThread,int capacity){
+
+
+        int tempCapacity = bytesLength / maxThread ;
+        if(tempCapacity > capacity){
+            capacity = 1024 * 1024;
+        }
+
+        Vector<DownloadBytesBean> vector = new Vector<DownloadBytesBean>();
+
+        if(bytesLength <= 0 ){
+            return null;
+        }
+
+        int size = bytesLength /capacity ;//一共有多少个容,默认1M分配一个线程处理
+
+        if(size < maxThread){
+            //就按实际多少M就跑多少个线程
+
+            for (int i = 0 ;i < size;i++){
+                DownloadBytesBean downloadBytesBean = new DownloadBytesBean(i * capacity,(i + 1 ) * capacity,i,bytesLength);
+                vector.add(downloadBytesBean);
+            }
+
+
+            int remain = bytesLength - capacity * size;
+            if(remain > 0){
+                //还剩多少,都放到最后一个
+
+                DownloadBytesBean downloadBytesBean = new DownloadBytesBean(size * capacity,bytesLength,size,bytesLength);
+                vector.add(downloadBytesBean);
+
+            }
+        }else {
+            //按最大线程数来跑
+            int remain = bytesLength - capacity * size;
+            for (int i = 0 ;i < maxThread;i++){
+                if(i == maxThread - 1 && remain >0){
+                    DownloadBytesBean downloadBytesBean = new DownloadBytesBean(i * capacity,bytesLength,i,bytesLength);
+                    vector.add(downloadBytesBean);
+                    continue;
+                }
+                DownloadBytesBean downloadBytesBean = new DownloadBytesBean(i * capacity,(i + 1 ) * capacity,i,bytesLength);
+                vector.add(downloadBytesBean);
+            }
+
+
+        }
+
+        return vector;
+    }
+
+
+
 }

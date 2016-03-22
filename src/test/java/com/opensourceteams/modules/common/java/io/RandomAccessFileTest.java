@@ -17,9 +17,6 @@ public class RandomAccessFileTest {
     public void testRead() throws IOException {
 
         RandomAccessFile raf = new RandomAccessFile("a.txt","rw");
-        //System.out.println(raf.getFilePointer());
-       // System.out.println(raf.readLine());
-       // System.out.println(raf.readUTF());
         byte[] buffer = new byte[1024];
         int len = 0 ;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -30,6 +27,23 @@ public class RandomAccessFileTest {
         System.out.println(new String(bos.toByteArray()));
 
         bos.close();
+        raf.close();
+
+    }
+
+    @Test
+    public void testWrite() throws IOException {
+
+        RandomAccessFile raf = new RandomAccessFile("a.txt","rw");
+/*        byte[] buffer = new byte[2];
+        buffer[0] = 97;
+        buffer[1] = 98 ;
+        int len = 0 ;
+        raf.write(buffer);*/
+
+        raf.writeUTF("中国人");
+        raf.seek(10);
+        raf.writeUTF("白发");
         raf.close();
 
     }

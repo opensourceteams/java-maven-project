@@ -2,10 +2,9 @@ package com.opensourceteams.modules.common.java.io;
 
 import org.junit.Test;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 
 /**
@@ -30,6 +29,9 @@ public class FileInputStreamTest {
         fos.close();
         fis.close();
     }
+
+
+
 
     /**
      * byte 去读,会出现中文乱码问题,切割的问题
