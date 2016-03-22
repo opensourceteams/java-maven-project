@@ -3,7 +3,7 @@ package com.opensourceteams.modules.common.gramar.图形化界面gui.n_06_图片
 /**
  * 开发者:刘文  Email:372065525@qq.com
  * 16/3/21  上午10:01
- * 功能描述:
+ * 功能描述:1
  */
 
 public class Run {
