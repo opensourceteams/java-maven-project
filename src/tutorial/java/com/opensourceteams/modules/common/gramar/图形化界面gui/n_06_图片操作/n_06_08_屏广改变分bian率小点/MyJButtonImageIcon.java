@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.图形化界面gui.n_06_图片操作.n_06_05_Button_Icon_支持广播压缩拆包;
+package com.opensourceteams.modules.common.gramar.图形化界面gui.n_06_图片操作.n_06_08_屏广改变分bian率小点;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,6 @@ import java.net.SocketException;
  */
 
 public class MyJButtonImageIcon extends JFrame {
-
     int receivePort = 7779;
 
     MyJButtonImageIcon instance = null;
@@ -43,16 +42,16 @@ public class MyJButtonImageIcon extends JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //得到屏幕的尺寸
 
 
-        int x = 100 ;
-        int y = 200 ;
-        int width = screenSize.width * 80 /100 ; //宽度
-        int height = screenSize.height * 80 /100;//高度
+        int x = 0 ;
+        int y = 0 ;
+        int width = 600 ; //宽度
+        int height = 400;//高度
 
         System.out.println("客户端宽:" +  screenSize.width);
         System.out.println("客户端高:" +  screenSize.height);
 
-        System.out.println("width:" +width);
-        System.out.println("height:" + height);
+        System.out.println("width:" +screenSize.width);
+        System.out.println("height:" + screenSize.height);
 
         this.setLayout(null);
 
@@ -73,7 +72,7 @@ public class MyJButtonImageIcon extends JFrame {
         btnShowImg = new JButton();
         btnShowImg.setIcon(new ImageIcon(imgPaths[0]));
 
-        btnShowImg.setBounds( 0,0,width,height);
+        btnShowImg.setBounds( 0,0,screenSize.width,screenSize.height);
 
 
 
@@ -88,11 +87,12 @@ public class MyJButtonImageIcon extends JFrame {
         DatagramSocket socket = null;
         try {
             socket = new DatagramSocket(receivePort);
+
         } catch (SocketException e) {
             e.printStackTrace();
         }
 
-        TaskThread  taskThread= new TaskThread(btnShowImg,socket);
+        TaskThread taskThread= new TaskThread(btnShowImg,socket);
         taskThread.start();
         taskThread.refreshData();
 

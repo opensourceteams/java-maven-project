@@ -22,16 +22,16 @@ public class BinaryUtilTest {
      */
     @Test
     public void testByteToBits(){
-        String s = BinaryUtil.byteToBits((byte)-127);
+        String s = BinaryStringUtil.byteToBits((byte)-127);
         System.out.println(s);
 
-        s = BinaryUtil.byteToBits((byte)-128);
+        s = BinaryStringUtil.byteToBits((byte)-128);
         System.out.println(s);
 
-        s = BinaryUtil.byteToBits((byte)-1);
+        s = BinaryStringUtil.byteToBits((byte)-1);
         System.out.println(s);
 
-        s = BinaryUtil.byteToBits((byte)-2);
+        s = BinaryStringUtil.byteToBits((byte)-2);
         System.out.println(s);
     }
 
@@ -50,7 +50,7 @@ public class BinaryUtilTest {
      */
     @Test
     public void testIntToBitsByByteLength(){
-        String s = BinaryUtil.intToBitsByByteLength(16);
+        String s = BinaryStringUtil.intToBitsByByteLength(16);
         System.out.println(s);
     }
 
@@ -59,24 +59,24 @@ public class BinaryUtilTest {
      */
     @Test
     public void testConvertIntByBit(){
-        int value = BinaryUtil.convertIntByBit("1");//15,31,63
+        int value = BinaryStringUtil.convertIntByBit("1");//15,31,63
         System.out.println("1 --> 1 -->"+ value);
 
-        value = BinaryUtil.convertIntByBit("11");//15,31,63
+        value = BinaryStringUtil.convertIntByBit("11");//15,31,63
         System.out.println("2 --> 11 -->"+ value);
-        value = BinaryUtil.convertIntByBit("111");//15,31,63
+        value = BinaryStringUtil.convertIntByBit("111");//15,31,63
         System.out.println("3 --> 111 -->"+ value);
-        value = BinaryUtil.convertIntByBit("1111");//15,31,63
+        value = BinaryStringUtil.convertIntByBit("1111");//15,31,63
         System.out.println("4 --> 1111 -->"+ value);
-        value = BinaryUtil.convertIntByBit("11111");//15,31,63
+        value = BinaryStringUtil.convertIntByBit("11111");//15,31,63
         System.out.println("5 --> 11111 -->"+ value);
-        value = BinaryUtil.convertIntByBit("111111");//15,31,63
+        value = BinaryStringUtil.convertIntByBit("111111");//15,31,63
         System.out.println("6 --> 111111 -->"+ value);
-        value = BinaryUtil.convertIntByBit("1111111");//15,31,63
+        value = BinaryStringUtil.convertIntByBit("1111111");//15,31,63
         System.out.println("7 --> 1111111 -->"+ value);
-        value = BinaryUtil.convertIntByBit("11111111");//15,31,63
+        value = BinaryStringUtil.convertIntByBit("11111111");//15,31,63
         System.out.println("8 --> 11111111 -->"+ value);
-        value = BinaryUtil.convertIntByBit("10000000");//15,31,63
+        value = BinaryStringUtil.convertIntByBit("10000000");//15,31,63
         System.out.println(value);
 
 

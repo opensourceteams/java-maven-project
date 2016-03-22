@@ -27,6 +27,7 @@ public class ZipUtil {
             gzos = new GZIPOutputStream(bos);
             gzos.write(data);
             gzos.finish();
+            gzos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

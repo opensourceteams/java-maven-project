@@ -18,9 +18,11 @@ import java.net.SocketException;
 
 public class UDPUtilTest {
 
-    boolean debug = false;
+    boolean debug = true;
     
     String receiveIp = "192.168.12.1";
+    int receiverPort = 7779;
+    int senderPort = 7778 ;
 
 
     /**
@@ -77,7 +79,7 @@ public class UDPUtilTest {
         byte[] bytes = ScreenCaptureUtil.screenCaptureToBytes(rect,"jpg");
         System.out.printf("抓到屏幕的大小:" +bytes.length + "  -->" + (bytes.length / 1024) + "(KB)");
 
-        UDPUtil.senderOnce(8889,receiveIp,8888,bytes);
+        UDPUtil.senderOnce(receiverPort,receiveIp,senderPort,bytes);
     }
 
     /**
@@ -104,7 +106,7 @@ public class UDPUtilTest {
 
         DatagramSocket socket = null;
         try {
-            socket = new DatagramSocket(8888);
+            socket = new DatagramSocket(senderPort);
         } catch (SocketException e) {
             e.printStackTrace();
         }
@@ -118,9 +120,9 @@ public class UDPUtilTest {
 
             //发送
             //UDPUtil.senderOnce(8889,receiveIp,8888,sub);
-            UDPUtil.sender( socket,8889,receiveIp, sub);
+            UDPUtil.sender( socket,receiverPort,receiveIp, sub);
             try {
-                Thread.sleep(10000);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -146,7 +148,7 @@ public class UDPUtilTest {
 
         DatagramSocket socket = null;
         try {
-            socket = new DatagramSocket(8888);
+            socket = new DatagramSocket(senderPort);
         } catch (SocketException e) {
             e.printStackTrace();
         }
@@ -179,7 +181,7 @@ public class UDPUtilTest {
                 }
                 //发送
                 //UDPUtil.senderOnce(8889,receiveIp,8888,sub);
-                UDPUtil.sender( socket,8889,receiveIp, sub);
+                UDPUtil.sender( socket,receiverPort,receiveIp, sub);
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e) {

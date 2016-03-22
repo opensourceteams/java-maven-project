@@ -6,7 +6,7 @@ package com.opensourceteams.modules.common.java.binary;
  * 功能描述:
  */
 
-public class BinaryUtil {
+public class BinaryStringUtil {
 
     /**
      *  将byte 表现为bit 的字符串形式
@@ -129,10 +129,10 @@ public class BinaryUtil {
         }
 
         if(sb.length() >=32){
-            return BinaryUtil.convertIntByBit(sb.toString().substring(sb.length() - 31));
+            return BinaryStringUtil.convertIntByBit(sb.toString().substring(sb.length() - 31));
         }
 
-        return BinaryUtil.convertIntByBit(sb.toString());
+        return BinaryStringUtil.convertIntByBit(sb.toString());
     }
 
     /**
@@ -156,10 +156,10 @@ public class BinaryUtil {
         }
 
         if(sb.length() >=32){
-            return BinaryUtil.convertIntByBit(sb.toString().substring(sb.length() - 31));
+            return BinaryStringUtil.convertIntByBit(sb.toString().substring(sb.length() - 31));
         }
 
-        return BinaryUtil.convertIntByBit(sb.toString());
+        return BinaryStringUtil.convertIntByBit(sb.toString());
     }
 
 
@@ -173,7 +173,7 @@ public class BinaryUtil {
         int calValue = 0;
         for(int i =0;i< 31;i++){
             sb.append("1");
-            calValue = BinaryUtil.convertIntByBit(sb.toString());
+            calValue = BinaryStringUtil.convertIntByBit(sb.toString());
             if(calValue >= value ){
                 return sb.length();
             }

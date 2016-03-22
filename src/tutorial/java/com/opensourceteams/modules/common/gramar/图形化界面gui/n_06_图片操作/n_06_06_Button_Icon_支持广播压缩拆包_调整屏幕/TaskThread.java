@@ -22,7 +22,7 @@ import java.util.Map;
 public class TaskThread extends Thread {
 
 
-    boolean debug = false;
+    boolean debug = true;
     long timeInterval = 1000;
     JButton btnShowImg ;
     DatagramSocket socket ;

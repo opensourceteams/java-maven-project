@@ -1,6 +1,6 @@
 package com.opensourceteams.modules.common.作业.第十四天.定义函数输出一个byte的二进制字符串;
 
-import com.opensourceteams.modules.common.java.binary.BinaryUtil;
+import com.opensourceteams.modules.common.java.binary.BinaryStringUtil;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -12,19 +12,19 @@ public class Run {
 
     public static void main(String[] args) {
 
-        String s = BinaryUtil.byteToBits((byte)129);
+        String s = BinaryStringUtil.byteToBits((byte)129);
         System.out.println(s);
 
-         s = BinaryUtil.byteToBits((byte)127);
+         s = BinaryStringUtil.byteToBits((byte)127);
         System.out.println(s);
 
-        s = BinaryUtil.byteToBits((byte)0);
+        s = BinaryStringUtil.byteToBits((byte)0);
         System.out.println(s);
 
-        s = BinaryUtil.byteToBits((byte)-1);
+        s = BinaryStringUtil.byteToBits((byte)-1);
         System.out.println(s);
 
-        s = BinaryUtil.byteToBits((byte)-2);
+        s = BinaryStringUtil.byteToBits((byte)-2);
         System.out.println(s);
 
     }

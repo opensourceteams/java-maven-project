@@ -1,6 +1,6 @@
 package com.opensourceteams.modules.common.gramar.二进制.十进制轩二进制表示;
 
-import com.opensourceteams.modules.common.java.binary.BinaryUtil;
+import com.opensourceteams.modules.common.java.binary.BinaryStringUtil;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -15,7 +15,7 @@ public class Test2 {
 
 
         for(int i =0;i<8;i++){
-            System.out.println("通过bit位数:" +(i + 1)+ ",得到的最大整数值" + BinaryUtil.getMaxValueByBitLength(i +1));
+            System.out.println("通过bit位数:" +(i + 1)+ ",得到的最大整数值" + BinaryStringUtil.getMaxValueByBitLength(i +1));
         }
 
 

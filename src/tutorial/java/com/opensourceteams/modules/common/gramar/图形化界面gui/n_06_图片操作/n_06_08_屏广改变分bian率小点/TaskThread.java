@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.图形化界面gui.n_06_图片操作.n_06_05_Button_Icon_支持广播压缩拆包;
+package com.opensourceteams.modules.common.gramar.图形化界面gui.n_06_图片操作.n_06_08_屏广改变分bian率小点;
 
 import com.opensourceteams.modules.common.java.algorithm.SplitArrayUtil;
 import com.opensourceteams.modules.common.java.util.net.UDPUtil;
@@ -9,12 +9,9 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.net.DatagramSocket;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -25,7 +22,7 @@ import java.util.Set;
 public class TaskThread extends Thread {
 
 
-    boolean debug = false;
+    boolean debug = true;
     long timeInterval = 1000;
     JButton btnShowImg ;
     DatagramSocket socket ;
@@ -102,7 +99,10 @@ public class TaskThread extends Thread {
                     /**
                      * 转换数据
                      */
-                    btnShowImg.setIcon(new ImageIcon(zipBytes));
+                    ByteArrayInputStream bais = new ByteArrayInputStream(zipBytes);
+                    bufferedImage = ImageIO.read(bais);
+                    btnShowImg.setIcon(null);
+                    btnShowImg.setIcon(new ImageIcon(bufferedImage,""));
 
                     //有新的数据包发过来了
                     if(type != lastType){
@@ -120,6 +120,7 @@ public class TaskThread extends Thread {
 
             } catch (Exception e) {
                 e.printStackTrace();
+                refreshData();
             }
 
 

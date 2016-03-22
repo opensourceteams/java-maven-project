@@ -1,6 +1,6 @@
 package com.opensourceteams.modules.common.作业.第十一天.自定义联合hashcode由多个属性组合;
 
-import com.opensourceteams.modules.common.java.binary.BinaryUtil;
+import com.opensourceteams.modules.common.java.binary.BinaryStringUtil;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -79,19 +79,19 @@ public class Criminal {
         System.out.println("========" +"home:" +home + " boold:" +boold + " height:" + height + " weight:" + weight );
 
 
-        sb.append(BinaryUtil.intToBitsByByteLength(home,1));
+        sb.append(BinaryStringUtil.intToBitsByByteLength(home,1));
         //sb.append(BinaryUtil.intToBitsByBitLength(boold,3));//通过bit位数:3,得到的最大整数值7
        // sb.append(BinaryUtil.intToBitsByByteLength(height,1));
         //sb.append(BinaryUtil.intToBitsByByteLength(weight,1));
-        System.out.println("home:"+ BinaryUtil.intToBitsByByteLength(home,1));
-        System.out.println("height:"+ BinaryUtil.intToBitsByByteLength(height,1));
+        System.out.println("home:"+ BinaryStringUtil.intToBitsByByteLength(home,1));
+        System.out.println("height:"+ BinaryStringUtil.intToBitsByByteLength(height,1));
         System.out.println("长度" +sb.toString().length());
-        System.out.println("值:"+BinaryUtil.convertIntByBit(sb.toString()));
+        System.out.println("值:"+ BinaryStringUtil.convertIntByBit(sb.toString()));
         System.out.println("字符串" +sb.toString());
 
 
 
-        return  BinaryUtil.convertIntByBit(sb.toString());
+        return  BinaryStringUtil.convertIntByBit(sb.toString());
     }
 
     @Override

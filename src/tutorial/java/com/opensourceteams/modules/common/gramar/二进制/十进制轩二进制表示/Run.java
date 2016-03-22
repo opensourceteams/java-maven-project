@@ -1,6 +1,6 @@
 package com.opensourceteams.modules.common.gramar.二进制.十进制轩二进制表示;
 
-import com.opensourceteams.modules.common.java.binary.BinaryUtil;
+import com.opensourceteams.modules.common.java.binary.BinaryStringUtil;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -17,14 +17,14 @@ public class Run {
         System.out.println("=========byte >=0 =================");
         byte j = 0;
         for(;j < 127;j++){
-            System.out.println("byte 的数据为:" +j +" 可表示的数值为" + BinaryUtil.convertIntByBit(BinaryUtil.byteToBits(j))  );
+            System.out.println("byte 的数据为:" +j +" 可表示的数值为" + BinaryStringUtil.convertIntByBit(BinaryStringUtil.byteToBits(j))  );
         }
 
-        System.out.println(BinaryUtil.convertIntByBit(BinaryUtil.byteToBits(j))  );
+        System.out.println(BinaryStringUtil.convertIntByBit(BinaryStringUtil.byteToBits(j))  );
 
         System.out.println("=========byte为负数=================");
         for(byte i =-128; i< 0;i++){
-            System.out.println("byte 的数据为:" +i +" 可表示的数值为" + BinaryUtil.convertIntByBit(BinaryUtil.byteToBits(i))  );
+            System.out.println("byte 的数据为:" +i +" 可表示的数值为" + BinaryStringUtil.convertIntByBit(BinaryStringUtil.byteToBits(i))  );
         }
 
 

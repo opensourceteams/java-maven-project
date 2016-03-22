@@ -13,6 +13,7 @@ import java.net.SocketException;
  */
 
 public class MyJButtonImageIcon extends JFrame {
+    int receivePort = 7779;
 
     MyJButtonImageIcon instance = null;
 
@@ -85,7 +86,7 @@ public class MyJButtonImageIcon extends JFrame {
 
         DatagramSocket socket = null;
         try {
-            socket = new DatagramSocket(8889);
+            socket = new DatagramSocket(receivePort);
 
         } catch (SocketException e) {
             e.printStackTrace();
