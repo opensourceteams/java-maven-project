@@ -10,6 +10,9 @@ import org.junit.Test;
 
 public class ZipUtilTest {
 
+    /**
+     * 压缩byte 数组
+     */
     @Test
     public void testGzipCompress(){
 
@@ -24,6 +27,9 @@ public class ZipUtilTest {
 
     }
 
+    /**
+     * 解压byte数组
+     */
     @Test
     public void testGzipExtract(){
 

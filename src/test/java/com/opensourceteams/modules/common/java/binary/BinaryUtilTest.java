@@ -10,12 +10,22 @@ import org.junit.Test;
 
 public class BinaryUtilTest {
 
+    @Test
+    public void testByte256(){
+        for (int  i = -128;i <128;i++){
+            System.out.println((i << 24 >>> 24));
+        }
+    }
+
     /**
      * int 转为二进制表现形式
      */
     @Test
     public void testByteToBits(){
         String s = BinaryUtil.byteToBits((byte)-127);
+        System.out.println(s);
+
+        s = BinaryUtil.byteToBits((byte)-128);
         System.out.println(s);
 
         s = BinaryUtil.byteToBits((byte)-1);
@@ -50,10 +60,26 @@ public class BinaryUtilTest {
     @Test
     public void testConvertIntByBit(){
         int value = BinaryUtil.convertIntByBit("1");//15,31,63
-        System.out.println(value);
+        System.out.println("1 --> 1 -->"+ value);
 
         value = BinaryUtil.convertIntByBit("11");//15,31,63
+        System.out.println("2 --> 11 -->"+ value);
+        value = BinaryUtil.convertIntByBit("111");//15,31,63
+        System.out.println("3 --> 111 -->"+ value);
+        value = BinaryUtil.convertIntByBit("1111");//15,31,63
+        System.out.println("4 --> 1111 -->"+ value);
+        value = BinaryUtil.convertIntByBit("11111");//15,31,63
+        System.out.println("5 --> 11111 -->"+ value);
+        value = BinaryUtil.convertIntByBit("111111");//15,31,63
+        System.out.println("6 --> 111111 -->"+ value);
+        value = BinaryUtil.convertIntByBit("1111111");//15,31,63
+        System.out.println("7 --> 1111111 -->"+ value);
+        value = BinaryUtil.convertIntByBit("11111111");//15,31,63
+        System.out.println("8 --> 11111111 -->"+ value);
+        value = BinaryUtil.convertIntByBit("10000000");//15,31,63
         System.out.println(value);
+
+
 
     }
 

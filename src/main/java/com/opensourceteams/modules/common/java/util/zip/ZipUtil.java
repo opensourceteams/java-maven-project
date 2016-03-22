@@ -36,7 +36,7 @@ public class ZipUtil {
     }
 
     /**
-     * 解压,从byte解压到byte
+     * 解压,从byte数组解压到byte数组
      * @param data
      * @return
      */

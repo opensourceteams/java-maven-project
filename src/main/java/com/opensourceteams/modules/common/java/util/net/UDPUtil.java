@@ -101,13 +101,16 @@ public class UDPUtil {
     }
 
 
+    /**
+     * 接收
+     * @param socket
+     * @return
+     */
     public static byte[] reveive(DatagramSocket socket){
 
         byte[] buffer = new byte[1024 * 64] ;
 
         try {
-
-
 
             DatagramPacket pack = null;
             pack = new DatagramPacket(buffer,buffer.length);
