@@ -47,7 +47,7 @@ public class URLUtilTest {
      * @throws FileNotFoundException
      */
     @Test
-    public void testDownloadFileSplit() throws FileNotFoundException {
+    public void testDownloadFileSplit() throws Exception {
         String urlStr = "http://100.68.68.101/apache.mirrors.lucidnetworks.net/tomcat/tomcat-9/v9.0.0.M4/bin/apache-tomcat-9.0.0.M4.zip";
 
 
@@ -94,7 +94,7 @@ public class URLUtilTest {
      * @throws FileNotFoundException
      */
     @Test
-    public void testDownloadSplitFileLocalFixedPosition() throws FileNotFoundException {
+    public void testDownloadSplitFileLocalFixedPosition() throws Exception {
         String urlStr = "http://100.68.68.101/apache.mirrors.lucidnetworks.net/tomcat/tomcat-9/v9.0.0.M4/bin/apache-tomcat-9.0.0.M4.zip";
 
 

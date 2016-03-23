@@ -7,6 +7,7 @@ import com.opensourceteams.modules.common.java.util.net.URLUtil;
 
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -19,23 +20,27 @@ import java.util.Vector;
 
 public class Run {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         long timer = System.currentTimeMillis();
 
-        String urlStr = "http://110.96.192.8:81/1Q2W3E4R5T6Y7U8I9O0P1Z2X3C4V5B/apache.opencas.org/tomcat/tomcat-9/v9.0.0.M4/bin/apache-tomcat-9.0.0.M4.zip";
+        String urlStr = "http://110.96.193.5:81/1Q2W3E4R5T6Y7U8I9O0P1Z2X3C4V5B/apache.fayea.com/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz";
 
 
-        int totalLength = URLUtil.getContentLength(urlStr);
-        System.out.println("总文件大小:"+totalLength/1024 +"(KB)" +"\t 文件URL:" +urlStr);
+        URLConnection conn =  URLUtil.openConnection(urlStr);
+        int totalLength = conn.getContentLength();
+        if(totalLength == -1 ){
+            throw new Exception("该问不了 -->" +urlStr);
+        }
+        System.out.println("文件类型:" + conn.getContentType()+" \t 总文件大小:"+totalLength/1024 +"(KB) --> "+totalLength/1024/1024 +"(MB)" +"\t 文件URL:" +urlStr);
         System.out.println("\n");
         RandomAccessFile raf = null;
-        String saveFilePath = "/opt/temp/apache-tomcat-9.0.0.M4-10.zip";
+        String saveFilePath = "/opt/temp/hadoop-2.6.4.tar.gz";
 
 
         List<DownLoadThread> list = new ArrayList<DownLoadThread>();
         try {
              raf = new RandomAccessFile(saveFilePath,"rw");
-             Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,1000);
+             Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,200);
              for (DownloadBytesBean d :vector){
                  DownLoadThread downLoadThread = new DownLoadThread(urlStr,saveFilePath,d);
                  downLoadThread.start();
@@ -57,11 +62,12 @@ public class Run {
 
 
 
-        String exeTime = TimerUtil.printWorkerTimeMillis(timer) +"";
+
 
         System.out.println("\n");
+        String exeTime = "\t" +TimerUtil.printWorkerTimeMillis(timer) +"";
 
-        System.out.println("文件下载完成,保存在:" +saveFilePath  +exeTime);
+        System.out.println("文件下载完成,保存在:" +saveFilePath );
 
 
     }

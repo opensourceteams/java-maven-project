@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Vector;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -81,7 +82,7 @@ public class URLUtil {
         return urlConnection.getContentType() ;
     }
 
-    public static byte[] getBytes(String urlStr,int beginIndex,int endIndex){
+    public static byte[] getBytes(String urlStr,int beginIndex,int endIndex) throws Exception {
 
         URLConnection urlConnection = openConnection(urlStr);
         if(urlConnection == null){
@@ -94,10 +95,13 @@ public class URLUtil {
         }
 
 
+        Vector<String> vector = new Vector<String>();
+        vector.add("application/octet-stream");
+        vector.add("application/zip");
 
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        if("application/zip".equals(urlConnection.getContentType())){
+        if(vector.contains(urlConnection.getContentType())){
 
             byte[] buffer = new byte[1024];
             try {
@@ -119,6 +123,8 @@ public class URLUtil {
                     }
                 }
             }
+        }else{
+            throw new Exception("该文件类型,不支持" + urlConnection.getContentType());
         }
 
 
