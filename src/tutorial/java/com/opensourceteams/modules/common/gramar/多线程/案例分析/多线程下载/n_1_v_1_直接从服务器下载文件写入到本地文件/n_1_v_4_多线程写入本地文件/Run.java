@@ -2,10 +2,13 @@ package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线�
 
 import com.opensourceteams.modules.common.java.algorithm.SplitArrayUtil;
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
+import com.opensourceteams.modules.common.java.timer.TimerUtil;
 import com.opensourceteams.modules.common.java.util.net.URLUtil;
 
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -17,26 +20,48 @@ import java.util.Vector;
 public class Run {
 
     public static void main(String[] args) {
+        long timer = System.currentTimeMillis();
 
-        String urlStr = "http://100.68.68.101/apache.mirrors.lucidnetworks.net/tomcat/tomcat-9/v9.0.0.M4/bin/apache-tomcat-9.0.0.M4.zip";
+        String urlStr = "http://110.96.192.8:81/1Q2W3E4R5T6Y7U8I9O0P1Z2X3C4V5B/apache.opencas.org/tomcat/tomcat-9/v9.0.0.M4/bin/apache-tomcat-9.0.0.M4.zip";
 
 
         int totalLength = URLUtil.getContentLength(urlStr);
-        System.out.println("总共大小:"+totalLength);
+        System.out.println("总文件大小:"+totalLength/1024 +"(KB)" +"\t 文件URL:" +urlStr);
+        System.out.println("\n");
         RandomAccessFile raf = null;
         String saveFilePath = "/opt/temp/apache-tomcat-9.0.0.M4-10.zip";
 
+
+        List<DownLoadThread> list = new ArrayList<DownLoadThread>();
         try {
              raf = new RandomAccessFile(saveFilePath,"rw");
-             Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,10);
+             Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,1000);
              for (DownloadBytesBean d :vector){
-                 new DownLoadThread(urlStr,saveFilePath,d).start();
+                 DownLoadThread downLoadThread = new DownLoadThread(urlStr,saveFilePath,d);
+                 downLoadThread.start();
+
+                 list.add(downLoadThread);
+
              }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        System.out.println("文件下载完成,保存在:" +saveFilePath);
+        for (DownLoadThread d : list){
+            try {
+                d.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+        String exeTime = TimerUtil.printWorkerTimeMillis(timer) +"";
+
+        System.out.println("\n");
+
+        System.out.println("文件下载完成,保存在:" +saveFilePath  +exeTime);
 
 
     }

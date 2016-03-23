@@ -35,7 +35,7 @@ public class FileReaderTest {
         }
 
         fr.close();
-        TimerUtil.printWorkerTimeMillis(start);
+        TimerUtil.printlnWorkerTimeMillis(start);
 
     }
 
@@ -60,7 +60,7 @@ public class FileReaderTest {
         }
 
         fr.close();
-        TimerUtil.printWorkerTimeMillis(start);
+        TimerUtil.printlnWorkerTimeMillis(start);
 
     }
 
@@ -85,7 +85,7 @@ public class FileReaderTest {
             System.out.println(new String(buffer,0,length));
         }
         isr.close();
-        TimerUtil.printWorkerTimeMillis(start);
+        TimerUtil.printlnWorkerTimeMillis(start);
 
     }
 
@@ -110,7 +110,7 @@ public class FileReaderTest {
             System.out.println(new String(buffer,0,length));
         }
         fr.close();
-        TimerUtil.printWorkerTimeMillis(start);
+        TimerUtil.printlnWorkerTimeMillis(start);
 
     }
 
@@ -141,7 +141,7 @@ public class FileReaderTest {
         }
 
         fr.close();
-        TimerUtil.printWorkerTimeMillis(start);
+        TimerUtil.printlnWorkerTimeMillis(start);
 
     }
 

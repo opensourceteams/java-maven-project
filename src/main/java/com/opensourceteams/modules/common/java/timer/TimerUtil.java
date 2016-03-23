@@ -14,10 +14,23 @@ public class TimerUtil {
      * 打印工作的时间,是多少毫秒
      * @param start
      */
-    public static long printWorkerTimeMillis(long start){
+    public static long printlnWorkerTimeMillis(long start){
         long end = System.currentTimeMillis();
 
-        System.out.println("\n执行时间(毫秒):"+ ( end -start));
+        System.out.println("\n执行时间:"+ ( end -start) +"(毫秒)\t" +(( end -start) /1000 ) + "(秒)" );
         return end -start;
     }
+
+    /**
+     * 打印工作的时间,是多少毫秒
+     * @param start
+     */
+    public static long  printWorkerTimeMillis(long start){
+        long end = System.currentTimeMillis();
+
+        System.out.print("执行时间:"+ ( end -start) +"(毫秒)\t" +(( end -start) /1000 ) + "(秒) \t" );
+        return end -start;
+    }
+
+
 }

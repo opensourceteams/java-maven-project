@@ -1,11 +1,14 @@
 package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_4_多线程写入本地文件;
 
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
+import com.opensourceteams.modules.common.java.timer.TimerUtil;
 import com.opensourceteams.modules.common.java.util.net.URLUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import static com.opensourceteams.modules.common.java.timer.TimerUtil.printWorkerTimeMillis;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -29,12 +32,16 @@ public class DownLoadThread extends Thread{
     }
     @Override
     public void run() {
+        long time = System.currentTimeMillis();
+        System.out.println("本次开始下载    -->    " +downloadBytesBean);
         try {
             raf = new RandomAccessFile(saveFilePath,"rw");
             byte[] bytes = URLUtil.getBytes(urlStr,downloadBytesBean.getBeginIndex(),downloadBytesBean.getEndIndex());
             raf.seek(downloadBytesBean.getBeginIndex());
             raf.write(bytes);
-            System.out.println(downloadBytesBean);
+            String exeTime = TimerUtil.printWorkerTimeMillis(time) +"";
+            System.out.println(downloadBytesBean + exeTime );
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

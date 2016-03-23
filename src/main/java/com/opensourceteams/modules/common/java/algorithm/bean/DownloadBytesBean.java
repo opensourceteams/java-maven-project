@@ -64,6 +64,6 @@ public class DownloadBytesBean {
 
     @Override
     public String toString() {
-        return  "索引" +this.getIndex() +"次下载完成,当前下载量:" +this.getLength() +",总下载量:" +this.totalLength;
+        return  "索引" +this.getIndex() +"次下载完成,当前下载量:" +this.getLength()/1024 +"(kb),总下载量:" +this.totalLength/1024+"(kb)";
     }
 }

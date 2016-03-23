@@ -196,10 +196,7 @@ public class SplitArrayUtil {
      */
     public static Vector<DownloadBytesBean> splitBytesToVector(int bytesLength,int maxThread){
 
-        int capacity = bytesLength / maxThread ;
-        if(capacity < 1024 * 1024){
-            capacity = 1024 * 1024;
-        }
+
         return splitBytesToVector(bytesLength,maxThread,1024 * 1024);
     }
 

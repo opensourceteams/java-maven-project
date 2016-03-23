@@ -86,7 +86,7 @@ public class BufferedReaderTest {
         }
         br.close();
 
-        TimerUtil.printWorkerTimeMillis(start);
+        TimerUtil.printlnWorkerTimeMillis(start);
     }
 
 
