@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_5_多线程写入本地文件_增加UI;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_6_多线程写入本地文件_增加UI_增加暂停功能_整体进度条;
 
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
 import com.opensourceteams.modules.common.java.timer.TimerUtil;
@@ -38,7 +38,7 @@ public class DownLoadThread extends Thread{
         System.out.println("本次开始下载    -->    " +downloadBytesBean);
         try {
             raf = new RandomAccessFile(saveFilePath,"rw");
-            byte[] bytes = URLUtil.getBytes(urlStr,downloadBytesBean.getBeginIndex(),downloadBytesBean.getEndIndex());
+            byte[] bytes = Download_URLUtil.getBytesIsSuspend(urlStr,downloadBytesBean.getBeginIndex(),downloadBytesBean.getEndIndex());
             raf.seek(downloadBytesBean.getBeginIndex());
             raf.write(bytes);
             String exeTime = TimerUtil.printWorkerTimeMillis(time) +"";

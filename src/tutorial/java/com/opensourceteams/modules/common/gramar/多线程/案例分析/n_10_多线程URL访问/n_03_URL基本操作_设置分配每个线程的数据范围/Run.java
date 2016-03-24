@@ -1,11 +1,9 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.n_10_多线程下载.n_03_URL基本操作_设置分配每个线程的数据范围;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.n_10_多线程URL访问.n_03_URL基本操作_设置分配每个线程的数据范围;
 
 import com.opensourceteams.modules.common.java.algorithm.SplitArrayUtil;
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
-import com.opensourceteams.modules.common.java.lang.ByteArrayUtil;
 import com.opensourceteams.modules.common.java.util.net.URLUtil;
 
-import java.net.URL;
 import java.net.URLConnection;
 import java.util.Vector;
 

@@ -1,4 +1,6 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_5_多线程写入本地文件_增加UI;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_6_多线程写入本地文件_增加UI_增加暂停功能_整体进度条;
+
+import com.opensourceteams.modules.common.java.util.net.URLUtil;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -26,6 +28,8 @@ public class DownLoadUI extends JFrame {
 
     JButton btDown;
 
+    JButton btIsSuspend; //是否暂停
+
     public DownLoadUI(String title){
         init(title);
     }
@@ -38,6 +42,7 @@ public class DownLoadUI extends JFrame {
         this.setBounds(0,0,800,600);
 
         int y = 0;
+
 
         // URL
         labUrl = new JLabel("URL:");
@@ -71,6 +76,28 @@ public class DownLoadUI extends JFrame {
         tfCount.setText("10");
 
 
+        //暂停
+
+        y = y + 100 ;
+        btIsSuspend = new JButton("暂停");
+        btIsSuspend.setBounds(100,aboveMargin + y,100,50);
+        btIsSuspend.addMouseListener(new MouseInputAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getComponent() == btIsSuspend){
+                    if("暂停".equals(btIsSuspend.getText())){
+                        Download_URLUtil.globalIsSuspend = true;
+                        btIsSuspend.setText("继续");
+                    }else{
+                        btIsSuspend.setText("暂停");
+                        Download_URLUtil.globalIsSuspend = false;
+                    }
+                }
+            }
+        });
+
+
+
         //进度条
 
         y = y +60 ;
@@ -78,7 +105,7 @@ public class DownLoadUI extends JFrame {
         bar.setBounds(100,aboveMargin + y,500,10);
 
         //保存按钮
-        y = y + 100;
+        y = y + 50;
 
 
         btDown = new JButton("下载");
@@ -88,10 +115,9 @@ public class DownLoadUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(e.getComponent() ==btDown){
-/*                    System.out.println("按钮单击");
-                    System.out.println("labUrl:"+taUrl.getText());
-                    System.out.println("labSaveFilePath:"+tfSaveFilePath.getText());
-                    System.out.println("labCount:"+ tfCount.getText());*/
+                    bar.setVisible(true);
+
+                    setProgressBarCurrentValue(0);
 
                     Downloader downloader =   new Downloader(DownLoadUI.this);
                     downloader.download(taUrl.getText(),tfSaveFilePath.getText(),tfCount.getText());
@@ -108,6 +134,9 @@ public class DownLoadUI extends JFrame {
         this.add(labCount);
         this.add(tfCount);
 
+        //暂停
+        this.add(btIsSuspend);
+
         this.add(bar);
 
         this.add(btDown);
@@ -122,7 +151,14 @@ public class DownLoadUI extends JFrame {
         bar.setMaximum(value);
     }
 
-    public void setProgressBarCurrentValue(int value){
+    public synchronized void setProgressBarCurrentValue(int value)
+    {
+
         bar.setValue(bar.getValue() + value);
+
+        if(bar.getValue() >= bar.getMaximum()){
+            bar.setValue(0);
+            bar.setVisible(false);
+        }
     }
 }

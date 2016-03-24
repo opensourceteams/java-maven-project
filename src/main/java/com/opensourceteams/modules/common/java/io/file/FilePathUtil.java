@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Comparator;
 import java.util.List;
 
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
+
 /**
  * 开发者:刘文  Email:372065525@qq.com
  * 16/3/11  上午6:00
@@ -39,25 +41,36 @@ public class FilePathUtil {
      * @param path
      * @throws Exception
      */
-    public static void createFile(String path) throws Exception {
+    public static boolean createNewFile(String path){
+        boolean result = true;
         if (path == null || "".equals(path)) {
-            return;
+            return false;
         }
         try {
             // 获得文件对象
             File f = new File(path);
             if (f.exists()) {
-                return;
+                return false;
             }
-            // 如果路径不存在,则创建
-            if (!f.getParentFile().exists()) {
-                f.getParentFile().mkdirs();
+
+            //如果是相对路径
+            if(f.getParentFile() == null){
+                f.createNewFile();
+            }else{
+                // 如果路径不存在,则创建
+                if (!f.getParentFile().exists()) {
+                    f.getParentFile().mkdirs();
+                }
+                f.createNewFile();
             }
-            f.createNewFile();
+
+            ;
         } catch (Exception e) {
-            // log.error("创建文件错误.path=" + path, e);
-            throw e;
+            //log.error("创建文件错误.path=" + path, e);
+            e.printStackTrace();
+            return false;
         }
+        return  result;
     }
 
 
@@ -94,10 +107,11 @@ public class FilePathUtil {
      */
     public static void subRecursionListFilesSort(List<String> list, File f ){
         subRecursionListFiles(list,f);
+
         /**
          * 对结果进行排序
          */
-        list.sort(new Comparator<String>() {
+/*        list.sort(new Comparator<String>() {
             public int compare(String o1, String o2) {
                 if(o1 == null && o2 == null){
                     return 0 ;
@@ -109,7 +123,7 @@ public class FilePathUtil {
                     return o1.compareTo(o2);
                 }
             }
-        });
+        });*/
 
     }
 }

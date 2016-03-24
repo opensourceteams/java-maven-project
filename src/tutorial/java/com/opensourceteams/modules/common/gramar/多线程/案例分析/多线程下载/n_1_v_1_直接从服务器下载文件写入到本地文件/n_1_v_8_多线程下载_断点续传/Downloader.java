@@ -1,8 +1,7 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_5_多线程写入本地文件_增加UI;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_8_多线程下载_断点续传;
 
 import com.opensourceteams.modules.common.java.algorithm.SplitArrayUtil;
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
-import com.opensourceteams.modules.common.java.timer.TimerUtil;
 import com.opensourceteams.modules.common.java.util.net.URLUtil;
 
 import java.io.FileNotFoundException;
@@ -27,9 +26,14 @@ public class Downloader {
     }
 
 
-
-
+    /**
+     * 下载
+     * @param url
+     * @param saveFilePath
+     * @param threadCount
+     */
     public   void download(String url,String saveFilePath,String threadCount){
+        ui.updateState("正在准备下载...");
 
 
         long timer = System.currentTimeMillis();
@@ -42,6 +46,7 @@ public class Downloader {
             return;
         }
 
+        ui.updateState("开始下载");
         ui.setProgressBarMaxValue(totalLength);
 
         System.out.println("文件类型:" + conn.getContentType()+" \t 总文件大小:"+totalLength/1024 +"(KB) --> "+totalLength/1024/1024 +"(MB)" +"\t 文件URL:" +url);
@@ -51,6 +56,7 @@ public class Downloader {
 
         List<DownLoadThread> list = new ArrayList<DownLoadThread>();
         try {
+            new ContinueTransferringBreakpointThread(list).start();
             raf = new RandomAccessFile(saveFilePath,"rw");
             Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,threadCountInt);
             for (DownloadBytesBean d :vector){
@@ -76,10 +82,10 @@ public class Downloader {
 
 
 
-        System.out.println("\n");
-        String exeTime = "\t" + TimerUtil.printWorkerTimeMillis(timer) +"";
+       // System.out.println("\n");
+     //   String exeTime = "\t" + TimerUtil.printWorkerTimeMillis(timer) +"";
 
-        System.out.println("文件下载完成,保存在:" +saveFilePath );
+       // System.out.println("文件下载完成,保存在:" +saveFilePath );
 
     }
 }

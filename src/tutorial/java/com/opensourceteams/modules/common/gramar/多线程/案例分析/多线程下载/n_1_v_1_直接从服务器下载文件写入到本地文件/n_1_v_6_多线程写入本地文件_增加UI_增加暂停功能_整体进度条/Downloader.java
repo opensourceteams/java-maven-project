@@ -1,8 +1,7 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_5_多线程写入本地文件_增加UI;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_6_多线程写入本地文件_增加UI_增加暂停功能_整体进度条;
 
 import com.opensourceteams.modules.common.java.algorithm.SplitArrayUtil;
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
-import com.opensourceteams.modules.common.java.timer.TimerUtil;
 import com.opensourceteams.modules.common.java.util.net.URLUtil;
 
 import java.io.FileNotFoundException;
@@ -76,10 +75,10 @@ public class Downloader {
 
 
 
-        System.out.println("\n");
-        String exeTime = "\t" + TimerUtil.printWorkerTimeMillis(timer) +"";
+       // System.out.println("\n");
+     //   String exeTime = "\t" + TimerUtil.printWorkerTimeMillis(timer) +"";
 
-        System.out.println("文件下载完成,保存在:" +saveFilePath );
+       // System.out.println("文件下载完成,保存在:" +saveFilePath );
 
     }
 }

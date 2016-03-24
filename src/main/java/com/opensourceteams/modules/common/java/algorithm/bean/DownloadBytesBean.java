@@ -10,10 +10,12 @@ public class DownloadBytesBean {
 
         private int beginIndex;
         private int endIndex;
-        private int length;
+        private int length; //本次下载量
         private int totalLength;
 
         private int index;//序号
+
+        private int amount;//合计,已下载量
 
         public DownloadBytesBean(int beginIndex, int endIndex,int index,int totalLength) {
             this.beginIndex = beginIndex;
@@ -62,8 +64,18 @@ public class DownloadBytesBean {
             this.totalLength = totalLength;
         }
 
-    @Override
-    public String toString() {
-        return  "索引" +this.getIndex() +"次下载完成,当前下载量:" +this.getLength()/1024 +"(KB)  -> " +this.getLength()/1024/1024 + "(MB),总下载量:" +this.totalLength/1024+"(KB) -> " +this.totalLength/1024/1024 +"(MB)";
-    }
+        @Override
+        public String toString() {
+            return  "索引" +this.getIndex() +"次下载完成,当前线程下载量:" +this.getLength()/1024 +"(KB)  -> " +this.getLength()/1024/1024 + "(MB)" +
+                    ",所有线程总下载量:" +this.totalLength/1024+"(KB) -> " +this.totalLength/1024/1024 +"(MB)" +
+                    ",当前线程总下载量:" +this.amount/1024+"(KB) -> " +this.amount/1024/1024 +"(MB)";
+        }
+
+        public int getAmount() {
+            return amount;
+        }
+
+        public void setAmount(int amount) {
+            this.amount = amount;
+        }
 }

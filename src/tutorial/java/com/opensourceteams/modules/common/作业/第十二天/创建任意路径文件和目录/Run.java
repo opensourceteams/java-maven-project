@@ -17,7 +17,7 @@ public class Run {
 
     public static void main(String[] args) throws Exception {
         //FilePathUtil.mkdir("d/fc/f");
-        FilePathUtil.createFile("src/test/resources/file/a.txt");
+        FilePathUtil.createNewFile("src/test/resources/file/a.txt");
 
 
     }

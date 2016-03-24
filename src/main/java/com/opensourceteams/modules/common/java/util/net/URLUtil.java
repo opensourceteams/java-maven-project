@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Vector;
-import java.util.zip.ZipInputStream;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -16,6 +15,8 @@ import java.util.zip.ZipInputStream;
  */
 
 public class URLUtil {
+    
+
 
     public static URLConnection openConnection(String urlStr){
         URL url = null;
@@ -130,4 +131,7 @@ public class URLUtil {
 
         return baos.toByteArray();
     }
+
+
+
 }
