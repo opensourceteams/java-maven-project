@@ -41,16 +41,16 @@ public class FilePathUtil {
      * @param path
      * @throws Exception
      */
-    public static boolean createNewFile(String path){
-        boolean result = true;
+    public static File  createNewFile(String path){
         if (path == null || "".equals(path)) {
-            return false;
+            return null;
         }
+        File f = null;
         try {
             // 获得文件对象
-            File f = new File(path);
+             f = new File(path);
             if (f.exists()) {
-                return false;
+                return f;
             }
 
             //如果是相对路径
@@ -64,13 +64,11 @@ public class FilePathUtil {
                 f.createNewFile();
             }
 
-            ;
         } catch (Exception e) {
             //log.error("创建文件错误.path=" + path, e);
             e.printStackTrace();
-            return false;
         }
-        return  result;
+        return  f;
     }
 
 
@@ -125,5 +123,11 @@ public class FilePathUtil {
             }
         });*/
 
+    }
+
+    public static boolean deleteFile(String path){
+        File file = new File(path);
+        file.deleteOnExit();
+        return  false;
     }
 }

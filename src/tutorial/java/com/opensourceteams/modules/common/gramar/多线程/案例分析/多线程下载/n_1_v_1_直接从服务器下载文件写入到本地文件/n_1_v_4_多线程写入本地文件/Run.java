@@ -40,7 +40,7 @@ public class Run {
         List<DownLoadThread> list = new ArrayList<DownLoadThread>();
         try {
              raf = new RandomAccessFile(saveFilePath,"rw");
-             Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,200);
+             Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,200,"","");
              for (DownloadBytesBean d :vector){
                  DownLoadThread downLoadThread = new DownLoadThread(urlStr,saveFilePath,d);
                  downLoadThread.start();

@@ -15,6 +15,54 @@ import java.util.List;
 public class FilePathUtilTest {
 
     /**
+     * 删除文件
+     */
+    @Test
+    public void testDelete(){
+        String path = "a.tmp" ;
+        File file = new File(path);
+        file.deleteOnExit();
+    }
+
+    /**
+     * 删除文件
+     */
+    @Test
+    public void testDelete2(){
+        String path = "a.tmp" ;
+        FilePathUtil.deleteFile(path);
+    }
+
+    /**
+     * 删除文件
+     */
+    @Test
+    public void testDeleteFiles(){
+        // TODO: 16/3/24  删除目录,目录下有子目录,递归删除的方法示实现
+        String path = "/opt/temp/a" ;
+        File file = new File(path);
+        deleteFiles(file);
+    }
+
+    public void deleteFiles(File f){
+        if(f != null){
+            if (f.isFile()){
+                f.deleteOnExit();
+            }else if(f.isDirectory()){
+                File[] files = f.listFiles();
+                if(files == null || files.length ==0){
+                    f.deleteOnExit();
+                }else{
+                    for (File sub :files){
+                        deleteFiles(sub);
+                    }
+
+                }
+
+            }
+        }
+    }
+    /**
      * 遍历所有的目录和子目录
      */
     @Test

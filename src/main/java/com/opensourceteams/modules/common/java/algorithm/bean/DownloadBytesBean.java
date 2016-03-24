@@ -8,6 +8,7 @@ package com.opensourceteams.modules.common.java.algorithm.bean;
 
 public class DownloadBytesBean {
 
+
         private int beginIndex;
         private int endIndex;
         private int length; //本次下载量
@@ -17,11 +18,18 @@ public class DownloadBytesBean {
 
         private int amount;//合计,已下载量
 
-        public DownloadBytesBean(int beginIndex, int endIndex,int index,int totalLength) {
+        String urlStr; //下载url
+        String saveFilePath; //本地保存地址
+
+        boolean isOver; //是否已完成该线程
+
+        public DownloadBytesBean(int beginIndex, int endIndex,int index,int totalLength,String urlStr,String saveFilePath) {
             this.beginIndex = beginIndex;
             this.endIndex = endIndex;
             this.index = index;
             this.totalLength = totalLength;
+            this.urlStr = urlStr;
+            this.saveFilePath = saveFilePath;
         }
 
         public int getBeginIndex() {
@@ -77,5 +85,29 @@ public class DownloadBytesBean {
 
         public void setAmount(int amount) {
             this.amount = amount;
+        }
+
+        public String getUrlStr() {
+            return urlStr;
+        }
+
+        public void setUrlStr(String urlStr) {
+            this.urlStr = urlStr;
+        }
+
+        public String getSaveFilePath() {
+            return saveFilePath;
+        }
+
+        public void setSaveFilePath(String saveFilePath) {
+            this.saveFilePath = saveFilePath;
+        }
+
+        public boolean isOver() {
+            return isOver;
+        }
+
+        public void setOver(boolean over) {
+            isOver = over;
         }
 }

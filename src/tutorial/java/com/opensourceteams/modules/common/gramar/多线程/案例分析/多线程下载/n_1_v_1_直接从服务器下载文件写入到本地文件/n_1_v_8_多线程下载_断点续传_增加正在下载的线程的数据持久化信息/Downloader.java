@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_7_多线程下载_增加停止按钮_状态显示label;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_8_多线程下载_断点续传_增加正在下载的线程的数据持久化信息;
 
 import com.opensourceteams.modules.common.java.algorithm.SplitArrayUtil;
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
@@ -7,8 +7,6 @@ import com.opensourceteams.modules.common.java.util.net.URLUtil;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 /**
@@ -20,6 +18,8 @@ import java.util.Vector;
 public class Downloader {
 
     DownLoadUI ui;
+
+    Vector<DownLoadThread> downloadThreadVector = new Vector<DownLoadThread>();//一共有多少个下载线程
 
     public Downloader(DownLoadUI downLoadUI){
         this.ui = downLoadUI;
@@ -33,6 +33,7 @@ public class Downloader {
      * @param threadCount
      */
     public   void download(String url,String saveFilePath,String threadCount){
+        ui.updateState("正在准备下载...");
 
 
         long timer = System.currentTimeMillis();
@@ -53,23 +54,24 @@ public class Downloader {
         RandomAccessFile raf = null;
 
 
-        List<DownLoadThread> list = new ArrayList<DownLoadThread>();
+
         try {
-            new ContinueTransferringBreakpointThread(list).start();
+            ContinueTransferringBreakpointThread continueTransferringBreakpointThread = new ContinueTransferringBreakpointThread();
+            continueTransferringBreakpointThread.start();
             raf = new RandomAccessFile(saveFilePath,"rw");
             Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,threadCountInt,url,saveFilePath);
             for (DownloadBytesBean d :vector){
-                DownLoadThread downLoadThread = new DownLoadThread(url,saveFilePath,d,ui);
+                DownLoadThread downLoadThread = new DownLoadThread(d,ui,continueTransferringBreakpointThread);
                 downLoadThread.start();
 
-                list.add(downLoadThread);
+                downloadThreadVector.add(downLoadThread);
 
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-/*        for (DownLoadThread d : list){
+/*        for (DownLoadThread d : downloadThreadVector){
             try {
                 d.join();
             } catch (InterruptedException e) {
@@ -86,5 +88,14 @@ public class Downloader {
 
        // System.out.println("文件下载完成,保存在:" +saveFilePath );
 
+    }
+
+
+    public Vector<DownLoadThread> getDownloadThreadVector() {
+        return downloadThreadVector;
+    }
+
+    public void setDownloadThreadVector(Vector<DownLoadThread> downloadThreadVector) {
+        this.downloadThreadVector = downloadThreadVector;
     }
 }

@@ -19,7 +19,6 @@ public class Run {
 
     @Test
     public void testReadCharArray1() throws Exception {
-        //TODO: Test goes here...
         String path = "";
         List<String> list = new ArrayList<String>();
         list.add("你好");
@@ -37,7 +36,6 @@ public class Run {
      */
     @Test
     public void testReadCharArray() throws Exception {
-        //TODO: Test goes here...
         String result = FileUtil.readCharArray("src/test/resources/file/a.txt");
         System.out.println(result);
     }

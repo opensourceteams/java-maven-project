@@ -194,72 +194,30 @@ public class SplitArrayUtil {
      * @param maxThread
      * @return
      */
-    public static Vector<DownloadBytesBean> splitBytesToVector(int bytesLength,int maxThread){
-
-
-        return splitBytesToVector(bytesLength,maxThread,1024 * 1024);
-    }
-
-    /**
-     * 根据byte数组的长度,分配线程数量,有指定的最大线程数限制
-     * )当总容量按每个容量单位分,总个数 size 小于等于总线程数时,线程数按size来分
-     * )当总容量按每个容量单位分,总个数 size 大于总线程数时,线程数按总线程数来分
-     * @param bytesLength
-     * @param maxThread
-     * @param capacity
-     * @return
-     */
-    public static Vector<DownloadBytesBean> splitBytesToVector(int bytesLength,int maxThread,int capacity){
-
-
-        int tempCapacity = bytesLength / maxThread ;
-        if(tempCapacity > capacity){
-            capacity = 1024 * 1024;
-        }
+    public static Vector<DownloadBytesBean> splitBytesToVector(int bytesLength,int maxThread,String url,String saveFilePath){
 
         Vector<DownloadBytesBean> vector = new Vector<DownloadBytesBean>();
+        int capacity = bytesLength / maxThread ;
+        int remain = bytesLength % maxThread;
 
-        if(bytesLength <= 0 ){
-            return null;
+        for (int i = 0 ;i < maxThread;i++){
+
+            if(i == maxThread - 1 && remain > 0){
+                DownloadBytesBean downloadBytesBean = new DownloadBytesBean(i * capacity,bytesLength,i,bytesLength,url,saveFilePath);
+                vector.add(downloadBytesBean);
+            }else{
+                DownloadBytesBean downloadBytesBean = new DownloadBytesBean(i * capacity,(i + 1 ) * capacity,i,bytesLength,url,saveFilePath);
+                vector.add(downloadBytesBean);
+            }
+
         }
 
-        int size = bytesLength /capacity ;//一共有多少个容,默认1M分配一个线程处理
 
-        if(size < maxThread){
-            //就按实际多少M就跑多少个线程
-
-            for (int i = 0 ;i < size;i++){
-                DownloadBytesBean downloadBytesBean = new DownloadBytesBean(i * capacity,(i + 1 ) * capacity,i,bytesLength);
-                vector.add(downloadBytesBean);
-            }
-
-
-            int remain = bytesLength - capacity * size;
-            if(remain > 0){
-                //还剩多少,都放到最后一个
-
-                DownloadBytesBean downloadBytesBean = new DownloadBytesBean(size * capacity,bytesLength,size,bytesLength);
-                vector.add(downloadBytesBean);
-
-            }
-        }else {
-            //按最大线程数来跑
-            int remain = bytesLength - capacity * size;
-            for (int i = 0 ;i < maxThread;i++){
-                if(i == maxThread - 1 && remain >0){
-                    DownloadBytesBean downloadBytesBean = new DownloadBytesBean(i * capacity,bytesLength,i,bytesLength);
-                    vector.add(downloadBytesBean);
-                    continue;
-                }
-                DownloadBytesBean downloadBytesBean = new DownloadBytesBean(i * capacity,(i + 1 ) * capacity,i,bytesLength);
-                vector.add(downloadBytesBean);
-            }
-
-
-        }
 
         return vector;
     }
+
+
 
 
 

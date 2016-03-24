@@ -30,7 +30,6 @@ public class Run {
      */
     @Test
     public void testReadCharArray() throws Exception {
-        //TODO: Test goes here...
         String result = FileUtil.readCharArray("src/test/resources/file/a.txt");
         System.out.println(result);
     }

@@ -22,7 +22,7 @@ public class Run {
 
         URLConnection conn = URLUtil.openConnection(urlStr);
         int length = URLUtil.getContentLength(conn);
-        Vector<DownloadBytesBean> vector =  SplitArrayUtil.splitBytesToVector(length,100,1024 * 1024 *2 );
+        Vector<DownloadBytesBean> vector =  SplitArrayUtil.splitBytesToVector(length,100 ,"","");
 
 
         for (int i = 0 ;i < vector.size();i ++){

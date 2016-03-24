@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_8_多线程下载_断点续传;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_10_多线程下载_断点续传_从保存已下载数据文件继续下载;
 
 
 import javax.swing.*;
@@ -13,8 +13,8 @@ import java.awt.event.MouseEvent;
 
 public class DownLoadUI extends JFrame {
 
-    String urlText = "http://110.96.193.4/1Q2W3E4R5T6Y7U8I9O0P1Z2X3C4V5B/ftp.yz.yamagata-u.ac.jp/pub/network/apache/tomcat/tomcat-9/v9.0.0.M4/bin/apache-tomcat-9.0.0.M4.zip";
-    String saveFilePath = "/opt/temp/apache-tomcat-9.0.0.M4.zip";
+    String urlText = "http://localhost:8080/ubuntu-15.10-desktop-amd64.iso";
+    String saveFilePath = "/opt/temp/download/ubuntu-15.10-desktop-amd64.iso";
 
 
     JLabel labUrl;
@@ -125,6 +125,8 @@ public class DownLoadUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if (e.getComponent() == btDown) {
                     bar.setVisible(true); //进度条可见
+                    bar.setValue(0); //当前进度条长度
+                    btDown.setText("开始下载");
 
                     setProgressBarCurrentValue(0);//进度条当前进度为0
                     Download_URLUtil.globalIsStop = false; //是否停止,不停止
@@ -192,8 +194,8 @@ public class DownLoadUI extends JFrame {
         bar.setValue(bar.getValue() + value);
 
         if (bar.getValue() >= bar.getMaximum()) {
-            bar.setValue(0);
-            bar.setVisible(false);
+            //bar.setValue(0);
+            //bar.setVisible(false);
             updateState("下载完成");
         }
     }

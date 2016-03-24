@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_8_多线程下载_断点续传;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_10_多线程下载_断点续传_从保存已下载数据文件继续下载;
 
 import com.opensourceteams.modules.common.java.algorithm.SplitArrayUtil;
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
@@ -7,8 +7,6 @@ import com.opensourceteams.modules.common.java.util.net.URLUtil;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 /**
@@ -20,6 +18,8 @@ import java.util.Vector;
 public class Downloader {
 
     DownLoadUI ui;
+
+    Vector<DownLoadThread> downloadThreadVector = new Vector<DownLoadThread>();//一共有多少个下载线程
 
     public Downloader(DownLoadUI downLoadUI){
         this.ui = downLoadUI;
@@ -42,7 +42,7 @@ public class Downloader {
         URLConnection conn =  URLUtil.openConnection(url);
         int totalLength = conn.getContentLength();
         if(totalLength == -1 ){
-            System.out.println("该问不了 -->" +url);
+            ui.updateState("下载地址该问不了 -->" +url);
             return;
         }
 
@@ -51,26 +51,29 @@ public class Downloader {
 
         System.out.println("文件类型:" + conn.getContentType()+" \t 总文件大小:"+totalLength/1024 +"(KB) --> "+totalLength/1024/1024 +"(MB)" +"\t 文件URL:" +url);
         System.out.println("\n");
-        RandomAccessFile raf = null;
 
 
-        List<DownLoadThread> list = new ArrayList<DownLoadThread>();
-        try {
-            new ContinueTransferringBreakpointThread(list).start();
-            raf = new RandomAccessFile(saveFilePath,"rw");
-            Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,threadCountInt);
+        ContinueTransferringBreakpointThread continueTransferringBreakpointThread = new ContinueTransferringBreakpointThread();
+
+
+
+
+            Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,threadCountInt,url,saveFilePath);
             for (DownloadBytesBean d :vector){
-                DownLoadThread downLoadThread = new DownLoadThread(url,saveFilePath,d,ui);
+                continueTransferringBreakpointThread.getDownloadBytesBeanVector().add(d);
+
+                DownLoadThread downLoadThread = new DownLoadThread(d,ui,continueTransferringBreakpointThread);
                 downLoadThread.start();
 
-                list.add(downLoadThread);
+                downloadThreadVector.add(downLoadThread);
 
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            continueTransferringBreakpointThread.start();
 
-/*        for (DownLoadThread d : list){
+
+
+
+/*        for (DownLoadThread d : downloadThreadVector){
             try {
                 d.join();
             } catch (InterruptedException e) {
@@ -87,5 +90,14 @@ public class Downloader {
 
        // System.out.println("文件下载完成,保存在:" +saveFilePath );
 
+    }
+
+
+    public Vector<DownLoadThread> getDownloadThreadVector() {
+        return downloadThreadVector;
+    }
+
+    public void setDownloadThreadVector(Vector<DownLoadThread> downloadThreadVector) {
+        this.downloadThreadVector = downloadThreadVector;
     }
 }

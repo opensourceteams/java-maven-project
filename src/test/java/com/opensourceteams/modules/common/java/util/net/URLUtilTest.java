@@ -58,7 +58,7 @@ public class URLUtilTest {
         FileOutputStream fos = new FileOutputStream("/opt/temp/apache-tomcat-9.0.0.M4-6.zip");
 
         System.out.println(totalLength);
-        Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,10);
+        Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,10,"","");
         int cal =0 ;
         for (int i = 0 ;i < vector.size();i++){
 
@@ -108,7 +108,7 @@ public class URLUtilTest {
 
 
 
-        Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,10);
+        Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,10,"","");
         int cal =0 ;
         for (int i = 0 ;i < vector.size();i++){
 

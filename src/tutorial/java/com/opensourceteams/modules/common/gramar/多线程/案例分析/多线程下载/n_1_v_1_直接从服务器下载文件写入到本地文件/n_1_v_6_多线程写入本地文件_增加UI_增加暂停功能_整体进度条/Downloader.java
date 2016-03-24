@@ -51,7 +51,7 @@ public class Downloader {
         List<DownLoadThread> list = new ArrayList<DownLoadThread>();
         try {
             raf = new RandomAccessFile(saveFilePath,"rw");
-            Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,threadCountInt);
+            Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVector(totalLength,threadCountInt,"","");
             for (DownloadBytesBean d :vector){
                 DownLoadThread downLoadThread = new DownLoadThread(url,saveFilePath,d,ui);
                 downLoadThread.start();
