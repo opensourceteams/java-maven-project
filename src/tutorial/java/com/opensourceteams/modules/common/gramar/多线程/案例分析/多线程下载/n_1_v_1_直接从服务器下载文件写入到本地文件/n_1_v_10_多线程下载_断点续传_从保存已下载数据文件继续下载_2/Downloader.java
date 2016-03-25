@@ -17,7 +17,7 @@ import java.util.*;
 
 public class Downloader {
 
-    DownLoadUI ui;
+    DownLoadUI ui; //
 
 
     public Downloader(DownLoadUI downLoadUI){
