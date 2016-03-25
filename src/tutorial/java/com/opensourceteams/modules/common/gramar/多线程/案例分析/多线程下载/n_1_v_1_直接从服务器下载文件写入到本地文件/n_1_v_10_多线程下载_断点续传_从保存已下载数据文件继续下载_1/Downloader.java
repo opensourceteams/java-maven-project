@@ -1,13 +1,17 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_10_多线程下载_断点续传_从保存已下载数据文件继续下载;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_10_多线程下载_断点续传_从保存已下载数据文件继续下载_1;
 
 import com.opensourceteams.modules.common.java.algorithm.SplitArrayUtil;
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
 import com.opensourceteams.modules.common.java.util.net.URLUtil;
+import com.opensourceteams.modules.common.java.util.properties.PropertiesUtil;
 
-import java.io.FileNotFoundException;
-import java.io.RandomAccessFile;
+import java.io.File;
 import java.net.URLConnection;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Vector;
+
+import static com.opensourceteams.modules.common.java.util.properties.PropertiesUtil.getPropertiesPrefix;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -19,13 +23,36 @@ public class Downloader {
 
     DownLoadUI ui;
 
-    Vector<DownLoadThread> downloadThreadVector = new Vector<DownLoadThread>();//一共有多少个下载线程
 
     public Downloader(DownLoadUI downLoadUI){
         this.ui = downLoadUI;
     }
 
 
+    public void breakpoint(String url,String saveFilePath,String threadCount){
+        File file = new File(saveFilePath);
+
+        File fileDownload = new File(saveFilePath+".download");
+        if(file != null && fileDownload != null){
+            Properties p = PropertiesUtil.getProperties(saveFilePath+".download");
+            int threadCountContinue = 0 ;
+            threadCountContinue = p.getProperty("thread.count") == null ? 0 : Integer.parseInt(p.getProperty("thread.count"));
+            if (threadCountContinue > 0){
+                //进行继传
+                Map<String,String> map = PropertiesUtil.getPropertiesPrefix(p,"thread.index");
+                for (Map.Entry<String,String> entry : map.entrySet()){
+                    System.out.println(entry.getKey() +":" +entry.getValue());
+                }
+
+            }else{
+                download(url, saveFilePath, threadCount);
+            }
+
+        }else {
+            download(url, saveFilePath, threadCount);
+        }
+
+    }
     /**
      * 下载
      * @param url
@@ -65,39 +92,13 @@ public class Downloader {
                 DownLoadThread downLoadThread = new DownLoadThread(d,ui,continueTransferringBreakpointThread);
                 downLoadThread.start();
 
-                downloadThreadVector.add(downLoadThread);
 
             }
             continueTransferringBreakpointThread.start();
 
 
-
-
-/*        for (DownLoadThread d : downloadThreadVector){
-            try {
-                d.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }*/
-
-
-
-
-
-       // System.out.println("\n");
-     //   String exeTime = "\t" + TimerUtil.printWorkerTimeMillis(timer) +"";
-
-       // System.out.println("文件下载完成,保存在:" +saveFilePath );
-
     }
 
 
-    public Vector<DownLoadThread> getDownloadThreadVector() {
-        return downloadThreadVector;
-    }
 
-    public void setDownloadThreadVector(Vector<DownLoadThread> downloadThreadVector) {
-        this.downloadThreadVector = downloadThreadVector;
-    }
 }

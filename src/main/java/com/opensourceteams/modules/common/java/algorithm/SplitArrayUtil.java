@@ -212,10 +212,38 @@ public class SplitArrayUtil {
 
         }
 
+        return vector;
+    }
+    public static Vector<DownloadBytesBean> splitBytesToVector(int bytesLength,int maxThread,List<DownloadBytesBean> downloadBytesBeanList){
 
+
+        int totalAmount = 0; //已下载的总量信息
+        for (DownloadBytesBean d : downloadBytesBeanList){
+            totalAmount += d.getAmount();
+        }
+
+        int downloadLength = bytesLength - totalAmount; //需要下载的总量信息
+        Vector<DownloadBytesBean> vector = new Vector<DownloadBytesBean>();
+        int capacity = downloadLength / maxThread ; //每个线程下载的容量信息
+        int remain = downloadLength % maxThread;   //每个线程下载的容量信息,是否还有剩的
+
+        int len = 0 ;//每个线程分配的长度
+        for (int i = 0 ;i < maxThread;i++){
+
+            if(i == maxThread - 1 && remain > 0){
+                len = capacity + remain;
+
+            }else{
+                len = capacity;
+            }
+
+        }
 
         return vector;
     }
+
+
+
 
 
 

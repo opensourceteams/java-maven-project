@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.集合.向量vector;
+package com.opensourceteams.modules.common.gramar.集合.向量vector.n_1_向量的基本操作;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com

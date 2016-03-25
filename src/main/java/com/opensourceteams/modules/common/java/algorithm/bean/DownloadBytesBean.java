@@ -9,6 +9,7 @@ package com.opensourceteams.modules.common.java.algorithm.bean;
 public class DownloadBytesBean {
 
 
+
         private int beginIndex;
         private int endIndex;
         private int length; //本次下载量
@@ -22,6 +23,10 @@ public class DownloadBytesBean {
         String saveFilePath; //本地保存地址
 
         boolean isOver; //是否已完成该线程
+
+        public DownloadBytesBean(){
+
+        }
 
         public DownloadBytesBean(int beginIndex, int endIndex,int index,int totalLength,String urlStr,String saveFilePath) {
             this.beginIndex = beginIndex;

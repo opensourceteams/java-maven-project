@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_10_多线程下载_断点续传_从保存已下载数据文件继续下载;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_10_多线程下载_断点续传_从保存已下载数据文件继续下载_2;
 
 
 import javax.swing.*;
@@ -133,7 +133,7 @@ public class DownLoadUI extends JFrame {
                     Download_URLUtil.globalIsSuspend = false ; //是否暂停,不暂停
 
                     Downloader downloader = new Downloader(DownLoadUI.this);
-                    downloader.download(txtaUrl.getText(), txtaSaveFilePath.getText(), txtCount.getText());
+                    downloader.breakpoint(txtaUrl.getText(), txtaSaveFilePath.getText(), txtCount.getText());
                 }
             }
         });

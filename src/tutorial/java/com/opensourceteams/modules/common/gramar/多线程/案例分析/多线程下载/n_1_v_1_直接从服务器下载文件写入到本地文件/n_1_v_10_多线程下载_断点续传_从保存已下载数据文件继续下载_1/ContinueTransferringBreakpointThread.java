@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_10_多线程下载_断点续传_从保存已下载数据文件继续下载;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_10_多线程下载_断点续传_从保存已下载数据文件继续下载_1;
 
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
 import com.opensourceteams.modules.common.java.io.file.FilePathUtil;
@@ -27,8 +27,25 @@ public class ContinueTransferringBreakpointThread extends Thread{
     public void run() {
         FileOutputStream fos = null;
         int i =0;
+        int breakpointCount = 0 ;
         while (true){
 
+            while (Download_URLUtil.globalIsSuspend){
+                System.out.println(Thread.currentThread().getName() + "暂停");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            while (Download_URLUtil.globalIsStop){
+                System.out.println(Thread.currentThread().getName() +"停止");
+                return ;
+            }
+
+            breakpointCount = 0 ;
 
             try {
                 Properties p = new Properties();
@@ -42,8 +59,9 @@ public class ContinueTransferringBreakpointThread extends Thread{
                         ++i;
                         //该线程还在
                         if(!d.isOver()){
+                            breakpointCount++;
                             //System.out.println("断点续传保存的东西:" +d);
-                            filePath = d.getSaveFilePath() +".tmp";
+                            filePath = d.getSaveFilePath() +".download";
                             d.getBeginIndex() ;
                             d.getAmount();
                             d.getIndex();
@@ -54,15 +72,15 @@ public class ContinueTransferringBreakpointThread extends Thread{
                             sb.append(d.getAmount());
 
 
-                            p.setProperty("thread." + d.getIndex(),sb.toString());
+                            p.setProperty("thread.index" + d.getIndex(),sb.toString());
 
                             File f = FilePathUtil.createNewFile(filePath);
                             p.setProperty("i",i+"");
-                            p.setProperty("thread.count", downloadBytesBeanVector.size()+"");
+                            p.setProperty("thread.count", breakpointCount+"");
                             fos = new FileOutputStream(f);
                             p.store(fos,"保存文件的下载信息,用作断点续传");
 
-                            System.out.println(downloadBytesBeanVector.size() + "保存了"+(i)+"次:" +p);
+                            System.out.println(breakpointCount + "保存了"+(i)+"次:" +p);
                         }
 
 
