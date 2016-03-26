@@ -44,8 +44,8 @@ public class MyJButtonImageIcon extends JFrame {
 
         int x = 0 ;
         int y = 0 ;
-        int width = 600 ; //宽度
-        int height = 400;//高度
+        int width = screenSize.width ; //宽度
+        int height = screenSize.height;//高度
 
         System.out.println("客户端宽:" +  screenSize.width);
         System.out.println("客户端高:" +  screenSize.height);
