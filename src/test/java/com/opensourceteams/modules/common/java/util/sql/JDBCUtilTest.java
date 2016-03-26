@@ -1,15 +1,15 @@
 package com.opensourceteams.modules.common.java.util.sql;
 
+import com.opensourceteams.modules.common.java.io.StreamUtil;
 import com.opensourceteams.modules.common.java.timer.TimerUtil;
 import org.junit.Test;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.opensourceteams.modules.common.java.util.sql.JDBCUtil.executeBatch;
 import static com.opensourceteams.modules.common.java.util.sql.JDBCUtil.getNewConnection;
-import static com.opensourceteams.modules.common.java.util.sql.JDBCUtil.ps;
 
 
 /**
@@ -83,6 +83,19 @@ public class JDBCUtilTest {
 
         System.out.println(result);
     }
+
+    /**
+     * PreparedStatement 增加数据,图片
+     */
+    @Test
+    public void testInsertPreparedStatement_Images(){
+        String sql = "insert into student (name,pic) values ('images',?)"  ;
+
+        Boolean result = JDBCUtil.executePreparedStatement(sql);
+        JDBCUtil.close();
+
+        System.out.println(result);
+    }
     /**
      * executePreparedStatement 增加数据
      */
@@ -96,6 +109,37 @@ public class JDBCUtilTest {
         List<Integer> types = new ArrayList<Integer>();
         types.add(Types.VARCHAR);
         types.add(Types.INTEGER);
+
+        Boolean result = null;
+        try {
+            result = JDBCUtil.executePreparedStatement(sql, values,types);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JDBCUtil.close();
+
+        System.out.println(result);
+    }
+
+    /**
+     * executePreparedStatement 增加数据,保存图片
+     */
+    @Test
+    public void testInsertPreparedStatementParamers_Images(){
+        String sql = "insert into student (name,age,pic) values (?,?,?)"  ;
+        List<Object> values = new ArrayList<Object>();
+        values.add("中国17");
+        values.add(17);
+        try {
+            values.add(new FileInputStream("/opt/temp/data/images/hadoop-logo.jpg"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        List<Integer> types = new ArrayList<Integer>();
+        types.add(Types.VARCHAR);
+        types.add(Types.INTEGER);
+        types.add(Types.BINARY);
 
         Boolean result = null;
         try {
@@ -219,6 +263,41 @@ public class JDBCUtilTest {
 
 
         JDBCUtil.close(conn,resultSet);
+
+    }
+
+    /**
+     * Statement 查询数据,读取图片
+     */
+    @Test
+    public void testResultSet_Image(){
+        String sql = "select id,name,age,pic from student where id = 3 "  ;
+        ResultSet resultSet = JDBCUtil.resultSet(conn,sql);
+        OutputStream os = null;
+        byte[] bytes = null;
+        try {
+
+            while (resultSet.next()){
+                os = new FileOutputStream("/opt/temp/data/images/hadoop-logo-4.jpg");
+                System.out.print("id:" + resultSet.getInt("id") );
+                System.out.println("\tname:" + resultSet.getString("name"));
+                System.out.println();
+                bytes = resultSet.getBytes(4);
+                os.write(bytes);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            StreamUtil.close(os);
+            JDBCUtil.close(conn,resultSet);
+        }
+
+
+
 
     }
 

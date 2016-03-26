@@ -1,5 +1,6 @@
 package com.opensourceteams.modules.common.java.util.sql;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.List;
 
@@ -175,6 +176,9 @@ public class JDBCUtil {
                             ps.setInt(i + 1,Integer.parseInt(values.get(i).toString()));
                         }else if(types.get(i) == Types.VARCHAR){
                             ps.setString(i + 1,values.get(i).toString());
+                        }else if(types.get(i) == Types.BINARY){
+                            InputStream is = (InputStream)values.get(i) ;
+                            ps.setBinaryStream(i + 1,is,is.available());
                         }else{
                             throw new Exception("暂不支持类型:" +types.get(i));
                         }
