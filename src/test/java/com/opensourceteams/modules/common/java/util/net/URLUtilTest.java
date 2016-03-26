@@ -81,7 +81,7 @@ public class URLUtilTest {
         }
 
         System.out.println(cal);
-       // System.out.println(conn.getContentLength());
+       // System.out.println(connection.getContentLength());
 
 
     }
@@ -132,7 +132,7 @@ public class URLUtilTest {
         }
 
         System.out.println(cal);
-        // System.out.println(conn.getContentLength());
+        // System.out.println(connection.getContentLength());
 
 
     }

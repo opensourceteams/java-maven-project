@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -23,15 +23,24 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="false" />
-    <loaded-nodes>
-      <connection connection-id="4b3ef62e-0535-48fc-8486-0c0fbd2ff7ca">
-        <schema name="bigdata" object-types="column, constraint, function, index, procedure, table, dataset trigger, view" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="4b3ef62e-0535-48fc-8486-0c0fbd2ff7ca">
-      <console name="win7" type="STANDARD"><![CDATA[select * from student;]]></console>
+      <console name="win7" type="STANDARD" />
+    </connection>
+    <connection id="f8783817-274b-4858-b053-1017f6dc10dd">
+      <console name="mac_mysql" type="STANDARD"><![CDATA[create table student (id int ,name varchar(100),age int);
+
+drop table student;
+
+select * from student;
+
+select * from user;
+
+grant all privileges on *.* to bigdata@"localhost" identified by "BigData000" with grant option;
+flush privileges;
+flush privileges;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
@@ -78,6 +87,80 @@
           <empty-password value="false" />
           <user value="bigdata" />
           <password value="YmlnZGF0YQ==" />
+        </database>
+        <properties>
+          <auto-commit value="false" />
+        </properties>
+        <ssh-settings>
+          <active value="false" />
+          <proxy-host value="" />
+          <proxy-port value="22" />
+          <proxy-user value="" />
+          <proxy-password value="" />
+          <auth-type value="PASSWORD" />
+          <key-file value="" />
+          <key-passphrase value="" />
+        </ssh-settings>
+        <details>
+          <charset value="UTF-8" />
+          <ddl-file-binding value="true" />
+          <database-logging value="true" />
+          <environment-type value="default" />
+          <idle-time-to-disconnect value="30" />
+          <password-expiry-time value="10" />
+          <max-connection-pool-size value="7" />
+          <alternative-statement-delimiter value="" />
+          <connect-automatically value="true" />
+        </details>
+        <object-filters hide-empty-schemas="false">
+          <object-type-filter use-master-settings="true">
+            <object-type name="SCHEMA" enabled="true" />
+            <object-type name="USER" enabled="true" />
+            <object-type name="ROLE" enabled="true" />
+            <object-type name="PRIVILEGE" enabled="true" />
+            <object-type name="CHARSET" enabled="true" />
+            <object-type name="TABLE" enabled="true" />
+            <object-type name="VIEW" enabled="true" />
+            <object-type name="MATERIALIZED_VIEW" enabled="true" />
+            <object-type name="NESTED_TABLE" enabled="true" />
+            <object-type name="COLUMN" enabled="true" />
+            <object-type name="INDEX" enabled="true" />
+            <object-type name="CONSTRAINT" enabled="true" />
+            <object-type name="DATASET_TRIGGER" enabled="true" />
+            <object-type name="DATABASE_TRIGGER" enabled="true" />
+            <object-type name="SYNONYM" enabled="true" />
+            <object-type name="SEQUENCE" enabled="true" />
+            <object-type name="PROCEDURE" enabled="true" />
+            <object-type name="FUNCTION" enabled="true" />
+            <object-type name="PACKAGE" enabled="true" />
+            <object-type name="TYPE" enabled="true" />
+            <object-type name="TYPE_ATTRIBUTE" enabled="true" />
+            <object-type name="ARGUMENT" enabled="true" />
+            <object-type name="DIMENSION" enabled="true" />
+            <object-type name="CLUSTER" enabled="true" />
+            <object-type name="DBLINK" enabled="true" />
+          </object-type-filter>
+          <object-name-filters />
+        </object-filters>
+      </connection>
+      <connection id="f8783817-274b-4858-b053-1017f6dc10dd" active="true">
+        <database>
+          <name value="mac_mysql" />
+          <description value="mac_mysql" />
+          <database-type value="MYSQL" />
+          <config-type value="BASIC" />
+          <database-version value="5.6" />
+          <driver-source value="BUILTIN" />
+          <driver-library value="$PROJECT_DIR$/../../../../resources/libset/mysql/mysql-connector-java-5.1.36.jar" />
+          <driver value="" />
+          <url-type value="DATABASE" />
+          <host value="localhost" />
+          <port value="3307" />
+          <database value="mysql" />
+          <os-authentication value="false" />
+          <empty-password value="false" />
+          <user value="root" />
+          <password value="WWlVcDAwMA==" />
         </database>
         <properties>
           <auto-commit value="false" />

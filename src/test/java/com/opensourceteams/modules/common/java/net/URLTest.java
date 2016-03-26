@@ -35,7 +35,7 @@ public class URLTest {
         InputStream is = conn.getInputStream();
         int len = 0 ;
 
-       // conn.setRequestProperty();
+       // connection.setRequestProperty();
         byte[] buffer = new byte[1024];
         GZIPInputStream zip = new GZIPInputStream(is );
         FileOutputStream fos = new FileOutputStream("/opt/temp/baidu.txt");
