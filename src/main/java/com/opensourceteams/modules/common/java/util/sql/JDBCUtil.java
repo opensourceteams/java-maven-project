@@ -1,8 +1,10 @@
 package com.opensourceteams.modules.common.java.util.sql;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.List;
+import java.util.Properties;
 
 
 /**
@@ -12,11 +14,14 @@ import java.util.List;
  */
 public class JDBCUtil {
 
-    static String  url = "jdbc:mysql://127.0.0.1:3307/bigdata?characterEncoding=utf8&amp;autoReconnect";
-    static String user = "bigdata";
-    static String password = "BigData000";
+    static String driver = "";
+    static String url = "";
+    static String user = "";
+    static String password = "";
 
     public static Connection connection = getConnection();
+
+
 
     public static PreparedStatement ps = null;
 
@@ -36,7 +41,18 @@ public class JDBCUtil {
     private synchronized static Connection getConnection(){
         try {
 
-            Class.forName("com.mysql.jdbc.Driver");
+            Properties p = new Properties();
+            try {
+                p.load(JDBCUtil.class.getClassLoader().getResourceAsStream("jdbc.properties"));
+                url = p.getProperty("jdbc.url");
+                user = p.getProperty("jdbc.user");
+                password = p.getProperty("jdbc.password");
+                driver = p.getProperty("jdbc.driver");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Class.forName(driver);
             if(connection != null) return connection;
 
             return DriverManager.getConnection(url,user,password);
@@ -489,6 +505,29 @@ public class JDBCUtil {
         if(rs != null){
             try {
                 rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            if(conn != null && !conn.isClosed()){
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public static  void close(Connection conn,CallableStatement cs){
+        if(cs != null){
+            try {
+                cs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
