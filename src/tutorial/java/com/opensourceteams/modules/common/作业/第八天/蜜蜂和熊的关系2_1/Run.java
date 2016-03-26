@@ -61,7 +61,7 @@ class BeeSugarPool{
     public void subtract(String name) throws InterruptedException {
 
         synchronized (BeeSugarPool.class){
-           // System.out.println("currentBeeSuger:"+currentBeeSuger +" onceIncrease:" +onceIncrease +" max:"+Run.MAX);
+           // System.out.println("currentBeeSuger:"+currentBeeSuger +" onceIncrease:" +onceIncrease +" max:"+ReceiverRun.MAX);
             if(currentBeeSuger >= Run.MAX && beeSuger >=Run.MAX){
                 currentBeeSuger = currentBeeSuger - onceIncrease ;
 

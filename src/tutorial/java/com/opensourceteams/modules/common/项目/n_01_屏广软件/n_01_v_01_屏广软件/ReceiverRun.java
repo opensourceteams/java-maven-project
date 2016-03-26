@@ -6,7 +6,7 @@ package com.opensourceteams.modules.common.项目.n_01_屏广软件.n_01_v_01_�
  * 功能描述:
  */
 
-public class Run {
+public class ReceiverRun {
 
     public static void main(String[] args) {
         MyJButtonImageIcon myJButton = new MyJButtonImageIcon("刘氏集团内部专享会议桌面共享软件");

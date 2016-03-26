@@ -20,7 +20,7 @@ public class SenderRun {
 
     boolean debug = true;
 
-    String receiveIp = "192.168.12.1";
+    String receiveIp = "192.168.12.17";
     int receiverPort = 7779;
     int senderPort = 7778 ;
 
