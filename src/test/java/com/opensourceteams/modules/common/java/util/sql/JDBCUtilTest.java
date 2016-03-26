@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.opensourceteams.modules.common.java.util.sql.JDBCUtil.executeBatch;
+import static com.opensourceteams.modules.common.java.util.sql.JDBCUtil.getNewConnection;
+import static com.opensourceteams.modules.common.java.util.sql.JDBCUtil.ps;
 
 
 /**
@@ -16,20 +18,22 @@ import static com.opensourceteams.modules.common.java.util.sql.JDBCUtil.executeB
  * 功能描述:
  */
 public class JDBCUtilTest {
-    Connection conn = JDBCUtil.getNewConnection();
+    Connection conn = getNewConnection();
 
     /**
      * Statement 创建表
      */
     @Test
     public void testCreateTable(){
-        Connection conn = JDBCUtil.getNewConnection();
-        String sql = "create table student_batch_PreparedStatement (id int primary key auto_increment,name varchar(100),age int) "  ;
+        Connection conn = getNewConnection();
+        String sql = "create table student_1 (id int primary key ,name varchar(100),age int) "  ;
         Boolean result = JDBCUtil.execute(conn,sql);
         JDBCUtil.close(conn);
 
         System.out.println(result);
     }
+
+
 
     /**
      * PreparedStatement 创建表
@@ -48,8 +52,8 @@ public class JDBCUtilTest {
      */
     @Test
     public void testDropTable(){
-        Connection conn = JDBCUtil.getNewConnection();
-        String sql = "drop table STUDENT_BATCH_PREPAREDSTATEMENT  "  ;
+        Connection conn = getNewConnection();
+        String sql = "drop table student_1  "  ;
         Boolean result = JDBCUtil.execute(conn,sql);
         JDBCUtil.close(conn);
 
@@ -312,7 +316,7 @@ public class JDBCUtilTest {
                 "FROM information_schema.TABLES where TABLE_SCHEMA='bigdata' and  table_name ='STUDENT_BATCH_PREPAREDSTATEMENT';"  ;
 
 
-        Connection conn = JDBCUtil.getNewConnection();
+        Connection conn = getNewConnection();
         ResultSet resultSet = JDBCUtil.resultSetPreparedStatement(conn,sql);
         try {
             while (resultSet.next()){
@@ -334,6 +338,46 @@ public class JDBCUtilTest {
 
     }
 
+    @Test
+    public void testBatch3(){
+
+        testDropTable();
+        testCreateTable();
+        long time = System.currentTimeMillis();
+        String sql = "insert into student_1 (name,age) values (?,?) "  ;
+        Connection conn = JDBCUtil.getNewConnection();
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            int totalCount = 150000;
+
+            for (int i = 0 ;i< totalCount;i++){
+
+                ps.setString(1,"name" +i);
+                ps.setInt(2,i);
+
+
+                ps.addBatch();
+
+                if(totalCount % 10000 ==0){
+                    ps.executeBatch();
+                    ps.clearBatch();
+                }
+
+                //ps.clearBatch();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            ps.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        JDBCUtil.close(conn);
+        TimerUtil.printlnWorkerTimeMillis(time);
+    }
     /**
      * PreparedStatement 插入数据 批量处理,性能测试一百万数据
      */
@@ -343,7 +387,7 @@ public class JDBCUtilTest {
         testCreateTable();
         long time = System.currentTimeMillis();
         //sql = "insert into student (id,name,age) values (" + i+",'f"+i+"',"+i+")"  ;
-        String sql = "insert into student_batch_PreparedStatement (name,age) values (?,?) "  ;
+        String sql = "insert into student_1 (id,name,age) values (?,?,?) "  ;
 
         try {
             List<List<Object>> values = new ArrayList<List<Object>>();
@@ -351,14 +395,16 @@ public class JDBCUtilTest {
             List<Object> rowValues = null;
 
             List<Integer> rowTypes = null;
-            int totalCount = 20000000;
+            int totalCount = 1000000;
 
             for (int i = 0 ;i< totalCount;i++){
                 rowValues = new ArrayList<Object>();
+                rowValues.add(i);
                 rowValues.add("中国" +i);
                 rowValues.add(i +10);
 
                 rowTypes = new ArrayList<Integer>();
+                rowTypes.add(Types.INTEGER);
                 rowTypes.add(Types.VARCHAR);
                 rowTypes.add(Types.INTEGER);
 

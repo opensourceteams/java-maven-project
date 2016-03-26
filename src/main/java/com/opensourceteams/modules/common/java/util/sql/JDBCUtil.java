@@ -1,14 +1,13 @@
 package com.opensourceteams.modules.common.java.util.sql;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+
 
 /**
  * 日期: 2016-03-25  14:53
  * 开发人:刘文  -->  (372065525@qq.com)
- * 功能描述:
+ * 功能描述:1
  */
 public class JDBCUtil {
 
@@ -18,6 +17,20 @@ public class JDBCUtil {
 
     public static Connection connection = getConnection();
 
+    public static PreparedStatement ps = null;
+
+    private synchronized static PreparedStatement getPreparedStatement(String sql){
+        if(ps == null){
+            try {
+                return connection.prepareStatement(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else{
+            return ps;
+        }
+        return null;
+    }
 
     private synchronized static Connection getConnection(){
         try {
@@ -243,7 +256,7 @@ public class JDBCUtil {
     }
 
     public static int[] executeBatchNotClose(String sql,List<List<Object>> values,List<List<Integer>> types ){
-        return  executeBatchNotClose(sql,values,types,1000);
+        return  executeBatchNotClose(sql,values,types,10000);
     }
 
 
@@ -280,7 +293,7 @@ public class JDBCUtil {
     }
 
     public static int[] executeBatchNotClose(String sql,List<List<Object>> values,List<List<Integer>> types ,int rowsCountExecuteBath){
-        PreparedStatement ps = preparedStatement(sql);
+        PreparedStatement ps = getPreparedStatement(sql);
         try {
 
 
@@ -295,8 +308,12 @@ public class JDBCUtil {
 
                 JDBCUtil.setPreparedStatement(ps,rowValues,rowTypes);
                 ps.addBatch();
+                //ps.clearBatch();
 
-                if(i % rowsCountExecuteBath ==0 ) ps.executeBatch();
+                if(i % rowsCountExecuteBath ==0 ) {
+                    ps.executeBatch();
+                    ps.clearBatch();
+                }
             }
 
             return  ps.executeBatch();
