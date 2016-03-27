@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.项目.n_01_屏广软件.n_01_v_01_屏广软件;
+package com.opensourceteams.modules.product.项目.n_01_屏广软件.n_01_v_01_屏广软件;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com

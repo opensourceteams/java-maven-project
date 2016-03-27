@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.项目.n_01_屏广软件.n_01_v_01_屏广软件;
+package com.opensourceteams.modules.product.项目.n_01_屏广软件.n_01_v_01_屏广软件;
 
 import com.opensourceteams.modules.common.java.algorithm.SplitArrayUtil;
 import com.opensourceteams.modules.common.java.util.net.UDPUtil;

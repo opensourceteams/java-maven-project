@@ -1,12 +1,16 @@
 package com.opensourceteams.modules.common.java.algorithm.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 开发者:刘文  Email:372065525@qq.com
  * 16/3/23  上午5:19
  * 功能描述: zun循原则,前包后不包
  */
 
-public class DownloadBytesBean {
+public class DownloadBytesBean implements  Comparable<DownloadBytesBean>{
 
 
 
@@ -23,6 +27,9 @@ public class DownloadBytesBean {
         String saveFilePath; //本地保存地址
 
         boolean isOver; //是否已完成该线程
+
+
+        List<Map<Integer,Integer>> rangList = new ArrayList<Map<Integer, Integer>>(); //断点续传使用
 
         public DownloadBytesBean(){
 
@@ -114,5 +121,26 @@ public class DownloadBytesBean {
 
         public void setOver(boolean over) {
             isOver = over;
+        }
+
+        public int compareTo(DownloadBytesBean o) {
+            if(o == null && this == null){
+                return  0;
+            }else if ( o == null ){
+                return  1;
+            }else if (this == null){
+                return -1;
+            }else{
+                return  beginIndex = o.beginIndex;
+            }
+        }
+
+
+        public List<Map<Integer, Integer>> getRangList() {
+            return rangList;
+        }
+
+        public void setRangList(List<Map<Integer, Integer>> rangList) {
+            this.rangList = rangList;
         }
 }

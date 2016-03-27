@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.项目.n_01_屏广软件.n_01_v_01_屏广软件;
+package com.opensourceteams.modules.product.项目.n_01_屏广软件.n_01_v_01_屏广软件;
 
 import com.opensourceteams.modules.common.java.algorithm.NextValueUtil;
 import com.opensourceteams.modules.common.java.algorithm.SplitArrayUtil;
@@ -21,8 +21,8 @@ public class SenderRun {
     boolean debug = true;
 
     String receiveIp = "192.168.12.17";
-    int receiverPort = 7779;
-    int senderPort = 7778 ;
+    int receiverPort = Constanct.getReceiverPort();
+    int senderPort = Constanct.getSenderPort() ;
 
     /**
      * 发送bytes,一张图片,压缩,分包

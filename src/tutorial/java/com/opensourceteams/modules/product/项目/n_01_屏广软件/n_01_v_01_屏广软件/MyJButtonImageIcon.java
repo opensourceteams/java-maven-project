@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.项目.n_01_屏广软件.n_01_v_01_屏广软件;
+package com.opensourceteams.modules.product.项目.n_01_屏广软件.n_01_v_01_屏广软件;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,6 @@ import java.net.SocketException;
  */
 
 public class MyJButtonImageIcon extends JFrame {
-    int receivePort = 7779;
 
     MyJButtonImageIcon instance = null;
 
@@ -86,7 +85,7 @@ public class MyJButtonImageIcon extends JFrame {
 
         DatagramSocket socket = null;
         try {
-            socket = new DatagramSocket(receivePort);
+            socket = new DatagramSocket(Constanct.getReceiverPort());
 
         } catch (SocketException e) {
             e.printStackTrace();
