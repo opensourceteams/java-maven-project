@@ -603,6 +603,12 @@ public class JDBCUtilTest {
 
     }
 
+
+    @Test
+    public void testprintMetaData(){
+        JDBCUtil.printMetaData("student");
+    }
+
     /**
      * 遍历数据库
      */

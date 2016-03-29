@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 
 /**
@@ -424,7 +425,17 @@ public class JDBCUtil<T> {
                             resultRowMap.put(map.get("columnName")+"",null);
 
                         }else{
-                            // TODO: 16/3/29 未处理完成数据库类型为Date 
+                            Object value = resultSet.getObject(map.get("columnName")+"");
+                            resultRowMap.put(map.get("columnName")+"",(Date)value);
+                        }
+                    }else  if("java.sql.Timestamp".equals(map.get("columnClassName"))){
+                        if(resultSet.getObject(map.get("columnName")+"") == null){
+                            //空值
+                            resultRowMap.put(map.get("columnName")+"",null);
+
+                        }else{
+                            Object value = resultSet.getObject(map.get("columnName")+"");
+                            resultRowMap.put(map.get("columnName")+"",(Date)value);
                         }
                     }
 
@@ -522,6 +533,34 @@ public class JDBCUtil<T> {
                 map.put("columnClassName",resultSetMetaData.getColumnClassName(i));
                 map.put("columnType",resultSetMetaData.getColumnType(i));
                 map.put("columnTypeName",resultSetMetaData.getColumnTypeName(i));
+                list.add(map);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static  List<Map<String,Object>> printMetaData(String tableName){
+        List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
+        Map<String,Object> map = null;
+        String sql = "select * from " +tableName;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSetMetaData resultSetMetaData = ps.getMetaData();
+            for (int i = 1 ;i <= resultSetMetaData.getColumnCount();i++ ){
+                map = new HashMap<String, Object>();
+                map.put("columnName",resultSetMetaData.getColumnName(i));
+                map.put("columnClassName",resultSetMetaData.getColumnClassName(i));
+                map.put("columnType",resultSetMetaData.getColumnType(i));
+                map.put("columnTypeName",resultSetMetaData.getColumnTypeName(i));
+
+                System.out.print("columnName:" +resultSetMetaData.getColumnName(i));
+                System.out.print("\tcolumnClassName:" + resultSetMetaData.getColumnClassName(i));
+                System.out.print("\tcolumnType:" + resultSetMetaData.getColumnType(i));
+                System.out.print("\tcolumnTypeName:" + resultSetMetaData.getColumnTypeName(i));
+                System.out.println();
                 list.add(map);
 
             }
