@@ -1,5 +1,7 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_10_多线程下载_断点续传_从保存已下载数据文件继续下载_2;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_11_多线程下载_断点续传_从保存已下载数据文件继续下载;
 
+
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_COLOR_BURNPeer;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -31,6 +33,7 @@ public class DownLoadUI extends JFrame {
     JButton butIsStop; //是否停止
 
     JButton btDown; //下载
+    JButton butBreakpointDown;  //继续下载
 
     JProgressBar bar; //进度条
 
@@ -133,7 +136,26 @@ public class DownLoadUI extends JFrame {
                     Download_URLUtil.globalIsSuspend = false ; //是否暂停,不暂停
 
                     Downloader downloader = new Downloader(DownLoadUI.this);
-                    downloader.breakpoint(txtaUrl.getText(), txtaSaveFilePath.getText(), txtCount.getText());
+                    downloader.download(txtaUrl.getText(), txtaSaveFilePath.getText(), txtCount.getText());
+                }
+            }
+        });
+
+        //继续下载
+        butBreakpointDown = new JButton("继续下载");
+        butBreakpointDown.setBounds(430, aboveMargin + y, 100, 50);
+        butBreakpointDown.addMouseListener(new MouseInputAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getComponent() == butBreakpointDown) {
+                    bar.setVisible(true); //进度条可见
+                    butBreakpointDown.setText("继续下载");
+
+                    Download_URLUtil.globalIsStop = false; //是否停止,不停止
+                    Download_URLUtil.globalIsSuspend = false ; //是否暂停,不暂停
+
+                    Downloader downloader = new Downloader(DownLoadUI.this);
+                    downloader.continueDownload( txtCount.getText());
                 }
             }
         });
@@ -170,6 +192,7 @@ public class DownLoadUI extends JFrame {
         this.add(labState) ;//下载状态信息
 
         this.add(btDown); //下载
+        this.add(butBreakpointDown) ; //继续下载
 
 
         this.setVisible(true);

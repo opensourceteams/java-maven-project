@@ -56,6 +56,19 @@
       <version>5.1.36</version>
     </dependency>
 
+    <!-- commons-dbcp-->
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <!-- commons-pool-->
+    <dependency>
+      <groupId>commons-pool</groupId>
+      <artifactId>commons-pool</artifactId>
+      <version>1.6</version>
+    </dependency>
+
 
   </dependencies>
 

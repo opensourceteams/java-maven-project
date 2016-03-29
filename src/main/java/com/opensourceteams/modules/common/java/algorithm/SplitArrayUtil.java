@@ -2,10 +2,7 @@ package com.opensourceteams.modules.common.java.algorithm;
 
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -218,18 +215,18 @@ public class SplitArrayUtil {
 
     /**
      * 分隔断点续传
-     * @param bytesLength
+     * @param bytesLength 原总量大小
      * @param maxThread
      * @param downloadBytesBeanList
      * @return
      */
-    public static Vector<DownloadBytesBean> splitBytesToVectorBreakpoint(int bytesLength,int maxThread,List<DownloadBytesBean> downloadBytesBeanList){
+    public static Vector<DownloadBytesBean> splitBytesToVectorBreakpoint(int bytesLength,int maxThread,List<DownloadBytesBean> downloadBytesBeanList,int totalAmount){
 
 
-        int totalAmount = 0; //已下载的总量信息
+/*        int totalAmount = 0; //已下载的总量信息
         for (DownloadBytesBean d : downloadBytesBeanList){
             totalAmount += d.getAmount();
-        }
+        }*/
         Collections.sort(downloadBytesBeanList);//对元素排序,按开始索引
 
         int downloadLength = bytesLength - totalAmount; //需要下载的总量信息
@@ -251,68 +248,103 @@ public class SplitArrayUtil {
 
             DownloadBytesBean downloadBytesBean = new DownloadBytesBean();
             downloadBytesBean.setLength(len);
-            processBreakpintDownloadBytesBean(bytesLength,newBytesLengthAdd,downloadBytesBeanList,downloadBytesBean);
+            downloadBytesBean.setTotalLength(downloadLength);
+            processBreakpintDownloadBytesBean(newBytesLengthAdd,downloadBytesBeanList,downloadBytesBean);
             newBytesLengthAdd = newBytesLengthAdd + len;
+            vector.add(downloadBytesBean);
 
         }
 
         return vector;
     }
 
-    public static void processBreakpintDownloadBytesBean(int bytesLength,int newBytesLengthAdd,List<DownloadBytesBean> downloadBytesBeanList,DownloadBytesBean downloadBytesBean){
+    public static void processBreakpintDownloadBytesBean(int newBytesLengthAdd,List<DownloadBytesBean> downloadBytesBeanList,DownloadBytesBean downloadBytesBean){/*
         int beginIndex = 0;//包含,当前开始索引
         int endIndex  =0; //不包含,当前结束索引
-        int oldCompleteIndex = 0 ; //以前下载下载到了哪个索引,当前索引还未下载
-        int oldNextIndex = 0 ;
+        //int oldCompleteIndex = 0 ; //以前下载下载到了哪个索引,当前索引还未下载
+        int oldEndIndex = 0 ;
+        int eachBeginIndex = 0 ;
 
         DownloadBytesBean oldLastDownloadBytesBean = downloadBytesBeanList.get(downloadBytesBeanList.size() -1);
 
-        if(newBytesLengthAdd >= oldLastDownloadBytesBean.getBeginIndex() + oldLastDownloadBytesBean.getAmount()){
-            if(beginIndex == 0){
-                //说明旧的已读完了
-                beginIndex = newBytesLengthAdd + 1;
-            }
 
+        List<Map<Integer,Integer>> rangList = new ArrayList<Map<Integer, Integer>>(); //断点续传使用
+        Map<Integer,Integer> map = new HashMap<Integer, Integer>();
+
+
+
+        if(newBytesLengthAdd >= oldLastDownloadBytesBean.getEndIndex()){
+
+            beginIndex = newBytesLengthAdd;
             endIndex = beginIndex + downloadBytesBean.getLength();
             downloadBytesBean.setBeginIndex(beginIndex);
             downloadBytesBean.setEndIndex(endIndex);
+            map.put(beginIndex,endIndex);
+            rangList.add(map);
+            downloadBytesBean.setRangList(rangList);
             //return;
 
 
         }else{
             //从旧的开始读
 
-            /**
+            *//**
              * ).先考虑当新线程,大于等于以前的线程的情况
-             */
+             *//*
             for (int i = 0 ;i < downloadBytesBeanList.size() ;i ++){
                 DownloadBytesBean oldDownloadBytesBean = downloadBytesBeanList.get(i);
-                oldDownloadBytesBean.getBeginIndex();
-                oldDownloadBytesBean.getAmount();
-                oldNextIndex = oldDownloadBytesBean.getEndIndex();
+                oldEndIndex = oldDownloadBytesBean.getEndIndex();
+                eachBeginIndex = oldDownloadBytesBean.getBeginIndex() +  oldDownloadBytesBean.getAmount();
 
                 if(beginIndex == 0){
-                    oldCompleteIndex = oldDownloadBytesBean.getBeginIndex() +  oldDownloadBytesBean.getAmount();
-                    beginIndex = oldCompleteIndex + 1;
+                    beginIndex = oldDownloadBytesBean.getBeginIndex() +  oldDownloadBytesBean.getAmount();
+                    //beginIndex = oldCompleteIndex + 1;
                 }
 
 
-                if(beginIndex + downloadBytesBean.getLength() <=  oldNextIndex){
+                if(i == downloadBytesBeanList.size() -1){
+                    //最后一次
+
+
+                    //如果循环完了,还没有结束
+                    if(endIndex == 0){
+                        endIndex = beginIndex + downloadBytesBean.getLength();
+                        downloadBytesBean.setBeginIndex(beginIndex);
+                        downloadBytesBean.setEndIndex(beginIndex + downloadBytesBean.getLength() );
+                    }
+
+
+                    map = new HashMap<Integer, Integer>();
+                    map.put(eachBeginIndex,endIndex);
+                    rangList.add(map);
+
+                }else{
+                    map = new HashMap<Integer, Integer>();
+                    map.put(eachBeginIndex,oldEndIndex);
+                    rangList.add(map);
+
+                }
+
+                if(beginIndex + downloadBytesBean.getLength() <=  oldEndIndex){
                     //新线程, 继续从原来
                     endIndex = beginIndex + downloadBytesBean.getLength();
-
                 }
 
                 if(beginIndex > 0 && endIndex > 0){
 
                     downloadBytesBean.setBeginIndex(beginIndex);
-                    downloadBytesBean.setEndIndex(beginIndex + downloadBytesBean.getLength() );
+                    downloadBytesBean.setEndIndex(endIndex );
+
+                    downloadBytesBean.setRangList(rangList);
                     return;
                 }
 
-            }
-        }
+            } //end for
 
+
+
+        }
+*/
 
 
 

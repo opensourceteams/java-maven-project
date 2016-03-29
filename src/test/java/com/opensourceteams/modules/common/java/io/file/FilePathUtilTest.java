@@ -29,7 +29,8 @@ public class FilePathUtilTest {
      */
     @Test
     public void testDelete2(){
-        String path = "a.tmp" ;
+        String path = "/opt/temp/download/ubuntu-15.10-desktop-amd64.iso.download" ;
+        //String saveFilePath = "/opt/temp/download/ubuntu-15.10-desktop-amd64.iso";
         FilePathUtil.deleteFile(path);
     }
 

@@ -29,7 +29,7 @@ public class DownloadBytesBean implements  Comparable<DownloadBytesBean>{
         boolean isOver; //是否已完成该线程
 
 
-        List<Map<Integer,Integer>> rangList = new ArrayList<Map<Integer, Integer>>(); //断点续传使用
+        List<Integer[]> rangList = new ArrayList<Integer[]>(); //断点续传使用
 
         public DownloadBytesBean(){
 
@@ -61,7 +61,8 @@ public class DownloadBytesBean implements  Comparable<DownloadBytesBean>{
         }
 
         public int getLength() {
-            return endIndex - beginIndex;
+
+           return length;
         }
 
         public void setLength(int length) {
@@ -86,7 +87,7 @@ public class DownloadBytesBean implements  Comparable<DownloadBytesBean>{
 
         @Override
         public String toString() {
-            return  "索引" +this.getIndex() +"次下载完成,当前线程下载量:" +this.getLength()/1024 +"(KB)  -> " +this.getLength()/1024/1024 + "(MB)" +
+            return  "索引" +this.getIndex() +"次下载完成,当前线程下载量:" +(this.getEndIndex() - this.getBeginIndex())/1024 +"(KB)  -> " + (this.getEndIndex() - this.getBeginIndex()) /1024/1024 + "(MB)" +
                     ",所有线程总下载量:" +this.totalLength/1024+"(KB) -> " +this.totalLength/1024/1024 +"(MB)" +
                     ",当前线程总下载量:" +this.amount/1024+"(KB) -> " +this.amount/1024/1024 +"(MB)";
         }
@@ -131,16 +132,16 @@ public class DownloadBytesBean implements  Comparable<DownloadBytesBean>{
             }else if (this == null){
                 return -1;
             }else{
-                return  beginIndex = o.beginIndex;
+                return  beginIndex - o.beginIndex;
             }
         }
 
 
-        public List<Map<Integer, Integer>> getRangList() {
+        public List<Integer[]> getRangList() {
             return rangList;
         }
 
-        public void setRangList(List<Map<Integer, Integer>> rangList) {
+        public void setRangList(List<Integer[]> rangList) {
             this.rangList = rangList;
         }
 }

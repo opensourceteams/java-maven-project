@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_10_多线程下载_断点续传_从保存已下载数据文件继续下载_2;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_11_多线程下载_断点续传_从保存已下载数据文件继续下载;
 
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
 import com.opensourceteams.modules.common.java.io.file.FilePathUtil;
@@ -59,8 +59,8 @@ public class ContinueTransferringBreakpointThread extends Thread{
                         ++i;
                         //该线程还在
                         if(!d.isOver() && d.getAmount() > 0){
+                            // TODO: 16/3/27 不能每个线程单独写一次到属性文件,要改成批量一次性写完
                             breakpointCount++;
-                            //System.out.println("断点续传保存的东西:" +d);
                             filePath = d.getSaveFilePath() +".download";
                             d.getBeginIndex() ;
                             d.getAmount();
@@ -75,6 +75,7 @@ public class ContinueTransferringBreakpointThread extends Thread{
                             p.setProperty("thread.index." + d.getIndex(),sb.toString());
                             p.setProperty("saveFilePath",d.getSaveFilePath());
                             p.setProperty("url",d.getUrlStr());
+                            p.setProperty("thread.totalLength",d.getTotalLength()+"");
 
                             File f = FilePathUtil.createNewFile(filePath);
                             p.setProperty("i",i+"");
@@ -100,8 +101,10 @@ public class ContinueTransferringBreakpointThread extends Thread{
 
                     continue;
 
+                }else{
+
+                    Thread.sleep(1000 * 5);
                 }
-                Thread.sleep(1000 * 5);
 
                 //进来的线程都跑完了
                 boolean isAllOver = true;
@@ -111,7 +114,10 @@ public class ContinueTransferringBreakpointThread extends Thread{
                     }
                 }
                 if(isAllOver){
-                    File f = FilePathUtil.createNewFile(filePath);
+                    FilePathUtil.deleteFile(filePath);
+                    System.out.println("删除下载元数据文件:" + filePath);
+
+/*                    File f = FilePathUtil.createNewFile(filePath);
                     p = new Properties();
                     p.setProperty("i",i+"");
                     p.setProperty("thread.count",0+"");
@@ -122,7 +128,7 @@ public class ContinueTransferringBreakpointThread extends Thread{
 
                     //当前线程都执行完了
                     System.out.println("当前线程都执行完了");
-                    Thread.currentThread().stop();
+                    Thread.currentThread().stop();*/
                 }
 
 

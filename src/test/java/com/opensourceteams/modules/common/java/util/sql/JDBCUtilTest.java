@@ -8,8 +8,9 @@ import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import static com.opensourceteams.modules.common.java.util.sql.JDBCUtil.getNewConnection;
+import static com.opensourceteams.modules.common.java.util.sql.JDBCUtil.*;
 
 
 /**
@@ -356,14 +357,32 @@ public class JDBCUtilTest {
     }
 
     /**
+     * 得到元数据信息
+     */
+    @Test
+    public void testGetMetaData(){
+        Connection connection = JDBCUtil.getNewConnection();
+        String sql = "select * from student";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            List<Map<String,Object>> list = JDBCUtil.getMetaData(ps);
+            for (Map<String,Object> map : list){
+                System.out.println(map);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    /**
      * testResultSetPreparedStatement 查询数据
      */
     @Test
     public void testResultSetPreparedStatement(){
         String sql = "select * from student  where name =? and id = ?"  ;
         List<Object> values = new ArrayList<Object>();
-        values.add("中国1");
-        values.add(3);
+        values.add("中国16");
+        values.add(2);
 
         List<Integer> types = new ArrayList<Integer>();
         types.add(Types.VARCHAR);
@@ -414,6 +433,76 @@ public class JDBCUtilTest {
 
 
         JDBCUtil.close(conn,resultSet);
+
+    }
+
+    /**
+     * testResultSetPreparedStatement 查询数据
+     */
+    @Test
+    public void testResultSetPreparedStatementPrint(){
+        String sql = "select * from student  where name =? and id = ?"  ;
+        List<Object> values = new ArrayList<Object>();
+        values.add("中国16");
+        values.add(2);
+
+        List<Integer> types = new ArrayList<Integer>();
+        types.add(Types.VARCHAR);
+        types.add(Types.INTEGER);
+
+        Connection connection = JDBCUtil.getNewConnection();
+        ResultSet resultSet = null;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            List<Map<String,Object>> list = JDBCUtil.getMetaData(ps);
+
+            resultSet = JDBCUtil.resultSetPreparedStatement(connection,ps,sql,values,types);
+
+
+
+
+            try {
+                while (resultSet.next()){
+                    System.out.print("id:" + resultSet.getInt("id") );
+                    System.out.println("\tname:" + resultSet.getString("name"));
+                    System.out.println();
+                    System.out.println("=======");
+                    for (Map<String,Object> map : list){
+                       /* System.out.println(map.get("columnName"));
+                        System.out.println(map.get("columnType"));
+                        System.out.println(map.get("columnClassName"));*/
+
+
+                        if("java.lang.Integer".equals(map.get("columnClassName"))){
+                            if(resultSet.getObject(map.get("columnName")+"") == null){
+                                //空值
+
+                            }else{
+                                int value = resultSet.getInt(map.get("columnName")+"");
+                                System.out.println(value);
+                            }
+                        }else  if("java.lang.String".equals(map.get("columnClassName"))){
+                            if(resultSet.getObject(map.get("columnName")+"") == null){
+                                //空值
+
+                            }else{
+                                String value = resultSet.getString(map.get("columnName")+"");
+                                System.out.println(value);
+                            }
+                        }
+                    }
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        JDBCUtil.close(connection,resultSet);
 
     }
 
@@ -512,5 +601,23 @@ public class JDBCUtilTest {
         JDBCUtil.close(conn);
         TimerUtil.printlnWorkerTimeMillis(time);
 
+    }
+
+    /**
+     * 遍历数据库
+     */
+    @Test
+    public void testGetSelectList(){
+        String sql = "select * from student  where  id > ? "  ;
+        List<Object> values = new ArrayList<Object>();
+        values.add(0);
+
+        List<Integer> types = new ArrayList<Integer>();
+        types.add(Types.INTEGER);
+        List<Map<Object,Object>> list = JDBCUtil.getSelectList(sql,values,types);
+        for (Map<Object,Object> map : list){
+            System.out.print(map +"\t");
+            System.out.println();
+        }
     }
 }

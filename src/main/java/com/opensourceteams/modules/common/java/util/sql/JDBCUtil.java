@@ -3,8 +3,7 @@ package com.opensourceteams.modules.common.java.util.sql;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 
 /**
@@ -12,7 +11,7 @@ import java.util.Properties;
  * 开发人:刘文  -->  (372065525@qq.com)
  * 功能描述:1
  */
-public class JDBCUtil {
+public class JDBCUtil<T> {
 
     static String driver = "";
     static String url = "";
@@ -368,6 +367,77 @@ public class JDBCUtil {
 
     }
 
+    /**
+     * 查询操作
+     * @param sql
+     * @param values
+     * @param types
+     * @return
+     */
+    public static ResultSet resultSetPreparedStatement(Connection connection, PreparedStatement ps,String sql, List<Object> values, List<Integer> types){
+        try {
+            setPreparedStatement(ps,values,types);
+            return  ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    public static List<Map<Object,Object>> getSelectList(String sql, List<Object> values, List<Integer> types){
+
+
+        List<Map<Object,Object>> result = new ArrayList<Map<Object, Object>>();
+        PreparedStatement ps = preparedStatement(sql);
+        List<Map<String,Object>> list = getMetaData(ps);
+        Map<Object,Object> resultRowMap = null;
+        ResultSet resultSet = resultSetPreparedStatement(connection,ps,sql,values,types);
+        try {
+            while (resultSet.next()){
+                resultRowMap = new HashMap<Object, Object>();
+                for (Map<String,Object> map : list){
+                    if("java.lang.Integer".equals(map.get("columnClassName"))){
+                        if(resultSet.getObject(map.get("columnName")+"") == null){
+                            //空值
+                            resultRowMap.put(map.get("columnName")+"",0);
+
+                        }else{
+                            int value = resultSet.getInt(map.get("columnName")+"");
+                            resultRowMap.put(map.get("columnName")+"",value);
+                        }
+                    }else  if("java.lang.String".equals(map.get("columnClassName"))){
+                        if(resultSet.getObject(map.get("columnName")+"") == null){
+                            //空值
+                            resultRowMap.put(map.get("columnName")+"",null);
+
+                        }else{
+                            String value = resultSet.getString(map.get("columnName")+"");
+                            resultRowMap.put(map.get("columnName")+"",value);
+                        }
+                    }else  if("java.sql.Date".equals(map.get("columnClassName"))){
+                        if(resultSet.getObject(map.get("columnName")+"") == null){
+                            //空值
+                            resultRowMap.put(map.get("columnName")+"",null);
+
+                        }else{
+                            // TODO: 16/3/29 未处理完成数据库类型为Date 
+                        }
+                    }
+
+                }
+                result.add(resultRowMap);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public static int executeUpdate(Connection conn, String sql){
     Statement st = createStatement(conn);
         try {
@@ -419,6 +489,48 @@ public class JDBCUtil {
 
     }
 
+    public static  List<Map<String,Object>> getMetaData(PreparedStatement ps){
+        List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
+        Map<String,Object> map = null;
+        try {
+            ResultSetMetaData resultSetMetaData = ps.getMetaData();
+            for (int i = 1 ;i <= resultSetMetaData.getColumnCount();i++ ){
+                map = new HashMap<String, Object>();
+                map.put("columnName",resultSetMetaData.getColumnName(i));
+                map.put("columnClassName",resultSetMetaData.getColumnClassName(i));
+                map.put("columnType",resultSetMetaData.getColumnType(i));
+                map.put("columnTypeName",resultSetMetaData.getColumnTypeName(i));
+                list.add(map);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static  List<Map<String,Object>> getMetaData(String tableName){
+        List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
+        Map<String,Object> map = null;
+        String sql = "select * from " +tableName;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSetMetaData resultSetMetaData = ps.getMetaData();
+            for (int i = 1 ;i <= resultSetMetaData.getColumnCount();i++ ){
+                map = new HashMap<String, Object>();
+                map.put("columnName",resultSetMetaData.getColumnName(i));
+                map.put("columnClassName",resultSetMetaData.getColumnClassName(i));
+                map.put("columnType",resultSetMetaData.getColumnType(i));
+                map.put("columnTypeName",resultSetMetaData.getColumnTypeName(i));
+                list.add(map);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static ResultSet resultSet(Connection conn, String sql){
         Statement st = createStatement(conn);
 
@@ -457,6 +569,8 @@ public class JDBCUtil {
         return null;
 
     }
+
+
 
     public static ResultSet resultSetPreparedStatement(Connection conn, String sql){
         try {
@@ -500,6 +614,29 @@ public class JDBCUtil {
             e.printStackTrace();
         }
     }
+
+    public static  void close(ResultSet rs){
+
+        if(rs != null){
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            if(connection != null && !connection.isClosed()){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static  void close(Connection conn,ResultSet rs){
 
         if(rs != null){

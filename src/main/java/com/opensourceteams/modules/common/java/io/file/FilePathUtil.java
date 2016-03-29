@@ -127,7 +127,10 @@ public class FilePathUtil {
 
     public static boolean deleteFile(String path){
         File file = new File(path);
-        file.deleteOnExit();
+        if(file != null ){
+            file.delete();
+        }
+
         return  false;
     }
 }
