@@ -12,12 +12,17 @@ import java.util.Map;
 /**
  * 日期: 2016-03-29  07:41
  * 开发人:刘文  -->  (372065525@qq.com)
- * 功能描述:
+ * 功能描述: JDBC查询数据库表行数据,反射处理,返回List<T>
+ * ).JDBC查询
+ * ).元数据得到数据库表和字段描述信息(字段名称,类型,长度,值)
+ * ).反射把数据注入到类属性值
+ * ).反回的是List
  */
 public class Run {
 
     /**
      * 设置list<T>属性
+     * 功能说
      */
     @Test
     public void testSetPropertiesList(){
@@ -27,6 +32,7 @@ public class Run {
 
         List<Integer> types = new ArrayList<Integer>();
         types.add(Types.INTEGER);
+
 
 
         List<Map<Object,Object>> listMap = JDBCUtil.getSelectList(sql,values,types);
