@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.NIO操作.n_06_nio_socket_通信.n_06_03_nio_socket_通信_客户端发送控制台输入服务端接收并发送3;
+package com.opensourceteams.modules.common.gramar.NIO操作.n_06_nio_socket_通信.n_06_04_nio_socket_通信_客户端服务器都可以收发;
 
 /**
  * 日期: 2016-03-31  15:45
