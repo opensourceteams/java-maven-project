@@ -13,7 +13,7 @@ import java.util.Map;
 public class Run {
 
     public static void main(String[] args) {
-        System.out.println("A");
+        System.out.println("Run");
         Map map = new HashMap();
         map.put("sa","dd");
         map.put("ly","李yan");

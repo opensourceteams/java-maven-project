@@ -84,6 +84,7 @@ public class ReflectUtil<T> {
                 try {
                     field = clazz.getDeclaredField(entry.getKey().toString());
                     field.setAccessible(true);
+
                     if(field.getType() == int.class){
                         if(entry.getValue() == null){
                             field.set(t,0);

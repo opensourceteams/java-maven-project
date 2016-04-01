@@ -17,7 +17,7 @@ public class Criminal {
     private int home;
 
     /**
-     * 血型,A,B,AB,O    5
+     * 血型,Run,B,AB,O    5
      */
     private int boold;
 

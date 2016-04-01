@@ -42,9 +42,9 @@ public class LabelDemo extends JPanel {
         label3 = new JLabel(icon);
 
         //Create tool tips, for the heck of it.
-        label1.setToolTipText("A label containing both image and text");
-        label2.setToolTipText("A label containing only text");
-        label3.setToolTipText("A label containing only an image");
+        label1.setToolTipText("Run label containing both image and text");
+        label2.setToolTipText("Run label containing only text");
+        label3.setToolTipText("Run label containing only an image");
 
         //Add the labels.
         add(label1);

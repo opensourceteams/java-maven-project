@@ -59,7 +59,6 @@ public class ContinueTransferringBreakpointThread extends Thread{
                         ++i;
                         //该线程还在
                         if(!d.isOver() && d.getAmount() > 0){
-                            // TODO: 16/3/27 不能每个线程单独写一次到属性文件,要改成批量一次性写完
                             breakpointCount++;
                             filePath = d.getSaveFilePath() +".download";
                             d.getBeginIndex() ;

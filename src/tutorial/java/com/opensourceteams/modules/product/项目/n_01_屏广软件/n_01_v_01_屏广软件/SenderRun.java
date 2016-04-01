@@ -20,7 +20,7 @@ public class SenderRun {
 
     boolean debug = true;
 
-    String receiveIp = "192.168.12.17";
+    String receiveIp = "192.168.12.9";
     int receiverPort = Constanct.getReceiverPort();
     int senderPort = Constanct.getSenderPort() ;
 
