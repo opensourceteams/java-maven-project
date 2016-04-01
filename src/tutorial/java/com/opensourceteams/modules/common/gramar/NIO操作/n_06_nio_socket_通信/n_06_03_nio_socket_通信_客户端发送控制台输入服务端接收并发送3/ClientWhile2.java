@@ -17,7 +17,6 @@ public class ClientWhile2 {
 
     static ByteBuffer buf = ByteBuffer.allocate(1024);
 
-    static  boolean isRead = true;
     static int i = 0;
     static  String ip ="192.168.12.7";
 
@@ -52,17 +51,15 @@ public class ClientWhile2 {
 
         if (client.isConnectionPending()) {
             if (client.finishConnect()) {
-
-/*                buf.put(new String("hello server").getBytes());
+                buf.put(new String("hello").getBytes());
                 buf.flip();
                 client.write(buf);
-                buf.clear();*/
+                buf.clear();
 
 
                 client.register(sel, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
             }
         } else if (key.isReadable()) {
-            isRead = true;
             buf.clear();
 
             int len = client.read(buf);
