@@ -55,7 +55,14 @@ public class Server {
                     //System.out.println("readable");
                     buf.clear();
                     SocketChannel client = (SocketChannel) selectionKey.channel();
-                    int len = client.read(buf) ;
+                    int len = 0 ;
+                    try {
+                        len = client.read(buf) ;
+                    }catch (Exception e){
+                        selectionKey.cancel();
+                        continue;
+                    }
+
                     if(len == -1){
                         selectionKey.channel().close();
                         continue;

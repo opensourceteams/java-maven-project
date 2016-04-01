@@ -13,11 +13,12 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
+import static com.opensourceteams.modules.common.gramar.NIO操作.n_06_nio_socket_通信.n_06_03_nio_socket_通信_客户端发送控制台输入服务端接收并发送3.Client.isRead;
+
 public class ClientWhile {
 
     static ByteBuffer buf = ByteBuffer.allocate(1024);
 
-    static  boolean isRead = true;
     static int i = 0;
 
     public static void main(String args[]) throws IOException {
@@ -63,7 +64,6 @@ public class ClientWhile {
                 client.register(sel, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
             }
         } else if (key.isReadable()) {
-            isRead = true;
             buf.clear();
 
             int len = client.read(buf);
