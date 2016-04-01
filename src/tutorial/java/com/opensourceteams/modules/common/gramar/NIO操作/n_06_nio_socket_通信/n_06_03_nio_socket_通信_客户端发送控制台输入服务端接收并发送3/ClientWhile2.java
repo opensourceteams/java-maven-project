@@ -24,7 +24,7 @@ public class ClientWhile2 {
     public static void main(String args[]) throws IOException {
         int serverPort = 8888;
 
-        SocketChannel channel = SocketChannel.open(); //打开Channel
+        SocketChannel channel = SocketChannel.open(); //打开Channel1
         channel.configureBlocking(false);
         channel.connect(new InetSocketAddress(ip, serverPort)); //连接
 
