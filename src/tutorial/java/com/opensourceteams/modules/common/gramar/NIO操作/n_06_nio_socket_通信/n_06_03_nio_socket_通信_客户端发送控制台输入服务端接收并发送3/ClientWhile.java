@@ -23,6 +23,7 @@ public class ClientWhile {
     public static void main(String args[]) throws IOException {
         int serverPort = 8888;
 
+
         SocketChannel channel = SocketChannel.open(); //打开Channel
         channel.configureBlocking(false);
         channel.connect(new InetSocketAddress("127.0.0.1", serverPort)); //连接

@@ -19,13 +19,14 @@ public class ClientWhile2 {
 
     static  boolean isRead = true;
     static int i = 0;
+    static  String ip ="192.168.12.7";
 
     public static void main(String args[]) throws IOException {
         int serverPort = 8888;
 
         SocketChannel channel = SocketChannel.open(); //打开Channel
         channel.configureBlocking(false);
-        channel.connect(new InetSocketAddress("127.0.0.1", serverPort)); //连接
+        channel.connect(new InetSocketAddress(ip, serverPort)); //连接
 
         Selector selector = Selector.open();    //打开Selector
         channel.register(selector, SelectionKey.OP_CONNECT); //注册OP_CONNECT
