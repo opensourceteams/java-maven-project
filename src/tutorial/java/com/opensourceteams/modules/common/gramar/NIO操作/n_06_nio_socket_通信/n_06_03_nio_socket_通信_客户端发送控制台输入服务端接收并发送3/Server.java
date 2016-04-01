@@ -25,7 +25,7 @@ public class Server {
 
         //在选择器中注册通道,选择感兴趣的动作
         ssc.register(selector, SelectionKey.OP_ACCEPT);
-        ByteBuffer buf = ByteBuffer.allocate(1024);
+
 
         //ServerSocketChannel server = null;
         //SocketChannel client = null;
@@ -50,6 +50,7 @@ public class Server {
 
 
                 }else if(selectionKey.isReadable()){
+                    ByteBuffer buf = ByteBuffer.allocate(1024);
 
                     //System.out.println("readable");
                     buf.clear();
@@ -64,14 +65,22 @@ public class Server {
                         buf.get(bytes);
 
                         System.out.println(new String(bytes));
-                        selectionKey.attach(buf);
+                        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+                        byteBuffer.clear();
+                        byteBuffer.put("服务器返回:".getBytes());
+                        byteBuffer.put(bytes);
+                        byteBuffer.flip();
+                        client.write(byteBuffer);
+
+
+
                     }
 
                     //client.register(selector, SelectionKey.OP_WRITE);
 
 
 
-                }else if(selectionKey.isWritable()){
+                }/*else if(selectionKey.isWritable()){
                    // System.out.println("writable");
                     SocketChannel client = (SocketChannel) selectionKey.channel();
                     ByteBuffer output = (ByteBuffer) selectionKey.attachment();
@@ -93,7 +102,7 @@ public class Server {
 
                     }
 
-                }else  if (selectionKey.isConnectable()){
+                }*/else  if (selectionKey.isConnectable()){
                     System.out.println("connectable");
                 }
 

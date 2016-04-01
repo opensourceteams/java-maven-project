@@ -74,7 +74,14 @@ public class ClientWhile2 {
             buf.get(bytes);
 
             System.out.println(new String(bytes));
-        }else if(key.isWritable()){
+
+//写
+            buf.clear();
+            String data =  "小明_2_"+(++i)  ;
+            buf.put(data.getBytes());
+            buf.flip();
+            client.write(buf);
+        }/*else if(key.isWritable()){
             if(!isRead){
                 return;
             }
@@ -86,7 +93,7 @@ public class ClientWhile2 {
             client.write(buf);
             isRead =false;
 
-        }
+        }*/
 
     }
 }

@@ -25,6 +25,7 @@ public class ClientWhile {
 
 
         SocketChannel channel = SocketChannel.open(); //打开Channel
+
         channel.configureBlocking(false);
         channel.connect(new InetSocketAddress("127.0.0.1", serverPort)); //连接
 
@@ -53,10 +54,10 @@ public class ClientWhile {
         if (client.isConnectionPending()) {
             if (client.finishConnect()) {
 
-/*                buf.put(new String("hello server").getBytes());
+               buf.put(new String("hello").getBytes());
                 buf.flip();
                 client.write(buf);
-                buf.clear();*/
+                buf.clear();
 
 
                 client.register(sel, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
@@ -74,7 +75,15 @@ public class ClientWhile {
             buf.get(bytes);
 
             System.out.println(new String(bytes));
-        }else if(key.isWritable()){
+
+
+            //写
+            buf.clear();
+            String data =  "小明_1_"+(++i)  ;
+            buf.put(data.getBytes());
+            buf.flip();
+            client.write(buf);
+        }/*else if(key.isWritable()){
             if(!isRead){
                 return;
             }
@@ -86,7 +95,7 @@ public class ClientWhile {
             client.write(buf);
             isRead =false;
 
-        }
+        }*/
 
     }
 }
