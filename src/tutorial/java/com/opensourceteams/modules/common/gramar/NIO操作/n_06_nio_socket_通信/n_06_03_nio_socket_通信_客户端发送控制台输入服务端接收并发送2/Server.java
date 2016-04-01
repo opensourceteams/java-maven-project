@@ -77,6 +77,8 @@ public class Server {
                     ByteBuffer output = (ByteBuffer) selectionKey.attachment();
 
 
+
+
                     if(output !=null){
                         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
                         byteBuffer.clear();

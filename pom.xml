@@ -93,6 +93,19 @@
 
     <!-- 扩展源代码和资源文件目录 -->
     <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
@@ -105,10 +118,12 @@
               <goal>add-source</goal>
             </goals>
             <configuration>
+
               <sources>
                 <!-- 我们可以通过在这里添加多个source节点，来添加任意多个源文件夹 -->
                 <source>${basedir}/src/tutorial/java</source>
               </sources>
+
             </configuration>
           </execution>
           <execution>
