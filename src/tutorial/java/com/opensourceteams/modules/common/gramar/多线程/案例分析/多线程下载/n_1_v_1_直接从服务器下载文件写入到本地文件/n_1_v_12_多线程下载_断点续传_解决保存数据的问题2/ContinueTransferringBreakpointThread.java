@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_11_多线程下载_断点续传_从保存已下载数据文件继续下载;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_12_多线程下载_断点续传_解决保存数据的问题2;
 
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
 import com.opensourceteams.modules.common.java.io.file.FilePathUtil;
@@ -21,12 +21,6 @@ public class ContinueTransferringBreakpointThread extends Thread{
 
     Vector<DownloadBytesBean> downloadBytesBeanVector = new Vector<DownloadBytesBean>();
 
-    Vector<DownloadBytesBean> downloadBytesBeanVectorTemp = new Vector<DownloadBytesBean>();
-
-
-    public void addDownloadBytesBeanVector(DownloadBytesBean downloadBytesBean){
-        ((Vector<DownloadBytesBean>)downloadBytesBeanVector.clone()).add(downloadBytesBean);
-    }
 
 
 
@@ -57,16 +51,11 @@ public class ContinueTransferringBreakpointThread extends Thread{
 
 
             breakpointCount = 0 ;
+            Properties p = new Properties();
 
             try {
 
-                if(downloadBytesBeanVectorTemp != null && downloadBytesBeanVectorTemp.size() >0){
-                    downloadBytesBeanVector.clear();
-                    downloadBytesBeanVector.addAll((Vector<DownloadBytesBean>)downloadBytesBeanVectorTemp.clone());
-                    downloadBytesBeanVectorTemp.clear();
 
-                }
-                Properties p = new Properties();
 
                 //p.load(new FileInputStream(filePath));
                 char split = ',';
@@ -110,8 +99,9 @@ public class ContinueTransferringBreakpointThread extends Thread{
                             System.out.println(breakpointCount + "保存了"+(i)+"次:" +p);
 
                             File f = FilePathUtil.createNewFile(filePath);
-                            fos = new FileOutputStream(f);
-                            p.store(fos,"保存文件的下载信息,用作断点续传");
+                          /*  fos = new FileOutputStream(f);
+                            p.store(fos,"保存文件的下载信息,用作断点续传");*/
+                            PropertiesUtil.writeAppen(filePath,p);
                         }
 
 
@@ -129,13 +119,13 @@ public class ContinueTransferringBreakpointThread extends Thread{
 
                 //还没有线程开始启动
                 if("".equals(filePath)){
-                    Thread.sleep(1000 * 5);
+                    Thread.sleep(100);
 
                     continue;
 
                 }else{
 
-                    Thread.sleep(1000 * 5);
+                    Thread.sleep(100);
                 }
 
 
@@ -154,10 +144,6 @@ public class ContinueTransferringBreakpointThread extends Thread{
 
 
             } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
                 e.printStackTrace();
             }finally {
                 if(fos != null){

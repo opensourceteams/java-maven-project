@@ -58,6 +58,21 @@ public class PropertiesUtilTest {
         p.store(new FileOutputStream(filePath),"这是一个什么样的说明文件");
 
     }
+    @Test
+    public void testWrite2() throws Exception {
+        PropertiesUtil.write(filePath,"A","b");
+
+    }
+
+    /**
+     * 将数据写入属性文件,如果文件中已有数据,会全部覆盖原来的数据
+     * @throws Exception
+     */
+    @Test
+    public void testWriteAppen() throws Exception {
+        PropertiesUtil.writeAppen(filePath,"A1","b");
+
+    }
 
     @Test
     public void testRemove() throws Exception {

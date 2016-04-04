@@ -1,9 +1,8 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_9_多线程下载_断点续传_解决线程下载量太大问题;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_12_多线程下载_断点续传_解决保存数据的问题2;
 
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
 
 import java.io.FileNotFoundException;
-import java.io.RandomAccessFile;
 
 /**
  * 开发者:刘文  Email:372065525@qq.com
@@ -11,34 +10,45 @@ import java.io.RandomAccessFile;
  * 功能描述:
  */
 
-public class DownLoadThread extends Thread{
+public class  DownLoadThread extends Thread{
 
     DownloadBytesBean downloadBytesBean;
-    RandomAccessFile raf;
+    //RandomAccessFile raf;
     DownLoadUI ui;
-    ContinueTransferringBreakpointThread continueTransferringBreakpointThread;
+    boolean isBreakpoint = false;
+    String url;
+    String saveFilePath;
 
 
 
 
-    public DownLoadThread(DownloadBytesBean downloadBytesBean, DownLoadUI ui, ContinueTransferringBreakpointThread continueTransferringBreakpointThread){
+    public DownLoadThread(String url,String saveFilePath,boolean isBreakpoint,DownloadBytesBean downloadBytesBean, DownLoadUI ui){
+        this.url = url;
+        this.saveFilePath = saveFilePath;
+        this.isBreakpoint = isBreakpoint;
         this.downloadBytesBean = downloadBytesBean;
         this.ui = ui;
-        this.continueTransferringBreakpointThread = continueTransferringBreakpointThread;
 
     }
     @Override
     public void run() {
-        continueTransferringBreakpointThread.getDownloadBytesBeanVector().add(downloadBytesBean);
+
         long time = System.currentTimeMillis();
-        System.out.println("本次开始下载    -->    " +downloadBytesBean);
+        System.out.println("本次开始下载    -->    " + downloadBytesBean);
 
         try {
-            raf = new RandomAccessFile(downloadBytesBean.getSaveFilePath(),"rw");
-            boolean result = Download_URLUtil.download(downloadBytesBean);
+           // raf = new RandomAccessFile(downloadBytesBean.getSaveFilePath(),"rw");
+            boolean result = false;
+            if(isBreakpoint){
+                result = Download_URLUtil.downloadBreakpoint(url,saveFilePath,downloadBytesBean,ui);
+            }else {
+                 result = Download_URLUtil.download(downloadBytesBean,ui);
+            }
+
             if (!result){
                 return;
             }
+
             System.out.println(downloadBytesBean );
             downloadBytesBean.setOver(true);
 

@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_9_多线程下载_断点续传_解决线程下载量太大问题;
+package com.opensourceteams.modules.product.项目.n_03_多线程下载工具.n_01_多线程下载工具;
 
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
 

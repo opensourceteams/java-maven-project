@@ -202,9 +202,11 @@ public class SplitArrayUtil {
 
             if(i == maxThread - 1 && remain > 0){
                 DownloadBytesBean downloadBytesBean = new DownloadBytesBean(i * capacity,bytesLength,i,bytesLength,url,saveFilePath);
+                downloadBytesBean.setIndex(i);
                 vector.add(downloadBytesBean);
             }else{
                 DownloadBytesBean downloadBytesBean = new DownloadBytesBean(i * capacity,(i + 1 ) * capacity,i,bytesLength,url,saveFilePath);
+                downloadBytesBean.setIndex(i);
                 vector.add(downloadBytesBean);
             }
 

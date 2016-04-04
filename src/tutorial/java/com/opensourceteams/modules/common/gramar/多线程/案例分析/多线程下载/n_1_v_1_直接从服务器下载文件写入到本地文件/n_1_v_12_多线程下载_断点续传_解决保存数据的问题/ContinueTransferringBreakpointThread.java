@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_11_多线程下载_断点续传_从保存已下载数据文件继续下载;
+package com.opensourceteams.modules.common.gramar.多线程.案例分析.多线程下载.n_1_v_1_直接从服务器下载文件写入到本地文件.n_1_v_12_多线程下载_断点续传_解决保存数据的问题;
 
 import com.opensourceteams.modules.common.java.algorithm.bean.DownloadBytesBean;
 import com.opensourceteams.modules.common.java.io.file.FilePathUtil;
@@ -24,8 +24,42 @@ public class ContinueTransferringBreakpointThread extends Thread{
     Vector<DownloadBytesBean> downloadBytesBeanVectorTemp = new Vector<DownloadBytesBean>();
 
 
-    public void addDownloadBytesBeanVector(DownloadBytesBean downloadBytesBean){
-        ((Vector<DownloadBytesBean>)downloadBytesBeanVector.clone()).add(downloadBytesBean);
+    public synchronized void addDownloadBytesBeanVector(DownloadBytesBean downloadBytesBean){
+        Vector<DownloadBytesBean> newVector = (Vector<DownloadBytesBean>)downloadBytesBeanVector.clone();
+        newVector.add(downloadBytesBean);
+        downloadBytesBeanVectorTemp = newVector;
+    }
+
+    public synchronized void removeDownloadBytesBeanVector(DownloadBytesBean downloadBytesBean){
+        Vector<DownloadBytesBean> newVector = (Vector<DownloadBytesBean>)downloadBytesBeanVector.clone();
+        newVector.remove(downloadBytesBean);
+        downloadBytesBeanVectorTemp = newVector;
+
+        String filePath = downloadBytesBean.getSaveFilePath() +".download";
+        //PropertiesUtil.removeKey(filePath,"thread.index." +downloadBytesBean.getIndex());
+    }
+
+    public synchronized void removeAllDownloadBytesBeanVector(){
+        Vector<DownloadBytesBean> newVector = new Vector<DownloadBytesBean>();
+        downloadBytesBeanVectorTemp = newVector;
+    }
+
+    public synchronized boolean  refleshDownloadBytesBeanVector(String filePath){
+
+        if(downloadBytesBeanVectorTemp != null ){
+            if(downloadBytesBeanVectorTemp.size() ==0){
+                //System.out.println("删除下载元数据文件:" + filePath);
+                //FilePathUtil.deleteFile(filePath);
+                return false;
+            }else{
+                downloadBytesBeanVector.clear();
+                downloadBytesBeanVector.addAll((Vector<DownloadBytesBean>)downloadBytesBeanVectorTemp.clone());
+                downloadBytesBeanVectorTemp.clear();
+            }
+
+
+        }
+        return true;
     }
 
 
@@ -38,12 +72,15 @@ public class ContinueTransferringBreakpointThread extends Thread{
         int breakpointCount = 0 ;
         //进来的线程都跑完了
         boolean isAllOver = false;
+        String filePath = "";
+
+
         while (true){
 
             while (Download_URLUtil.globalIsSuspend){
                 System.out.println(Thread.currentThread().getName() + "暂停");
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -57,30 +94,28 @@ public class ContinueTransferringBreakpointThread extends Thread{
 
 
             breakpointCount = 0 ;
+            Properties p = new Properties();
 
             try {
 
-                if(downloadBytesBeanVectorTemp != null && downloadBytesBeanVectorTemp.size() >0){
-                    downloadBytesBeanVector.clear();
-                    downloadBytesBeanVector.addAll((Vector<DownloadBytesBean>)downloadBytesBeanVectorTemp.clone());
-                    downloadBytesBeanVectorTemp.clear();
 
+               // System.out.println("个数:"+downloadBytesBeanVector.size());
+                if(!refleshDownloadBytesBeanVector(filePath)){
+                    Thread.sleep(100 );
+                    continue;
                 }
-                Properties p = new Properties();
+
 
                 //p.load(new FileInputStream(filePath));
                 char split = ',';
-                String filePath = "";
+
                 if(downloadBytesBeanVector != null && downloadBytesBeanVector.size() >0 ){
                     StringBuffer sb = null;
                     for (DownloadBytesBean d : downloadBytesBeanVector){
                         ++i;
                         filePath = d.getSaveFilePath() +".download";
 
-                        if(d.isOver()){
-                            PropertiesUtil.removeKey(filePath,"thread.index." + d.getIndex());
-
-                        }else if(!d.isOver() && d.getAmount() > 0){
+                        if(d.getAmount() > 0){
                             //该线程还在
                             // TODO: 16/3/27 不能每个线程单独写一次到属性文件,要改成批量一次性写完
                             breakpointCount++;
@@ -110,56 +145,31 @@ public class ContinueTransferringBreakpointThread extends Thread{
                             System.out.println(breakpointCount + "保存了"+(i)+"次:" +p);
 
                             File f = FilePathUtil.createNewFile(filePath);
-                            fos = new FileOutputStream(f);
-                            p.store(fos,"保存文件的下载信息,用作断点续传");
+                            //fos = new FileOutputStream(f);
+                            //p.store(fos,"保存文件的下载信息,用作断点续传");
+                            PropertiesUtil.writeAppen(filePath,p);
                         }
 
 
-
-
-
-
-
                     }
 
                 }
 
 
-                //FilePathUtil.deleteFile(filePath);
-
-                //还没有线程开始启动
-                if("".equals(filePath)){
-                    Thread.sleep(1000 * 5);
-
-                    continue;
-
-                }else{
-
-                    Thread.sleep(1000 * 5);
-                }
 
 
-                isAllOver = true;
-                if(downloadBytesBeanVector != null && downloadBytesBeanVector.size() >0 ){
-                    for (DownloadBytesBean d : downloadBytesBeanVector){
-                        isAllOver = d.isOver() && isAllOver;
-                    }
-                }
-                if(isAllOver){
+
+                if(downloadBytesBeanVector != null && downloadBytesBeanVector.size() == 0 ){
                     System.out.println("删除下载元数据文件:" + filePath);
                     FilePathUtil.deleteFile(filePath);
-
-
                 }
+
+                Thread.sleep(10 );
 
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }finally {
+            } finally {
                 if(fos != null){
                     try {
                         fos.close();
@@ -171,11 +181,11 @@ public class ContinueTransferringBreakpointThread extends Thread{
         }
     }
 
-    public Vector<DownloadBytesBean> getDownloadBytesBeanVector() {
+/*    public Vector<DownloadBytesBean> getDownloadBytesBeanVector() {
         return downloadBytesBeanVector;
     }
 
     public void setDownloadBytesBeanVector(Vector<DownloadBytesBean> downloadBytesBeanVector) {
         this.downloadBytesBeanVector = downloadBytesBeanVector;
-    }
+    }*/
 }

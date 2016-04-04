@@ -59,6 +59,49 @@ public class PropertiesUtil {
         return null;
     }
 
+    public static Properties write(String filePath,Object key,Object value){
+        Properties p = new Properties();
+        p.put(key,value);
+        try {
+            p.store(new FileOutputStream(filePath),"这是一个什么样的说明文件");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return p;
+    }
+
+    public static Properties write(String filePath,Properties properties){
+        try {
+            properties.store(new FileOutputStream(filePath),"这是一个什么样的说明文件");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return properties;
+    }
+
+    public static Properties writeAppen(String filePath,Object key,Object value){
+        Properties p  = PropertiesUtil.getProperties(filePath);
+        p.put(key,value);
+        try {
+            p.store(new FileOutputStream(filePath),"这是一个什么样的说明文件");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return p;
+    }
+
+    public static Properties writeAppen(String filePath,Properties properties){
+        Properties p  = PropertiesUtil.getProperties(filePath);
+        p.putAll(properties);
+        try {
+            p.store(new FileOutputStream(filePath),"这是一个什么样的说明文件");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return p;
+    }
+
+
     /**
      * 得到属性文件
      * @param filePath
