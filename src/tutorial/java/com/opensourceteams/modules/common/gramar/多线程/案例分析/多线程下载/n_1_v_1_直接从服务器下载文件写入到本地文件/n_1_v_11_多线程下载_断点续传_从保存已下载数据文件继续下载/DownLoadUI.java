@@ -161,9 +161,9 @@ public class DownLoadUI extends JFrame {
         });
 
         //下载状态信息
-        labState = new JLabel("");
+        labState = new JLabel("状态个息显示");
         //labState.setVisible(false);
-        labState.setBounds(430, aboveMargin + y, 100, 50);
+        labState.setBounds(580, aboveMargin + y, 100, 50);
 
         //进度条
 
