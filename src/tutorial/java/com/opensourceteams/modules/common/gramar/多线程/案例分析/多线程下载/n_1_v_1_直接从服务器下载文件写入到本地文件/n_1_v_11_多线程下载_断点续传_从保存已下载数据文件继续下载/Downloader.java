@@ -73,7 +73,7 @@ public class Downloader {
                         System.out.println(entry.getKey() + ":" + entry.getValue());
                         downloadBytesBean.setBeginIndex(Integer.parseInt(entry.getValue().split(",")[0]));
                         downloadBytesBean.setAmount(Integer.parseInt(entry.getValue().split(",")[1]));
-                        downloadBytesBean.setEndIndex(downloadBytesBean.getIndex() + downloadBytesBean.getAmount());
+                        downloadBytesBean.setEndIndex(Integer.parseInt(entry.getValue().split(",")[2]));
                         downloadBytesBeanList.add(downloadBytesBean);
                         //continueDownload(downloadBytesBeanList, threadCount);
 
@@ -110,6 +110,7 @@ public class Downloader {
             String metadataPath = Constant.downloadPathRoot + "/" + files[0];
             String downloadPath = metadataPath.substring(0, metadataPath.lastIndexOf(".download"));
             System.out.println(metadataPath);
+            String url = "";
 
             File downFile = new File(downloadPath);
 
@@ -120,13 +121,16 @@ public class Downloader {
                 Properties p = PropertiesUtil.getProperties(metadataPath);
                 int threadCountContinue = 0;
                 int totalLength = 0 ;
+                String saveFilePath = "";
                 threadCountContinue = p.getProperty("thread.count") == null ? 0 : Integer.parseInt(p.getProperty("thread.count"));
                 totalLength = p.getProperty("thread.totalLength") == null ? 0 : Integer.parseInt(p.getProperty("thread.totalLength"));
+                url = p.getProperty("url") ;
+                saveFilePath = p.getProperty("saveFilePath") ;
                 ui.setProgressBarMaxValue(totalLength);
                 if (threadCountContinue > 0) {
                     //进行继传
                     Map<String, String> map = PropertiesUtil.getPropertiesPrefix(p, "thread.index");
-                    List<DownloadBytesBean> downloadBytesBeanList = new ArrayList<DownloadBytesBean>();
+                    Vector<DownloadBytesBean> downloadBytesBeanVector = new Vector<DownloadBytesBean>();
                     int totalAmount = 0 ;
                     DownloadBytesBean downloadBytesBean = null;
                     for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -136,20 +140,48 @@ public class Downloader {
                         System.out.println(entry.getKey() + ":" + entry.getValue());
                         downloadBytesBean.setBeginIndex(Integer.parseInt(entry.getValue().split(",")[0]));
                         downloadBytesBean.setAmount(Integer.parseInt(entry.getValue().split(",")[1]));
-                        downloadBytesBean.setEndIndex(downloadBytesBean.getIndex() + downloadBytesBean.getAmount());
-                        downloadBytesBeanList.add(downloadBytesBean);
+                        downloadBytesBean.setEndIndex(Integer.parseInt(entry.getValue().split(",")[2]));
+                        //downloadBytesBean.setSaveFilePath(saveFilePath);
+                        downloadBytesBeanVector.add(downloadBytesBean);
+
                         //continueDownload(downloadBytesBeanList, threadCount);
 
                     }
                     ui.setProgressBarCurrentValue(totalAmount);
 
-                    Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVectorBreakpoint(totalLength,Integer.parseInt(maxThread),downloadBytesBeanList,totalAmount);
-                    System.out.println(vector);
+
+                    //Vector<DownloadBytesBean> vector = SplitArrayUtil.splitBytesToVectorBreakpoint(totalLength,Integer.parseInt(maxThread),downloadBytesBeanList,totalAmount);
+                    //System.out.println(vector);
+                    downloadBreakpoint(url,saveFilePath,maxThread,downloadBytesBeanVector);
 
 
                 }
             }
 
+
+        }
+    }
+
+    public void downloadBreakpoint(String url,String saveFilePath,String threadCount, Vector<DownloadBytesBean> downloadBytesBeanVector ){
+
+        URLConnection conn =  URLUtil.openConnection(url);
+        int totalLength = conn.getContentLength();
+        if(totalLength == -1 ){
+            ui.updateState("下载地址该问不了 -->" +url);
+            return;
+        }
+
+        Vector<DownloadBytesBean> vector = AlgorithmDownUtil.breakpoint(url,saveFilePath,Integer.parseInt(threadCount),totalLength,downloadBytesBeanVector);
+
+        ContinueTransferringBreakpointThread continueTransferringBreakpointThread = new ContinueTransferringBreakpointThread();
+        if(vector != null && vector.size()>0){
+            for (DownloadBytesBean d : vector){
+
+                continueTransferringBreakpointThread.getDownloadBytesBeanVector().add(d);
+                DownLoadThread downLoadThread = new DownLoadThread(url,saveFilePath,true,d,ui);
+                downLoadThread.start();
+            }
+            continueTransferringBreakpointThread.start();
 
         }
     }
@@ -188,7 +220,7 @@ public class Downloader {
             for (DownloadBytesBean d :vector){
                 continueTransferringBreakpointThread.getDownloadBytesBeanVector().add(d);
 
-                DownLoadThread downLoadThread = new DownLoadThread(d,ui,continueTransferringBreakpointThread);
+                DownLoadThread downLoadThread = new DownLoadThread(url,saveFilePath,false,d,ui);
                 downLoadThread.start();
 
 

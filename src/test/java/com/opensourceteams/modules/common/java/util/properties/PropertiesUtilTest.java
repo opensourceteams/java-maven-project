@@ -3,6 +3,7 @@ package com.opensourceteams.modules.common.java.util.properties;
 import com.opensourceteams.modules.common.java.io.file.FilePathUtil;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
@@ -18,7 +19,7 @@ import static com.opensourceteams.modules.common.java.util.properties.Properties
 public class PropertiesUtilTest {
 
 
-    String filePath = "/opt/temp/download/ubuntu-15.10-desktop-amd64.iso.tmp";
+    String filePath = "a.properties";
 
 
     /**
@@ -51,10 +52,21 @@ public class PropertiesUtilTest {
         Properties p = new Properties();
         //p.load(new FileInputStream(FilePathUtil.createNewFile("b.tmp")));
        // p.setProperty("a","b1");
-        p.setProperty("b","2");
-        p.setProperty("c","3");
+        p.setProperty("b1","2");
+        p.setProperty("c1","3");
 
         p.store(new FileOutputStream(filePath),"这是一个什么样的说明文件");
+
+    }
+
+    @Test
+    public void testRemove() throws Exception {
+        File f = FilePathUtil.createNewFile(filePath);
+        Properties p = PropertiesUtil.getProperties(filePath);
+
+        p.remove("b1");
+
+        p.store(new FileOutputStream(f),"这是一个什么样的说明文件");
 
     }
 

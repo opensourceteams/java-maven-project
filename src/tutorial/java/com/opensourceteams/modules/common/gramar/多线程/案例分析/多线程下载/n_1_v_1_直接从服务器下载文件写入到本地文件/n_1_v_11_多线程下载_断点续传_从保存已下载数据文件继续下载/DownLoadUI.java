@@ -17,6 +17,7 @@ public class DownLoadUI extends JFrame {
 
     String urlText = "http://localhost:8080/ubuntu-15.10-desktop-amd64.iso";
     String saveFilePath = "/opt/temp/download/ubuntu-15.10-desktop-amd64.iso";
+    int countThread = 3;
 
 
     JLabel labUrl;
@@ -82,7 +83,7 @@ public class DownLoadUI extends JFrame {
         labCount.setBounds(leftMargin, aboveMargin + y, 100, 50);
         txtCount = new JTextField();
         txtCount.setBounds(100, aboveMargin + y, 500, 50);
-        txtCount.setText("10");
+        txtCount.setText(countThread +"");
 
 
         //暂停

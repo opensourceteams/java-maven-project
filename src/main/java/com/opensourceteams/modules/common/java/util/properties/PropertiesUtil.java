@@ -1,7 +1,10 @@
 package com.opensourceteams.modules.common.java.util.properties;
 
+import com.opensourceteams.modules.common.java.io.file.FilePathUtil;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -47,6 +50,33 @@ public class PropertiesUtil {
         try {
             fileInputStream = new FileInputStream(filePath);
             p.load(fileInputStream);
+            return p;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 得到属性文件
+     * @param filePath
+     * @return
+     */
+    public static Properties removeKey(String filePath,Object key){
+        if(!FilePathUtil.exist(filePath)){
+            return null;
+        }
+        Properties p = new Properties();
+        FileInputStream fileInputStream = null;
+        try {
+
+            fileInputStream = new FileInputStream(filePath);
+            System.out.println("removeKey filePath:"+filePath);
+            p.load(fileInputStream);
+            p.remove(key);
+            p.store(new FileOutputStream(filePath),"属性文件更新描述信息");
             return p;
         } catch (FileNotFoundException e) {
             e.printStackTrace();

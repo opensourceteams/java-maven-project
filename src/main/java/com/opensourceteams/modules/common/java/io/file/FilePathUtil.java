@@ -127,8 +127,22 @@ public class FilePathUtil {
 
     public static boolean deleteFile(String path){
         File file = new File(path);
-        if(file != null ){
+        if(file != null && file.exists()){
             file.delete();
+        }
+
+        return  false;
+    }
+
+    /**
+     * 判断文件是否存在
+     * @param path
+     * @return
+     */
+    public static boolean exist(String path){
+        File file = new File(path);
+        if(file != null && file.exists() ){
+           return true;
         }
 
         return  false;

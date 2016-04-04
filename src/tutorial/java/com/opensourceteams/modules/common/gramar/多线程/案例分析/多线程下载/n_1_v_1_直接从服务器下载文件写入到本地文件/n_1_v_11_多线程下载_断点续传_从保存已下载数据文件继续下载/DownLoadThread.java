@@ -14,17 +14,21 @@ import java.io.RandomAccessFile;
 public class  DownLoadThread extends Thread{
 
     DownloadBytesBean downloadBytesBean;
-    RandomAccessFile raf;
+    //RandomAccessFile raf;
     DownLoadUI ui;
-    ContinueTransferringBreakpointThread continueTransferringBreakpointThread;
+    boolean isBreakpoint = false;
+    String url;
+    String saveFilePath;
 
 
 
 
-    public DownLoadThread(DownloadBytesBean downloadBytesBean, DownLoadUI ui, ContinueTransferringBreakpointThread continueTransferringBreakpointThread){
+    public DownLoadThread(String url,String saveFilePath,boolean isBreakpoint,DownloadBytesBean downloadBytesBean, DownLoadUI ui){
+        this.url = url;
+        this.saveFilePath = saveFilePath;
+        this.isBreakpoint = isBreakpoint;
         this.downloadBytesBean = downloadBytesBean;
         this.ui = ui;
-        this.continueTransferringBreakpointThread = continueTransferringBreakpointThread;
 
     }
     @Override
@@ -34,8 +38,14 @@ public class  DownLoadThread extends Thread{
         System.out.println("本次开始下载    -->    " + downloadBytesBean);
 
         try {
-            raf = new RandomAccessFile(downloadBytesBean.getSaveFilePath(),"rw");
-            boolean result = Download_URLUtil.download(downloadBytesBean,ui);
+           // raf = new RandomAccessFile(downloadBytesBean.getSaveFilePath(),"rw");
+            boolean result = false;
+            if(isBreakpoint){
+                result = Download_URLUtil.downloadBreakpoint(url,saveFilePath,downloadBytesBean,ui);
+            }else {
+                 result = Download_URLUtil.download(downloadBytesBean,ui);
+            }
+
             if (!result){
                 return;
             }
