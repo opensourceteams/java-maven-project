@@ -57,24 +57,22 @@ public class Algorithm {
 
 
 
-        /*int[] arry0 = {0,2};
-        int[] arry1 = {7,3};//
-        int[] arry2 = {14,1};
-        int[][] list = {arry0,arry1,arry2};*/
-
-
 
         int total = 20;
         int n = 4 ;
+        int calTotal = 0 ;
         Vector<DownloadBytesBean> resultVector = breakpoint(n,total,vector);
-        for (DownloadBytesBean d : resultVector){
-            System.out.println("beginIndex:" +d.getBeginIndex() +" -> "  +" endIndex :" +d.getEndIndex());
+        for (int i = 0 ;i< resultVector.size();i++){
+            DownloadBytesBean d = resultVector.get(i);
+            System.out.println("线程 "+i + " beginIndex:" +d.getBeginIndex() +" -> "  +" endIndex :" +d.getEndIndex());
             List<Integer[]> list = d.getRangList();
             for (Integer[] v: list){
-                System.out.println(v[0] +" -> " +v[1] +" 长度:" +(v[1] - v[0]));
+                System.out.println("索引从 "+ v[0] +" -> " +v[1] +" 长度:" +(v[1] - v[0]));
+                calTotal = calTotal + (v[1] - v[0]);
             }
-            System.out.println("\n");
+            System.out.println("");
         }
+        System.out.println("计算后的总长度:" + calTotal);
 
 
 
@@ -91,7 +89,6 @@ public class Algorithm {
         int totalAmount = 0 ;
         Collections.sort(oldVector);
         for (DownloadBytesBean d: oldVector){
-            System.out.println(d.getBeginIndex());
             totalAmount = totalAmount +d.getAmount();
         }
 
