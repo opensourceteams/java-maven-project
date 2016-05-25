@@ -15,7 +15,7 @@ public class Run {
 
     public static void main(String[] args) throws IOException {
 
-        String path = "/opt/workspace/bigdata/all_frame_intellij/java-maven/subRecursionListFiles/d.txt";
+        String path = "/opt/workspace/bigdata/all_frame_intellij/java_maven/d.txt";
         write(path,new String[]{"小明","小华"});
 
     }
