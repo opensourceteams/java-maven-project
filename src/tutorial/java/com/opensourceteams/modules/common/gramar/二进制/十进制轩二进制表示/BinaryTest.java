@@ -12,13 +12,15 @@ public class BinaryTest {
 
     public static void main(String[] args) throws RuntimeException {
 
-        int value = 16;
+        showByte256();
+
+     /*   int value = 16;
 
 
         System.out.println(getMaxBitLengthByInt(value));
 
         getMaxValueByBitLength();
-
+*/
 
 
        // getMaxValueByByteLength(1);
