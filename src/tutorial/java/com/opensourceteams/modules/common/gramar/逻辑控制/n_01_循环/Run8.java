@@ -8,11 +8,11 @@ package com.opensourceteams.modules.common.gramar.逻辑控制.n_01_循环;
 public class Run8 {
 
     public static void main(String[] args) {
-        for_i:for (int i = 1 ;i <= 10 ;i ++){
-            for_k:for (int k = 1 ;k <= 10 ;k ++){
+        for_i:for (int i = 1 ;i <= 5 ;i ++){
+            for_k:for (int k = 1 ;k <= 5 ;k ++){
 
-                for (int j = 1 ;j <= 10 ;j ++){
-                    if(j ==5){
+                for (int j = 1 ;j <= 5 ;j ++){
+                    if(j ==3){
 
                         break  for_k;
                     }
