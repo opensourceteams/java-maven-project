@@ -1,4 +1,4 @@
-package com.opensourceteams.modules.common.作业.第八天.蜜蜂和熊的关系2_1;
+package com.opensourceteams.modules.common.作业.第八天.蜜蜂和熊的关系2_1_OK;
 
 /**
  * 生产蜂密的池
@@ -31,15 +31,10 @@ class BeeSugarPool{
                 return  ;
             }
             currentBeeSuger++;
-            System.out.println(name + " 多生产一斤蜂密生产的过程中... 完成的有:" + beeSuger + " 当前有:" +currentBeeSuger);
-        }
-
-        try {
-
+            System.out.println(name + " 多生产一斤蜂密生产的过程中... 完成的有:" + beeSuger + " 当前有:" +currentBeeSuger );
             Thread.sleep(Run.costTime);
-        }catch (Exception e){
-            currentBeeSuger--;
         }
+
 
 
         synchronized (BeeSugarPool.class){
